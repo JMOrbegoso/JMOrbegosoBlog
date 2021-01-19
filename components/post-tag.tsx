@@ -61,6 +61,9 @@ function getFontAwesomeIcon(tag: PostTagEnum) {
       return faYarn;
     case PostTagEnum.WSL:
       return faLinux;
+
+    default:
+      throw new Error(`Invalid tag: ${tag}`);
   }
 }
 
