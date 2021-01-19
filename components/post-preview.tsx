@@ -1,8 +1,8 @@
-import Avatar from './avatar';
 import DateFormatter from './date-formatter';
-import CoverImage from './cover-image';
 import Link from 'next/link';
 import Author from '../types/author';
+import PostTag from './post-tag';
+import { PostTag as PostTagEnum } from '../lib/enums/postTag';
 
 type Props = {
   title: string;
@@ -11,21 +11,12 @@ type Props = {
   excerpt: string;
   author: Author;
   slug: string;
+  tags: PostTagEnum[];
 };
 
-const PostPreview = ({
-  title,
-  coverImage,
-  date,
-  excerpt,
-  author,
-  slug,
-}: Props) => {
+const PostPreview = ({ title, date, excerpt, slug, tags }: Props) => {
   return (
     <div>
-      <div className="mb-5">
-        <CoverImage slug={slug} title={title} src={coverImage} />
-      </div>
       <h3 className="text-3xl mb-3 leading-snug">
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a className="hover:underline">{title}</a>
@@ -35,7 +26,13 @@ const PostPreview = ({
         <DateFormatter dateString={date} />
       </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-      <Avatar name={author.name} picture={author.picture} />
+      <div className="col-md-12 mb-5 text-center">
+        {tags?.map((tag) => (
+          <div className="mx-2" style={{ display: 'inline-block' }}>
+            <PostTag tag={tag} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
