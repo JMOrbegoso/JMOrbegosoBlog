@@ -1,20 +1,21 @@
-import Alert from './alert';
 import Footer from './footer';
 import Meta from './meta';
+import NavBar from './navbar';
+import { WEB_NAME } from '../lib/constants';
 
 type Props = {
-  preview?: boolean;
   children: React.ReactNode;
 };
 
-const Layout = ({ preview, children }: Props) => {
+const Layout = ({ children }: Props) => {
   return (
     <>
       <Meta />
       <div className="min-h-screen">
-        <Alert preview={preview} />
-        <main>{children}</main>
+        <NavBar title={WEB_NAME} />
+        <main style={{ paddingTop: 70 }}>{children}</main>
       </div>
+
       <Footer />
     </>
   );
