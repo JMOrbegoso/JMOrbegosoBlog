@@ -23,7 +23,7 @@ const PostPreview = ({ title, date, excerpt, slug, tags }: Props) => {
         </Link>
       </h3>
       <div className="text-lg mb-4">
-        <DateFormatter dateString={date} />
+        🗓 <DateFormatter dateString={date} />
       </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
       <div className="col-md-12 mb-5 text-center">
