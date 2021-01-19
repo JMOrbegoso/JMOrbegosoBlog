@@ -1,30 +1,76 @@
+import ContactWay from './contact-way';
+import { SocialNetwork } from '../lib/enums/socialNetwork';
 import Container from './container';
-import { EXAMPLE_PATH } from '../lib/constants';
 
-const Footer = () => {
+type Props = {
+  title: string;
+  copyright: string;
+  personalweb: string;
+  facebook?: string;
+  twitter?: string;
+  github?: string;
+  linkedin?: string;
+  youtube?: string;
+  instagram?: string;
+};
+
+const Footer = ({
+  title,
+  copyright,
+  personalweb,
+  facebook,
+  twitter,
+  github,
+  linkedin,
+  youtube,
+  instagram,
+}: Props) => {
   return (
-    <footer className="bg-accent-1 border-t border-accent-2">
+    <footer className="bg-primary">
       <Container>
-        <div className="py-28 flex flex-col lg:flex-row items-center">
-          <h3 className="text-4xl lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Statically Generated with Next.js.
-          </h3>
-          <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
-            <a
-              href="https://nextjs.org/docs/basic-features/pages"
-              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
-            >
-              Read Documentation
-            </a>
-            <a
-              href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-              className="mx-3 font-bold hover:underline"
-            >
-              View on GitHub
-            </a>
+        <div className="row">
+          <div className="col-md-12 py-5">
+            <div className="text-center">
+              <a className="text-white" href={personalweb} target="_blank">
+                {title}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="mb-5 text-center">
+              <ContactWay
+                socialNetwork={SocialNetwork.Facebook}
+                userName={facebook}
+              />
+              <ContactWay
+                socialNetwork={SocialNetwork.Twitter}
+                userName={twitter}
+              />
+              <ContactWay
+                socialNetwork={SocialNetwork.GitHub}
+                userName={github}
+              />
+              <ContactWay
+                socialNetwork={SocialNetwork.LinkedIn}
+                userName={linkedin}
+              />
+              <ContactWay
+                socialNetwork={SocialNetwork.YouTube}
+                userName={youtube}
+              />
+              <ContactWay
+                socialNetwork={SocialNetwork.Instagram}
+                userName={instagram}
+              />
+            </div>
           </div>
         </div>
       </Container>
+      <div className="footer-copyright container-fluid text-center py-3 text-white-50">
+        <p>{copyright}</p>
+      </div>
     </footer>
   );
 };
