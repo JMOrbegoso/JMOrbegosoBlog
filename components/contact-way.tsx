@@ -30,13 +30,15 @@ const ContactWay = ({ socialNetwork, userName }: Props) => {
     const icon = getFontAwesomeIcon(socialNetwork);
 
     return (
-      <a href={`${baseUrl}/${userName}`} target="_blank">
-        <FontAwesomeIcon
-          icon={icon}
-          className="mr-md-5 mr-3 fa-3x"
-          style={{ color: 'white' }}
-        />
-      </a>
+      <>
+        <a href={`${baseUrl}/${userName}`} target="_blank">
+          <FontAwesomeIcon
+            icon={icon}
+            className="m-2 fa-3x"
+            style={{ color: 'white' }}
+          />
+        </a>
+      </>
     );
   }
   return <></>;
