@@ -1,3 +1,4 @@
+import { PostTag } from '../lib/enums/postTag';
 import Author from './author';
 
 type PostType = {
@@ -11,6 +12,7 @@ type PostType = {
     url: string;
   };
   content: string;
+  tags: PostTag[];
 };
 
 export default PostType;
