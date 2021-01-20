@@ -2,12 +2,14 @@ import Footer from './footer';
 import Meta from './meta';
 import NavBar from './navbar';
 import { WEB_NAME } from '../lib/constants';
+import Author from '../types/author';
 
 type Props = {
+  author: Author;
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ author, children }: Props) => {
   return (
     <>
       <Meta />
@@ -16,7 +18,7 @@ const Layout = ({ children }: Props) => {
         <main style={{ paddingTop: 70 }}>{children}</main>
       </div>
 
-      <Footer />
+      <Footer author={author} />
     </>
   );
 };
