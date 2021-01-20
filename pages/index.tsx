@@ -2,19 +2,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from '../components/container';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
-import { getAllPosts } from '../lib/api';
+import { getAuthorData, getAllPosts } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Post from '../types/post';
+import Author from '../types/author';
 
 type Props = {
+  author: Author;
   allPosts: Post[];
 };
 
-const Index = ({ allPosts }: Props) => {
+const Index = ({ author, allPosts }: Props) => {
   return (
     <>
-      <Layout>
+      <Layout author={author}>
         <Head>
           <title> {WEB_NAME} </title>
         </Head>
@@ -39,7 +41,9 @@ export const getStaticProps = async () => {
     'tags',
   ]);
 
+  const author = getAuthorData();
+
   return {
-    props: { allPosts },
+    props: { author, allPosts },
   };
 };

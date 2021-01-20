@@ -1,25 +1,20 @@
 import ContactWay from './contact-way';
 import { SocialNetwork } from '../lib/enums/socialNetwork';
 import Container from './container';
-import {
-  CREDITS,
-  COPYRIGHT,
-  PERSONAL_WEB,
-  FACEBOOK,
-  TWITTER,
-  GITHUB,
-  LINKEDIN,
-  YOUTUBE,
-  INSTAGRAM,
-} from '../lib/constants';
+import { CREDITS, COPYRIGHT } from '../lib/constants';
+import Author from '../types/author';
 
-const Footer = () => {
+type Props = {
+  author: Author;
+};
+
+const Footer = ({ author }: Props) => {
   return (
     <footer className="bg-primary">
       <Container>
         <div className="row">
           <div className="col-md-12 py-5 text-center">
-            <a className="text-white" href={PERSONAL_WEB} target="_blank">
+            <a className="text-white" href={author.web} target="_blank">
               {CREDITS}
             </a>
           </div>
@@ -28,27 +23,27 @@ const Footer = () => {
           <div className="col-md-12 mb-5 text-center">
             <ContactWay
               socialNetwork={SocialNetwork.Facebook}
-              userName={FACEBOOK}
+              userName={author.facebook}
             />
             <ContactWay
               socialNetwork={SocialNetwork.Twitter}
-              userName={TWITTER}
+              userName={author.twitter}
             />
             <ContactWay
               socialNetwork={SocialNetwork.GitHub}
-              userName={GITHUB}
+              userName={author.github}
             />
             <ContactWay
               socialNetwork={SocialNetwork.LinkedIn}
-              userName={LINKEDIN}
+              userName={author.linkedin}
             />
             <ContactWay
               socialNetwork={SocialNetwork.YouTube}
-              userName={YOUTUBE}
+              userName={author.youtube}
             />
             <ContactWay
               socialNetwork={SocialNetwork.Instagram}
-              userName={INSTAGRAM}
+              userName={author.instagram}
             />
           </div>
         </div>
