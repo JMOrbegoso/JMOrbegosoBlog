@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from '../components/container';
 import TagsList from '../components/tags-list';
 import Layout from '../components/layout';
-import { getAllPosts, getAuthorData } from '../lib/api';
+import { getAllTags, getAuthorData } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import { PostTag } from '../lib/enums/postTag';
@@ -33,14 +33,9 @@ export default Tags;
 export const getStaticProps = async () => {
   const author = getAuthorData();
 
-  const allPosts = getAllPosts(['tags']);
-  const allTags = allPosts.map((p) => p.tags).flat(1);
-
-  const allUniqueTags = allTags
-    .filter((item, index) => allTags.indexOf(item) === index)
-    .sort((tag1, tag2) => tag1.localeCompare(tag2));
+  const allTags = getAllTags();
 
   return {
-    props: { author, allTags: allUniqueTags },
+    props: { author, allTags },
   };
 };

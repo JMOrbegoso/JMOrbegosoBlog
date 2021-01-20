@@ -98,3 +98,14 @@ export function getAuthorData() {
   ]);
   return aboutMeData;
 }
+
+export function getAllTags() {
+  const allPosts = getAllPosts(['tags']);
+  const allTags = allPosts.map((p) => p.tags).flat(1);
+
+  const allUniqueTags = allTags
+    .filter((item, index) => allTags.indexOf(item) === index)
+    .sort((tag1, tag2) => tag1.localeCompare(tag2));
+
+  return allUniqueTags;
+}
