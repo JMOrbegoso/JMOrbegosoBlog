@@ -56,13 +56,9 @@ type Params = {
 };
 
 export const getStaticProps = async ({ params }: Params) => {
-  const postsByTag = getAllPosts([
-    'title',
-    'date',
-    'slug',
-    'excerpt',
-    'tags',
-  ]).filter((p) => p.tags.includes(params.id));
+  const allPosts = getAllPosts(['title', 'date', 'slug', 'excerpt', 'tags']);
+
+  const postsByTag = allPosts.filter((p) => p.tags.includes(params.id));
 
   const author = getAuthorData();
 

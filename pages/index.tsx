@@ -31,15 +31,7 @@ const Index = ({ author, allPosts }: Props) => {
 export default Index;
 
 export const getStaticProps = async () => {
-  const allPosts = getAllPosts([
-    'title',
-    'date',
-    'slug',
-    'author',
-    'coverImage',
-    'excerpt',
-    'tags',
-  ]);
+  const allPosts = getAllPosts(['title', 'date', 'slug', 'excerpt', 'tags']);
 
   const author = getAuthorData();
 
