@@ -1,6 +1,5 @@
 import DateFormatter from './date-formatter';
 import Link from 'next/link';
-import Author from '../types/author';
 import PostTag from './post-tag';
 import { PostTag as PostTagEnum } from '../lib/enums/postTag';
 
@@ -9,7 +8,6 @@ type Props = {
   coverImage: string;
   date: string;
   excerpt: string;
-  author: Author;
   slug: string;
   tags: PostTagEnum[];
 };
