@@ -12,7 +12,7 @@ import { WEB_NAME } from '../../lib/constants';
 import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
 import Author from '../../types/author';
-import PostTag from '../../components/post-tag';
+import PostTags from '../../components/post-tags';
 
 type Props = {
   author: Author;
@@ -46,13 +46,7 @@ const Post = ({ author, post, morePosts }: Props) => {
                 author={author}
               />
               <PostBody content={post.content} />
-              <div className="col-md-12 mb-5 text-center">
-                {post.tags.map((tag) => (
-                  <div className="mx-2" style={{ display: 'inline-block' }}>
-                    <PostTag tag={tag} />
-                  </div>
-                ))}
-              </div>
+              <PostTags tags={post.tags} />
             </article>
           </>
         )}
