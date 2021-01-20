@@ -94,6 +94,7 @@ export function getAuthorData() {
     'linkedin',
     'youtube',
     'instagram',
+    'content',
   ]);
   return aboutMeData;
 }
