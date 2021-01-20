@@ -1,7 +1,7 @@
 export enum PostTag {
-  Node = 'Node JS',
-  React = 'React JS',
-  Angular = 'Angular',
-  Yarn = 'Yarn',
-  WSL = 'WSL',
+  Node = 'node-js',
+  React = 'react-js',
+  Angular = 'angular',
+  Yarn = 'yarn',
+  WSL = 'wsl',
 }

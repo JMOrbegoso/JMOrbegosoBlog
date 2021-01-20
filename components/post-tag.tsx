@@ -18,10 +18,12 @@ type Props = {
 
 const PostTag = ({ tag }: Props) => {
   const tagIcon = getFontAwesomeIcon(tag);
+  const tagTitle = getTagTitle(tag);
+
   return (
     <>
       <Link href={`/tags/${tag}`}>
-        <a title={tag}>
+        <a title={tagTitle}>
           <div
             className="container bg-primary"
             style={{
@@ -61,6 +63,24 @@ function getFontAwesomeIcon(tag: PostTagEnum) {
       return faYarn;
     case PostTagEnum.WSL:
       return faLinux;
+
+    default:
+      throw new Error(`Invalid tag: ${tag}`);
+  }
+}
+
+function getTagTitle(tag: PostTagEnum) {
+  switch (tag) {
+    case PostTagEnum.Node:
+      return 'Node JS';
+    case PostTagEnum.React:
+      return 'React JS';
+    case PostTagEnum.Angular:
+      return 'Angular';
+    case PostTagEnum.Yarn:
+      return 'Yarn';
+    case PostTagEnum.WSL:
+      return 'WSL';
 
     default:
       throw new Error(`Invalid tag: ${tag}`);
