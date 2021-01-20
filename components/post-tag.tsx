@@ -20,7 +20,7 @@ const PostTag = ({ tag }: Props) => {
   const tagIcon = getFontAwesomeIcon(tag);
   return (
     <>
-      <Link href={`/tag/${tag}`}>
+      <Link href={`/tags/${tag}`}>
         <a title={tag}>
           <div
             className="container bg-primary"
