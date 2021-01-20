@@ -14,7 +14,6 @@ const NavBar = ({ title }: Props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/categories">Categories</Nav.Link>
           <Nav.Link href="/tags">Tags</Nav.Link>
           <Nav.Link href="/about">About Me</Nav.Link>
           <Nav.Link href="/contact">Contact</Nav.Link>
