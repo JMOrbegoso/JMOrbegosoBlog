@@ -5,3 +5,5 @@ export const HOME_OG_IMAGE_URL =
 export const WEB_NAME = "JM Orbegoso's Blog";
 export const CREDITS = 'Developed by JM Orbegoso';
 export const COPYRIGHT = '© 2021 JM Orbegoso';
+export const POST_PER_PAGE = 6;
+export const PAGINATION_LENGTH = 2;
