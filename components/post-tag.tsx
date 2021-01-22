@@ -13,7 +13,7 @@ const PostTag = ({ tag }: Props) => {
 
   return (
     <>
-      <Link href={`/tags/${tag}`}>
+      <Link href={`/tags/${tag}/1`}>
         <a title={tagTitle}>
           <div
             className="container bg-primary"
