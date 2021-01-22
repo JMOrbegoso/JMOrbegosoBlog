@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from '../components/container';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
 import { getAuthorData, getAllPosts } from '../lib/api';
@@ -20,9 +19,7 @@ const Index = ({ author, allPosts }: Props) => {
         <Head>
           <title> {WEB_NAME} </title>
         </Head>
-        <Container>
-          {allPosts.length > 0 && <PostsList posts={allPosts} />}
-        </Container>
+        <PostsList posts={allPosts} actualPage={1} />
       </Layout>
     </>
   );
