@@ -43,7 +43,7 @@ export default PostPagination;
 
 function generatePaginationItem(page: number, isActive: boolean = false) {
   return (
-    <Pagination.Item key={page} active={isActive} href={`/${page}`}>
+    <Pagination.Item key={page} active={isActive} href={`${page}`}>
       {page}
     </Pagination.Item>
   );
