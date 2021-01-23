@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Pagination } from 'react-bootstrap';
 import { POST_PER_PAGE, PAGINATION_LENGTH } from '../lib/constants';
 
@@ -45,8 +46,8 @@ export default PostPagination;
 
 function generatePaginationItem(page: number, isActive: boolean = false) {
   return (
-    <Pagination.Item key={page} active={isActive} href={`${page}`}>
-      {page}
-    </Pagination.Item>
+    <Link href={`${page}`} passHref>
+      <Pagination.Item active={isActive}>{page}</Pagination.Item>
+    </Link>
   );
 }
