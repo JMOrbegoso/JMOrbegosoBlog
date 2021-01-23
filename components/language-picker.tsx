@@ -1,21 +1,34 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
+import ILocalResources from '../interfaces/ilocalresources';
 
-const LanguagePicker = () => {
+type Props = {
+  localResources: ILocalResources;
+};
+
+const LanguagePicker = ({ localResources }: Props) => {
   const router = useRouter();
 
-  const changeLanguage = (e: any) => {
+  const changeLanguage = (param: any) => {
     router.push(router.pathname, router.pathname, {
-      locale: e.target.value,
+      locale: param,
     });
   };
 
   return (
     <>
-      <select onChange={changeLanguage}>
-        <option value="en">English</option>
-        <option value="es">Español</option>
-      </select>
+      <DropdownButton
+        id="dropdown-basic-button"
+        title={localResources.change_language}
+      >
+        <Dropdown.Item eventKey="en" onSelect={changeLanguage}>
+          English
+        </Dropdown.Item>
+        <Dropdown.Item eventKey="es" onSelect={changeLanguage}>
+          Español
+        </Dropdown.Item>
+      </DropdownButton>
     </>
   );
 };
