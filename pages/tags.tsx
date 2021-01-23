@@ -7,11 +7,12 @@ import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import { PostTag } from '../lib/enums/postTag';
 import Author from '../types/author';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
   allTags: PostTag[];
-  localResources: any;
+  localResources: ILocalResources;
 };
 
 const Tags = ({ author, allTags, localResources }: Props) => {

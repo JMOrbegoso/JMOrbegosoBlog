@@ -18,12 +18,13 @@ import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
 import Author from '../../types/author';
 import PostTags from '../../components/post-tags';
+import ILocalResources from '../../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
   post: PostType;
   morePosts: PostType[];
-  localResources: any;
+  localResources: ILocalResources;
 };
 
 const Post = ({ author, post, morePosts, localResources }: Props) => {

@@ -7,10 +7,11 @@ import { WEB_NAME } from '../lib/constants';
 import Author from '../types/author';
 import markdownToHtml from '../lib/markdownToHtml';
 import markdownStyles from '../components/markdown-styles.module.css';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
-  localResources: any;
+  localResources: ILocalResources;
 };
 
 const About = ({ author, localResources }: Props) => {

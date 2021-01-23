@@ -6,11 +6,12 @@ import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
   allPosts: Post[];
-  localResources: any;
+  localResources: ILocalResources;
 };
 
 const Index = ({ author, allPosts, localResources }: Props) => {

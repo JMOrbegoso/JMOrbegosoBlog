@@ -7,12 +7,13 @@ import { WEB_NAME } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
 import { POST_PER_PAGE } from '../lib/constants';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
   allPosts: Post[];
   actualPage: number;
-  localResources: any;
+  localResources: ILocalResources;
 };
 
 const IndexPage = ({ author, allPosts, actualPage, localResources }: Props) => {
