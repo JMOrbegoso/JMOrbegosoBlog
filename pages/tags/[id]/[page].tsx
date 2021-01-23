@@ -3,7 +3,12 @@ import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
 import Container from '../../../components/container';
 import Layout from '../../../components/layout';
-import { getAllPosts, getAuthorData, getAllTags } from '../../../lib/api';
+import {
+  getAllPosts,
+  getAuthorData,
+  getAllTags,
+  getLocalResources,
+} from '../../../lib/api';
 import PostTitle from '../../../components/post-title';
 import Head from 'next/head';
 import { WEB_NAME } from '../../../lib/constants';
@@ -18,15 +23,22 @@ type Props = {
   tagTitle: string;
   postsByTag: PostType[];
   actualPage: number;
+  localResources: any;
 };
 
-const Tag = ({ author, tagTitle, postsByTag, actualPage }: Props) => {
+const Tag = ({
+  author,
+  tagTitle,
+  postsByTag,
+  actualPage,
+  localResources,
+}: Props) => {
   const router = useRouter();
   if (!router.isFallback && !tagTitle) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout author={author}>
+    <Layout author={author} localResources={localResources}>
       <Container>
         <PostTitle>Posts by tag: {tagTitle}</PostTitle>
         {router.isFallback ? (
@@ -53,21 +65,31 @@ type Params = {
     id: string;
     page: number;
   };
+  locales: string[];
+  locale: string;
+  defaultLocale: string;
 };
 
-export const getStaticProps = async ({ params }: Params) => {
+export const getStaticProps = async ({ params, locale }: Params) => {
+  const author = getAuthorData();
+  const localResources = await getLocalResources(locale);
+
   const allPosts = getAllPosts(['title', 'date', 'slug', 'excerpt', 'tags']);
 
   const postsByTag = allPosts.filter((p) => p.tags.includes(params.id));
-
-  const author = getAuthorData();
 
   const tagTitle = getTagTitle(params.id);
 
   const actualPage = params.page;
 
   return {
-    props: { author, tagTitle, postsByTag, actualPage },
+    props: {
+      author,
+      tagTitle,
+      postsByTag,
+      actualPage,
+      localResources: localResources.default,
+    },
   };
 };
 

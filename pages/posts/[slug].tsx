@@ -5,7 +5,12 @@ import Container from '../../components/container';
 import PostBody from '../../components/post-body';
 import PostHeader from '../../components/post-header';
 import Layout from '../../components/layout';
-import { getPostBySlug, getAllPosts, getAuthorData } from '../../lib/api';
+import {
+  getPostBySlug,
+  getAllPosts,
+  getAuthorData,
+  getLocalResources,
+} from '../../lib/api';
 import PostTitle from '../../components/post-title';
 import Head from 'next/head';
 import { WEB_NAME } from '../../lib/constants';
@@ -18,15 +23,16 @@ type Props = {
   author: Author;
   post: PostType;
   morePosts: PostType[];
+  localResources: any;
 };
 
-const Post = ({ author, post, morePosts }: Props) => {
+const Post = ({ author, post, morePosts, localResources }: Props) => {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout author={author}>
+    <Layout author={author} localResources={localResources}>
       <Container>
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
@@ -61,10 +67,14 @@ type Params = {
   params: {
     slug: string;
   };
+  locales: string[];
+  locale: string;
+  defaultLocale: string;
 };
 
-export async function getStaticProps({ params }: Params) {
+export async function getStaticProps({ params, locale }: Params) {
   const author = getAuthorData();
+  const localResources = await getLocalResources(locale);
 
   const post = getPostBySlug(params.slug, [
     'title',
@@ -84,6 +94,7 @@ export async function getStaticProps({ params }: Params) {
         ...post,
         content,
       },
+      localResources: localResources.default,
     },
   };
 }

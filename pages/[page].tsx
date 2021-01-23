@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
-import { getAuthorData, getAllPosts } from '../lib/api';
+import { getAuthorData, getAllPosts, getLocalResources } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Post from '../types/post';
@@ -12,12 +12,13 @@ type Props = {
   author: Author;
   allPosts: Post[];
   actualPage: number;
+  localResources: any;
 };
 
-const IndexPage = ({ author, allPosts, actualPage }: Props) => {
+const IndexPage = ({ author, allPosts, actualPage, localResources }: Props) => {
   return (
     <>
-      <Layout author={author}>
+      <Layout author={author} localResources={localResources}>
         <Head>
           <title> {WEB_NAME} </title>
         </Head>
@@ -33,17 +34,26 @@ type Params = {
   params: {
     page: number;
   };
+  locales: string[];
+  locale: string;
+  defaultLocale: string;
 };
 
-export const getStaticProps = async ({ params }: Params) => {
-  const allPosts = getAllPosts(['title', 'date', 'slug', 'excerpt', 'tags']);
-
+export const getStaticProps = async ({ params, locale }: Params) => {
   const author = getAuthorData();
+  const localResources = await getLocalResources(locale);
+
+  const allPosts = getAllPosts(['title', 'date', 'slug', 'excerpt', 'tags']);
 
   const actualPage = params.page;
 
   return {
-    props: { author, allPosts, actualPage },
+    props: {
+      author,
+      allPosts,
+      actualPage,
+      localResources: localResources.default,
+    },
   };
 };
 
