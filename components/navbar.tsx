@@ -3,6 +3,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import LanguagePicker from './language-picker';
 import ILocalResources from '../interfaces/ilocalresources';
+import Link from 'next/link';
 
 type Props = {
   title: string;
@@ -16,10 +17,18 @@ const NavBar = ({ title, localResources }: Props) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/">{localResources.home}</Nav.Link>
-          <Nav.Link href="/tags">{localResources.tags}</Nav.Link>
-          <Nav.Link href="/about">{localResources.about}</Nav.Link>
-          <Nav.Link href="/contact">{localResources.contact}</Nav.Link>
+          <Link href="/">
+            <a className="mx-2 text-white">{localResources.home}</a>
+          </Link>
+          <Link href="/tags">
+            <a className="mx-2 text-white">{localResources.tags}</a>
+          </Link>
+          <Link href="/about">
+            <a className="mx-2 text-white">{localResources.about}</a>
+          </Link>
+          <Link href="/contact">
+            <a className="mx-2 text-white">{localResources.contact}</a>
+          </Link>
         </Nav>
         <LanguagePicker localResources={localResources} />
       </Navbar.Collapse>
