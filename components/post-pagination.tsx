@@ -34,7 +34,9 @@ const PostPagination = ({ actualPage, totalPosts }: Props) => {
 
   return (
     <>
-      <Pagination size="lg">{pageItems}</Pagination>
+      <div className="row justify-content-center align-items-center">
+        <Pagination size="lg">{pageItems}</Pagination>
+      </div>
     </>
   );
 };
