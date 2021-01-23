@@ -1,15 +1,13 @@
 import DateFormatter from './date-formatter';
 import Link from 'next/link';
-import Author from '../types/author';
-import PostTag from './post-tag';
 import { PostTag as PostTagEnum } from '../lib/enums/postTag';
+import PostTags from './post-tags';
 
 type Props = {
   title: string;
   coverImage: string;
   date: string;
   excerpt: string;
-  author: Author;
   slug: string;
   tags: PostTagEnum[];
 };
@@ -23,16 +21,10 @@ const PostPreview = ({ title, date, excerpt, slug, tags }: Props) => {
         </Link>
       </h3>
       <div className="text-lg mb-4">
-        🗓 <DateFormatter dateString={date} />
+        <DateFormatter dateString={date} />
       </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-      <div className="col-md-12 mb-5 text-center">
-        {tags?.map((tag) => (
-          <div className="mx-2" style={{ display: 'inline-block' }}>
-            <PostTag tag={tag} />
-          </div>
-        ))}
-      </div>
+      <PostTags tags={tags} />
     </div>
   );
 };

@@ -1,32 +1,33 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
 import Container from '../../components/container';
 import PostBody from '../../components/post-body';
-import Header from '../../components/header';
 import PostHeader from '../../components/post-header';
 import Layout from '../../components/layout';
-import { getPostBySlug, getAllPosts } from '../../lib/api';
+import { getPostBySlug, getAllPosts, getAuthorData } from '../../lib/api';
 import PostTitle from '../../components/post-title';
 import Head from 'next/head';
-import { CMS_NAME } from '../../lib/constants';
+import { WEB_NAME } from '../../lib/constants';
 import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
+import Author from '../../types/author';
+import PostTags from '../../components/post-tags';
 
 type Props = {
+  author: Author;
   post: PostType;
   morePosts: PostType[];
-  preview?: boolean;
 };
 
-const Post = ({ post, morePosts, preview }: Props) => {
+const Post = ({ author, post, morePosts }: Props) => {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout preview={preview}>
+    <Layout author={author}>
       <Container>
-        <Header />
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
@@ -34,7 +35,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
             <article className="mb-32">
               <Head>
                 <title>
-                  {post.title} | Next.js Blog Example with {CMS_NAME}
+                  {WEB_NAME} - {post.title}
                 </title>
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
@@ -42,9 +43,10 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 title={post.title}
                 coverImage={post.coverImage}
                 date={post.date}
-                author={post.author}
+                author={author}
               />
               <PostBody content={post.content} />
+              <PostTags tags={post.tags} />
             </article>
           </>
         )}
@@ -62,19 +64,22 @@ type Params = {
 };
 
 export async function getStaticProps({ params }: Params) {
+  const author = getAuthorData();
+
   const post = getPostBySlug(params.slug, [
     'title',
     'date',
     'slug',
-    'author',
     'content',
     'ogImage',
     'coverImage',
+    'tags',
   ]);
   const content = await markdownToHtml(post.content || '');
 
   return {
     props: {
+      author,
       post: {
         ...post,
         content,

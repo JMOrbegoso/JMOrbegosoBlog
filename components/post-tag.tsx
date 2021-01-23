@@ -1,16 +1,7 @@
 import Link from 'next/link';
 import { PostTag as PostTagEnum } from '../lib/enums/postTag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faNode,
-  faReact,
-  faAngular,
-  faYarn,
-  faLinux,
-} from '@fortawesome/free-brands-svg-icons';
-
-library.add(faNode, faReact, faAngular, faYarn, faLinux);
+import { getTagTitle, getFontAwesomeIcon } from '../lib/tag-helpers';
 
 type Props = {
   tag: PostTagEnum;
@@ -18,10 +9,12 @@ type Props = {
 
 const PostTag = ({ tag }: Props) => {
   const tagIcon = getFontAwesomeIcon(tag);
+  const tagTitle = getTagTitle(tag);
+
   return (
     <>
-      <Link href={`/tags/${tag}`}>
-        <a title={tag}>
+      <Link href={`/tags/${tag}/1`}>
+        <a title={tagTitle}>
           <div
             className="container bg-primary"
             style={{
@@ -48,23 +41,5 @@ const PostTag = ({ tag }: Props) => {
     </>
   );
 };
-
-function getFontAwesomeIcon(tag: PostTagEnum) {
-  switch (tag) {
-    case PostTagEnum.Node:
-      return faNode;
-    case PostTagEnum.React:
-      return faReact;
-    case PostTagEnum.Angular:
-      return faAngular;
-    case PostTagEnum.Yarn:
-      return faYarn;
-    case PostTagEnum.WSL:
-      return faLinux;
-
-    default:
-      throw new Error(`Invalid tag: ${tag}`);
-  }
-}
 
 export default PostTag;
