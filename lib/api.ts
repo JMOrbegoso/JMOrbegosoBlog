@@ -109,3 +109,7 @@ export function getAllTags() {
 
   return allUniqueTags;
 }
+
+export async function getLocalResources(locale: string) {
+  return await import(`../lang/${locale}.json`);
+}
