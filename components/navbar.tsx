@@ -17,17 +17,17 @@ const NavBar = ({ title, localResources }: Props) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Link href="/">
-            <a className="mx-2 text-white">{localResources.home}</a>
+          <Link href="/" passHref>
+            <Nav.Link>{localResources.home}</Nav.Link>
           </Link>
-          <Link href="/tags">
-            <a className="mx-2 text-white">{localResources.tags}</a>
+          <Link href="/tags" passHref>
+            <Nav.Link>{localResources.tags}</Nav.Link>
           </Link>
-          <Link href="/about">
-            <a className="mx-2 text-white">{localResources.about}</a>
+          <Link href="/about" passHref>
+            <Nav.Link>{localResources.about}</Nav.Link>
           </Link>
-          <Link href="/contact">
-            <a className="mx-2 text-white">{localResources.contact}</a>
+          <Link href="/contact" passHref>
+            <Nav.Link>{localResources.contact}</Nav.Link>
           </Link>
         </Nav>
         <LanguagePicker localResources={localResources} />
