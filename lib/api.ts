@@ -2,20 +2,25 @@ import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-const dataDirectory = join(process.cwd(), '_data');
-const postsDirectory = join(process.cwd(), '_posts');
+const dataDirectory = (locale: string) => join(process.cwd(), '_data', locale);
+const postsDirectory = (locale: string) =>
+  join(process.cwd(), '_posts', locale);
 
-export function getDataSlugs() {
-  return fs.readdirSync(dataDirectory);
+export function getDataSlugs(locale: string) {
+  return fs.readdirSync(dataDirectory(locale));
 }
 
-export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory);
+export function getPostSlugs(locale: string) {
+  return fs.readdirSync(postsDirectory(locale));
 }
 
-export function getPostBySlug(slug: string, fields: string[] = []) {
+export function getPostBySlug(
+  locale: string,
+  slug: string,
+  fields: string[] = [],
+) {
   const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(postsDirectory, `${realSlug}.md`);
+  const fullPath = join(postsDirectory(locale), `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
@@ -42,9 +47,13 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
   return items;
 }
 
-export function getDataBySlug(slug: string, fields: string[] = []) {
+export function getDataBySlug(
+  locale: string,
+  slug: string,
+  fields: string[] = [],
+) {
   const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(dataDirectory, `${realSlug}.md`);
+  const fullPath = join(dataDirectory(locale), `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
@@ -71,19 +80,19 @@ export function getDataBySlug(slug: string, fields: string[] = []) {
   return items;
 }
 
-export function getAllPosts(fields: string[] = []) {
-  const slugs = getPostSlugs();
+export function getAllPosts(locale: string, fields: string[] = []) {
+  const slugs = getPostSlugs(locale);
   const posts = slugs
-    .map((slug) => getPostBySlug(slug, fields))
+    .map((slug) => getPostBySlug(locale, slug, fields))
     // sort posts by date in descending order
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;
 }
 
-export function getAuthorData() {
-  const slugs = getDataSlugs();
-  const aboutMeSlug = slugs.filter((slug) => slug.includes('about-me'))[0];
-  const aboutMeData = getDataBySlug(aboutMeSlug, [
+export function getAuthorData(locale: string) {
+  const slugs = getDataSlugs(locale);
+  const [aboutMeSlug] = slugs.filter((slug) => slug.includes('about-me'));
+  const aboutMeData = getDataBySlug(locale, aboutMeSlug, [
     'firstname',
     'lastname',
     'picture',
@@ -99,8 +108,8 @@ export function getAuthorData() {
   return aboutMeData;
 }
 
-export function getAllTags() {
-  const allPosts = getAllPosts(['tags']);
+export function getAllTags(locale: string) {
+  const allPosts = getAllPosts(locale, ['tags']);
   const allTags = allPosts.map((p) => p.tags).flat(1);
 
   const allUniqueTags = allTags
