@@ -10,9 +10,7 @@ const PostTags = ({ tags }: Props) => {
     <>
       <div className="col-md-12 mb-5 text-center">
         {tags.map((tag) => (
-          <div className="mx-2" style={{ display: 'inline-block' }}>
-            <PostTag tag={tag} />
-          </div>
+          <PostTag key={tag} tag={tag} />
         ))}
       </div>
     </>
