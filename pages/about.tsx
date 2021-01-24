@@ -19,7 +19,9 @@ const About = ({ author, localResources }: Props) => {
     <>
       <Layout author={author} localResources={localResources}>
         <Head>
-          <title> {WEB_NAME} - About </title>
+          <title>
+            {WEB_NAME} - {localResources.about}
+          </title>
         </Head>
         <Container>
           <div className="max-w-2xl mx-auto">

@@ -41,14 +41,16 @@ const Tag = ({
   return (
     <Layout author={author} localResources={localResources}>
       <Container>
-        <PostTitle>Posts by tag: {tagTitle}</PostTitle>
+        <PostTitle>
+          {localResources.posts_by_tag} - {tagTitle}
+        </PostTitle>
         {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
+          <PostTitle>{localResources.loading}</PostTitle>
         ) : (
           <>
             <Head>
               <title>
-                {WEB_NAME} - Posts by tag - {tagTitle}
+                {WEB_NAME} - {localResources.posts_by_tag} - {tagTitle}
               </title>
             </Head>
             <PostsList posts={postsByTag} actualPage={actualPage} />

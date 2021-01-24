@@ -3,5 +3,7 @@
   "tags": "Tags",
   "about": "About Me",
   "contact": "Contact",
-  "change_language": "Change Language"
+  "change_language": "Change Language",
+  "loading": "Loading…",
+  "posts_by_tag": "Posts by Tag"
 }

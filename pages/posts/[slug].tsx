@@ -36,7 +36,7 @@ const Post = ({ author, post, morePosts, localResources }: Props) => {
     <Layout author={author} localResources={localResources}>
       <Container>
         {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
+          <PostTitle>{localResources.loading}</PostTitle>
         ) : (
           <>
             <article className="mb-32">

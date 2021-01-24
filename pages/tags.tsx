@@ -22,9 +22,11 @@ const Tags = ({ author, allTags, localResources }: Props) => {
       <Layout author={author} localResources={localResources}>
         <Container>
           <Head>
-            <title>{WEB_NAME} - Tags</title>
+            <title>
+              {WEB_NAME} - {localResources.tags}
+            </title>
           </Head>
-          <PostTitle>Tags</PostTitle>
+          <PostTitle>{localResources.tags}</PostTitle>
           <Container>
             {allTags.length > 0 && <TagsList tags={allTags} />}
           </Container>

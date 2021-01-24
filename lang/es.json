@@ -3,5 +3,7 @@
   "tags": "Temas",
   "about": "Sobre Mi",
   "contact": "Contacto",
-  "change_language": "Cambiar Lenguaje"
+  "change_language": "Cambiar Lenguaje",
+  "loading": "Cargando…",
+  "posts_by_tag": "Posts por tema"
 }
