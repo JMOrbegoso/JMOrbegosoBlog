@@ -100,39 +100,53 @@ export const getStaticProps = async ({ params, locale }: Params) => {
   };
 };
 
-export async function getStaticPaths() {
-  const allTags = getAllTags();
-  const paginatedPostsByTags: { tag: string; page: number }[] = [];
+export async function getStaticPaths({ locales }: { locales: string[] }) {
+  const paths: { locale: string; params: { id: string; page: string } }[] = [];
 
-  allTags.forEach((tag) => {
-    const allPosts = getAllPosts(['tags']);
-    const allPostsByTag = allPosts.filter((p) => p.tags.includes(tag));
+  locales.forEach((locale) => {
+    const allTags = getAllTags(locale);
+    const paginatedPostsByTags: {
+      tag: string;
+      page: number;
+      locale: string;
+    }[] = [];
 
-    const totalPages = Math.ceil(allPostsByTag.length / POST_PER_PAGE);
+    allTags.forEach((tag) => {
+      const allPosts = getAllPosts(locale, ['tags']);
+      const allPostsByTag = allPosts.filter((p) => p.tags.includes(tag));
 
-    const pagesArray: number[] = [];
+      const totalPages = Math.ceil(allPostsByTag.length / POST_PER_PAGE);
 
-    for (let i = 1; i <= totalPages; i++) {
-      pagesArray.push(i);
-    }
+      const pagesArray: number[] = [];
 
-    pagesArray.forEach((page) => {
-      paginatedPostsByTags.push({
-        tag: tag,
-        page: page,
+      for (let i = 1; i <= totalPages; i++) {
+        pagesArray.push(i);
+      }
+
+      pagesArray.forEach((page) => {
+        paginatedPostsByTags.push({
+          tag: tag,
+          page: page,
+          locale: locale,
+        });
       });
     });
-  });
 
-  return {
-    paths: paginatedPostsByTags.map((pt) => {
+    const pagePath = paginatedPostsByTags.map((pt) => {
       return {
+        locale: pt.locale,
         params: {
           id: pt.tag,
           page: pt.page.toString(),
         },
       };
-    }),
+    });
+
+    paths.push(...pagePath);
+  });
+
+  return {
+    paths: paths,
     fallback: false,
   };
 }
