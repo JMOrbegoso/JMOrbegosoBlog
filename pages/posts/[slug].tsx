@@ -74,10 +74,10 @@ type Params = {
 };
 
 export async function getStaticProps({ params, locale }: Params) {
-  const author = getAuthorData();
+  const author = getAuthorData(locale);
   const localResources = await getLocalResources(locale);
 
-  const post = getPostBySlug(params.slug, [
+  const post = getPostBySlug(locale, params.slug, [
     'title',
     'date',
     'slug',
