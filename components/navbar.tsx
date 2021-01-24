@@ -13,7 +13,9 @@ type Props = {
 const NavBar = ({ title, localResources }: Props) => {
   return (
     <Navbar bg="primary" variant="dark" fixed="top" expand="lg">
-      <Navbar.Brand href="/">{title}</Navbar.Brand>
+      <Link href="/" passHref>
+        <Navbar.Brand>{title}</Navbar.Brand>
+      </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
