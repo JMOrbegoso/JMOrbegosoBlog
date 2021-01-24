@@ -13,31 +13,33 @@ const PostTag = ({ tag }: Props) => {
 
   return (
     <>
-      <Link href={`/tags/${tag}/1`}>
-        <a title={tagTitle}>
-          <div
-            className="container bg-primary"
-            style={{
-              display: 'inline-grid',
-              width: 54,
-              height: 54,
-              borderRadius: 15,
-              justifyContent: 'center',
-              alignContent: 'center',
-            }}
-          >
-            <div className="row">
-              <div className="col-md-12">
-                <FontAwesomeIcon
-                  icon={tagIcon}
-                  className="fa-2x"
-                  style={{ color: 'white' }}
-                />
+      <div className="mx-2" style={{ display: 'inline-block' }}>
+        <Link href={`/tags/${tag}/1`}>
+          <a title={tagTitle}>
+            <div
+              className="container bg-primary"
+              style={{
+                display: 'inline-grid',
+                width: 54,
+                height: 54,
+                borderRadius: 15,
+                justifyContent: 'center',
+                alignContent: 'center',
+              }}
+            >
+              <div className="row">
+                <div className="col-md-12">
+                  <FontAwesomeIcon
+                    icon={tagIcon}
+                    className="fa-2x"
+                    style={{ color: 'white' }}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </a>
-      </Link>
+          </a>
+        </Link>
+      </div>
     </>
   );
 };
