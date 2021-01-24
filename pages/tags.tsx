@@ -8,6 +8,7 @@ import { WEB_NAME } from '../lib/constants';
 import { PostTag } from '../lib/enums/postTag';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
+import PostTitle from '../components/post-title';
 
 type Props = {
   author: Author;
@@ -19,11 +20,14 @@ const Tags = ({ author, allTags, localResources }: Props) => {
   return (
     <>
       <Layout author={author} localResources={localResources}>
-        <Head>
-          <title> {WEB_NAME} </title>
-        </Head>
         <Container>
-          {allTags.length > 0 && <TagsList tags={allTags} />}
+          <Head>
+            <title>{WEB_NAME} - Tags</title>
+          </Head>
+          <PostTitle>Tags</PostTitle>
+          <Container>
+            {allTags.length > 0 && <TagsList tags={allTags} />}
+          </Container>
         </Container>
       </Layout>
     </>
