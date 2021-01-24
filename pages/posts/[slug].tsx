@@ -100,17 +100,24 @@ export async function getStaticProps({ params, locale }: Params) {
   };
 }
 
-export async function getStaticPaths() {
-  const posts = getAllPosts(['slug']);
+export async function getStaticPaths({ locales }: { locales: string[] }) {
+  const paths: { locale: string; params: { slug: string } }[] = [];
 
-  return {
-    paths: posts.map((posts) => {
+  locales.forEach((locale) => {
+    const postPath = getAllPosts(locale, ['slug']).map((post) => {
       return {
+        locale: locale,
         params: {
-          slug: posts.slug,
+          slug: post.slug,
         },
       };
-    }),
+    });
+
+    paths.push(...postPath);
+  });
+
+  return {
+    paths: paths,
     fallback: false,
   };
 }
