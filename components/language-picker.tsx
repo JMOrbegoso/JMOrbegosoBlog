@@ -11,9 +11,7 @@ const LanguagePicker = ({ localResources }: Props) => {
   const router = useRouter();
 
   const changeLanguage = (param: any) => {
-    router.push(router.pathname, router.pathname, {
-      locale: param,
-    });
+    router.push(router.asPath, router.asPath, { locale: param });
   };
 
   return (
