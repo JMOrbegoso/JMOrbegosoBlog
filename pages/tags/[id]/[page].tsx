@@ -3,7 +3,12 @@ import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
 import Container from '../../../components/container';
 import Layout from '../../../components/layout';
-import { getAllPosts, getAuthorData, getAllTags } from '../../../lib/api';
+import {
+  getAllPosts,
+  getAuthorData,
+  getAllTags,
+  getLocalResources,
+} from '../../../lib/api';
 import PostTitle from '../../../components/post-title';
 import Head from 'next/head';
 import { WEB_NAME } from '../../../lib/constants';
@@ -12,21 +17,29 @@ import Author from '../../../types/author';
 import PostsList from '../../../components/posts-list';
 import { getTagTitle } from '../../../lib/tag-helpers';
 import { POST_PER_PAGE } from '../../../lib/constants';
+import ILocalResources from '../../../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
   tagTitle: string;
   postsByTag: PostType[];
   actualPage: number;
+  localResources: ILocalResources;
 };
 
-const Tag = ({ author, tagTitle, postsByTag, actualPage }: Props) => {
+const Tag = ({
+  author,
+  tagTitle,
+  postsByTag,
+  actualPage,
+  localResources,
+}: Props) => {
   const router = useRouter();
   if (!router.isFallback && !tagTitle) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout author={author}>
+    <Layout author={author} localResources={localResources}>
       <Container>
         <PostTitle>Posts by tag: {tagTitle}</PostTitle>
         {router.isFallback ? (
@@ -53,57 +66,87 @@ type Params = {
     id: string;
     page: number;
   };
+  locales: string[];
+  locale: string;
+  defaultLocale: string;
 };
 
-export const getStaticProps = async ({ params }: Params) => {
-  const allPosts = getAllPosts(['title', 'date', 'slug', 'excerpt', 'tags']);
+export const getStaticProps = async ({ params, locale }: Params) => {
+  const author = getAuthorData(locale);
+  const localResources = await getLocalResources(locale);
+
+  const allPosts = getAllPosts(locale, [
+    'title',
+    'date',
+    'slug',
+    'excerpt',
+    'tags',
+  ]);
 
   const postsByTag = allPosts.filter((p) => p.tags.includes(params.id));
-
-  const author = getAuthorData();
 
   const tagTitle = getTagTitle(params.id);
 
   const actualPage = params.page;
 
   return {
-    props: { author, tagTitle, postsByTag, actualPage },
+    props: {
+      author,
+      tagTitle,
+      postsByTag,
+      actualPage,
+      localResources: localResources.default,
+    },
   };
 };
 
-export async function getStaticPaths() {
-  const allTags = getAllTags();
-  const paginatedPostsByTags: { tag: string; page: number }[] = [];
+export async function getStaticPaths({ locales }: { locales: string[] }) {
+  const paths: { locale: string; params: { id: string; page: string } }[] = [];
 
-  allTags.forEach((tag) => {
-    const allPosts = getAllPosts(['tags']);
-    const allPostsByTag = allPosts.filter((p) => p.tags.includes(tag));
+  locales.forEach((locale) => {
+    const allTags = getAllTags(locale);
+    const paginatedPostsByTags: {
+      tag: string;
+      page: number;
+      locale: string;
+    }[] = [];
 
-    const totalPages = Math.ceil(allPostsByTag.length / POST_PER_PAGE);
+    allTags.forEach((tag) => {
+      const allPosts = getAllPosts(locale, ['tags']);
+      const allPostsByTag = allPosts.filter((p) => p.tags.includes(tag));
 
-    const pagesArray: number[] = [];
+      const totalPages = Math.ceil(allPostsByTag.length / POST_PER_PAGE);
 
-    for (let i = 1; i <= totalPages; i++) {
-      pagesArray.push(i);
-    }
+      const pagesArray: number[] = [];
 
-    pagesArray.forEach((page) => {
-      paginatedPostsByTags.push({
-        tag: tag,
-        page: page,
+      for (let i = 1; i <= totalPages; i++) {
+        pagesArray.push(i);
+      }
+
+      pagesArray.forEach((page) => {
+        paginatedPostsByTags.push({
+          tag: tag,
+          page: page,
+          locale: locale,
+        });
       });
     });
-  });
 
-  return {
-    paths: paginatedPostsByTags.map((pt) => {
+    const pagePath = paginatedPostsByTags.map((pt) => {
       return {
+        locale: pt.locale,
         params: {
           id: pt.tag,
           page: pt.page.toString(),
         },
       };
-    }),
+    });
+
+    paths.push(...pagePath);
+  });
+
+  return {
+    paths: paths,
     fallback: false,
   };
 }

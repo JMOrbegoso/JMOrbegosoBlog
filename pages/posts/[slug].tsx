@@ -5,7 +5,12 @@ import Container from '../../components/container';
 import PostBody from '../../components/post-body';
 import PostHeader from '../../components/post-header';
 import Layout from '../../components/layout';
-import { getPostBySlug, getAllPosts, getAuthorData } from '../../lib/api';
+import {
+  getPostBySlug,
+  getAllPosts,
+  getAuthorData,
+  getLocalResources,
+} from '../../lib/api';
 import PostTitle from '../../components/post-title';
 import Head from 'next/head';
 import { WEB_NAME } from '../../lib/constants';
@@ -13,20 +18,22 @@ import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
 import Author from '../../types/author';
 import PostTags from '../../components/post-tags';
+import ILocalResources from '../../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
   post: PostType;
   morePosts: PostType[];
+  localResources: ILocalResources;
 };
 
-const Post = ({ author, post, morePosts }: Props) => {
+const Post = ({ author, post, morePosts, localResources }: Props) => {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout author={author}>
+    <Layout author={author} localResources={localResources}>
       <Container>
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
@@ -61,12 +68,16 @@ type Params = {
   params: {
     slug: string;
   };
+  locales: string[];
+  locale: string;
+  defaultLocale: string;
 };
 
-export async function getStaticProps({ params }: Params) {
-  const author = getAuthorData();
+export async function getStaticProps({ params, locale }: Params) {
+  const author = getAuthorData(locale);
+  const localResources = await getLocalResources(locale);
 
-  const post = getPostBySlug(params.slug, [
+  const post = getPostBySlug(locale, params.slug, [
     'title',
     'date',
     'slug',
@@ -84,21 +95,29 @@ export async function getStaticProps({ params }: Params) {
         ...post,
         content,
       },
+      localResources: localResources.default,
     },
   };
 }
 
-export async function getStaticPaths() {
-  const posts = getAllPosts(['slug']);
+export async function getStaticPaths({ locales }: { locales: string[] }) {
+  const paths: { locale: string; params: { slug: string } }[] = [];
 
-  return {
-    paths: posts.map((posts) => {
+  locales.forEach((locale) => {
+    const postPath = getAllPosts(locale, ['slug']).map((post) => {
       return {
+        locale: locale,
         params: {
-          slug: posts.slug,
+          slug: post.slug,
         },
       };
-    }),
+    });
+
+    paths.push(...postPath);
+  });
+
+  return {
+    paths: paths,
     fallback: false,
   };
 }

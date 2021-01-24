@@ -1,21 +1,23 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from '../components/container';
 import Layout from '../components/layout';
-import { getAuthorData } from '../lib/api';
+import { getAuthorData, getLocalResources } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Author from '../types/author';
 import markdownToHtml from '../lib/markdownToHtml';
 import markdownStyles from '../components/markdown-styles.module.css';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
+  localResources: ILocalResources;
 };
 
-const About = ({ author }: Props) => {
+const About = ({ author, localResources }: Props) => {
   return (
     <>
-      <Layout author={author}>
+      <Layout author={author} localResources={localResources}>
         <Head>
           <title> {WEB_NAME} - About </title>
         </Head>
@@ -34,8 +36,15 @@ const About = ({ author }: Props) => {
 
 export default About;
 
-export const getStaticProps = async () => {
-  const author = getAuthorData();
+type Params = {
+  locales: string[];
+  locale: string;
+  defaultLocale: string;
+};
+
+export const getStaticProps = async ({ locale }: Params) => {
+  const author = getAuthorData(locale);
+  const localResources = await getLocalResources(locale);
 
   const content = await markdownToHtml(author.content || '');
 
@@ -45,6 +54,7 @@ export const getStaticProps = async () => {
         ...author,
         content,
       },
+      localResources: localResources.default,
     },
   };
 };

@@ -1,23 +1,25 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
-import { getAuthorData, getAllPosts } from '../lib/api';
+import { getAuthorData, getAllPosts, getLocalResources } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
 import { POST_PER_PAGE } from '../lib/constants';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
   allPosts: Post[];
   actualPage: number;
+  localResources: ILocalResources;
 };
 
-const IndexPage = ({ author, allPosts, actualPage }: Props) => {
+const IndexPage = ({ author, allPosts, actualPage, localResources }: Props) => {
   return (
     <>
-      <Layout author={author}>
+      <Layout author={author} localResources={localResources}>
         <Head>
           <title> {WEB_NAME} </title>
         </Head>
@@ -33,38 +35,62 @@ type Params = {
   params: {
     page: number;
   };
+  locales: string[];
+  locale: string;
+  defaultLocale: string;
 };
 
-export const getStaticProps = async ({ params }: Params) => {
-  const allPosts = getAllPosts(['title', 'date', 'slug', 'excerpt', 'tags']);
+export const getStaticProps = async ({ params, locale }: Params) => {
+  const author = getAuthorData(locale);
+  const localResources = await getLocalResources(locale);
 
-  const author = getAuthorData();
+  const allPosts = getAllPosts(locale, [
+    'title',
+    'date',
+    'slug',
+    'excerpt',
+    'tags',
+  ]);
 
   const actualPage = params.page;
 
   return {
-    props: { author, allPosts, actualPage },
+    props: {
+      author,
+      allPosts,
+      actualPage,
+      localResources: localResources.default,
+    },
   };
 };
 
-export async function getStaticPaths() {
-  const allPosts = getAllPosts([]);
+export async function getStaticPaths({ locales }: { locales: string[] }) {
+  const paths: { locale: string; params: { page: string } }[] = [];
 
-  const totalPages = Math.round(allPosts.length / POST_PER_PAGE);
-  const pagesArray: number[] = [];
+  locales.forEach((locale) => {
+    const allPosts = getAllPosts(locale, ['slug']);
 
-  for (let i = 1; i <= totalPages; i++) {
-    pagesArray.push(i);
-  }
+    const totalPages = Math.ceil(allPosts.length / POST_PER_PAGE);
+    const pagesArray: number[] = [];
 
-  return {
-    paths: pagesArray.map((page) => {
+    for (let i = 1; i <= totalPages; i++) {
+      pagesArray.push(i);
+    }
+
+    const pagePath = pagesArray.map((page) => {
       return {
+        locale: locale,
         params: {
           page: page.toString(),
         },
       };
-    }),
+    });
+
+    paths.push(...pagePath);
+  });
+
+  return {
+    paths: paths,
     fallback: false,
   };
 }
