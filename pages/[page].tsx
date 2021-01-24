@@ -64,24 +64,33 @@ export const getStaticProps = async ({ params, locale }: Params) => {
   };
 };
 
-export async function getStaticPaths() {
-  const allPosts = getAllPosts([]);
+export async function getStaticPaths({ locales }: { locales: string[] }) {
+  const paths: { locale: string; params: { page: string } }[] = [];
 
-  const totalPages = Math.round(allPosts.length / POST_PER_PAGE);
-  const pagesArray: number[] = [];
+  locales.forEach((locale) => {
+    const allPosts = getAllPosts(locale, ['slug']);
 
-  for (let i = 1; i <= totalPages; i++) {
-    pagesArray.push(i);
-  }
+    const totalPages = Math.ceil(allPosts.length / POST_PER_PAGE);
+    const pagesArray: number[] = [];
 
-  return {
-    paths: pagesArray.map((page) => {
+    for (let i = 1; i <= totalPages; i++) {
+      pagesArray.push(i);
+    }
+
+    const pagePath = pagesArray.map((page) => {
       return {
+        locale: locale,
         params: {
           page: page.toString(),
         },
       };
-    }),
+    });
+
+    paths.push(...pagePath);
+  });
+
+  return {
+    paths: paths,
     fallback: false,
   };
 }
