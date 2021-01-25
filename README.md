@@ -28,6 +28,12 @@ Your blog should be up and running on [http://localhost:3000](http://localhost:3
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
 
+## Add a Tag
+
+- Add the tag as enum in /lib/postTag.ts
+- Add the svg image of the tag in public/assets/tags/
+- That's all, now the tag can be used on any post.
+
 # Notes
 
 This blog-starter-typescript uses [Tailwind CSS](https://tailwindcss.com). To control the generated stylesheet's filesize, this example uses Tailwind CSS' v2.0 [`purge` option](https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css) to remove unused CSS.
