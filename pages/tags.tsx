@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from '../components/container';
-import TagsList from '../components/tags-list';
 import Layout from '../components/layout';
 import { getAllTags, getAuthorData, getLocalResources } from '../lib/api';
 import Head from 'next/head';
@@ -9,6 +8,7 @@ import { PostTag } from '../lib/enums/postTag';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
 import PostTitle from '../components/post-title';
+import PostTags from '../components/post-tags';
 
 type Props = {
   author: Author;
@@ -28,7 +28,7 @@ const Tags = ({ author, allTags, localResources }: Props) => {
           </Head>
           <PostTitle>{localResources.tags}</PostTitle>
           <Container>
-            {allTags.length > 0 && <TagsList tags={allTags} />}
+            <PostTags tags={allTags} />
           </Container>
         </Container>
       </Layout>
