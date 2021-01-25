@@ -19,6 +19,7 @@ import PostType from '../../types/post';
 import Author from '../../types/author';
 import PostTags from '../../components/post-tags';
 import ILocalResources from '../../interfaces/ilocalresources';
+import DisqusComments from '../../components/disqus-comments';
 
 type Props = {
   author: Author;
@@ -54,6 +55,7 @@ const Post = ({ author, post, morePosts, localResources }: Props) => {
               />
               <PostBody content={post.content} />
               <PostTags tags={post.tags} />
+              <DisqusComments post={post} />
             </article>
           </>
         )}
