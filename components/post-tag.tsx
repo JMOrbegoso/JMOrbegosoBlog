@@ -1,45 +1,32 @@
 import Link from 'next/link';
+import { Image } from 'react-bootstrap';
 import { PostTag as PostTagEnum } from '../lib/enums/postTag';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getTagTitle, getFontAwesomeIcon } from '../lib/tag-helpers';
+import { getTagTitle } from '../lib/tag-helpers';
 
 type Props = {
   tag: PostTagEnum;
 };
 
 const PostTag = ({ tag }: Props) => {
-  const tagIcon = getFontAwesomeIcon(tag);
+  const tagIconSrc = `/assets/tags/${tag}.svg`;
   const tagTitle = getTagTitle(tag);
 
   return (
     <>
-      <div className="mx-2" style={{ display: 'inline-block' }}>
-        <Link href={`/tags/${tag}/1`}>
-          <a title={tagTitle}>
-            <div
-              className="container bg-primary"
-              style={{
-                display: 'inline-grid',
-                width: 54,
-                height: 54,
-                borderRadius: 15,
-                justifyContent: 'center',
-                alignContent: 'center',
-              }}
-            >
-              <div className="row">
-                <div className="col-md-12">
-                  <FontAwesomeIcon
-                    icon={tagIcon}
-                    className="fa-2x"
-                    style={{ color: 'white' }}
-                  />
-                </div>
-              </div>
-            </div>
-          </a>
-        </Link>
-      </div>
+      <Link href={`/tags/${tag}/1`}>
+        <a title={tagTitle}>
+          <div
+            className="d-flex justify-content-center m-2 bg-primary"
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 15,
+            }}
+          >
+            <Image className="p-1" src={tagIconSrc} />
+          </div>
+        </a>
+      </Link>
     </>
   );
 };

@@ -1,7 +1,13 @@
 export enum PostTag {
-  Node = 'node-js',
-  React = 'react-js',
   Angular = 'angular',
-  Yarn = 'yarn',
+  Bootstrap = 'bootstrap',
+  Jest = 'jest',
+  MySQL = 'mysql',
+  NestJS = 'nest-js',
+  NextJS = 'next-js',
+  ReactJS = 'react-js',
+  Redux = 'redux',
+  TypeScript = 'typescript',
   WSL = 'wsl',
+  Yarn = 'yarn',
 }

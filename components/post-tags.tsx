@@ -8,7 +8,7 @@ type Props = {
 const PostTags = ({ tags }: Props) => {
   return (
     <>
-      <div className="col-md-12 mb-5 text-center">
+      <div className="row justify-content-center">
         {tags.map((tag) => (
           <PostTag key={tag} tag={tag} />
         ))}
