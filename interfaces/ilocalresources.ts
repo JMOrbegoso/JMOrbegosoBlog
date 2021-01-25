@@ -4,6 +4,7 @@ interface ILocalResources {
   about: string;
   contact: string;
   change_language: string;
+  trademarks_copyright: string;
   loading: string;
   posts_by_tag: string;
 }

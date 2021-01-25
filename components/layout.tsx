@@ -20,7 +20,7 @@ const Layout = ({ author, children, localResources }: Props) => {
         <main style={{ paddingTop: 70 }}>{children}</main>
       </div>
 
-      <Footer author={author} />
+      <Footer author={author} localResources={localResources} />
     </>
   );
 };

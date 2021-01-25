@@ -3,19 +3,21 @@ import { SocialNetwork } from '../lib/enums/socialNetwork';
 import Container from './container';
 import { CREDITS, COPYRIGHT } from '../lib/constants';
 import Author from '../types/author';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
+  localResources: ILocalResources;
 };
 
-const Footer = ({ author }: Props) => {
+const Footer = ({ author, localResources }: Props) => {
   return (
     <footer className="bg-primary">
       <Container>
         <div className="row">
           <div className="col-md-12 py-5 text-center">
             <a className="text-white" href={author.web} target="_blank">
-              {CREDITS}
+              <h5>{CREDITS}</h5>
             </a>
           </div>
         </div>
@@ -49,7 +51,9 @@ const Footer = ({ author }: Props) => {
         </div>
       </Container>
       <div className="footer-copyright container-fluid text-center py-3">
-        <p className="text-white-50">{COPYRIGHT}</p>
+        <p className="text-white-50">
+          {COPYRIGHT} - {localResources.trademarks_copyright}
+        </p>
       </div>
     </footer>
   );
