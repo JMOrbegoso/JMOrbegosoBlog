@@ -16,7 +16,7 @@ const PostTag = ({ tag }: Props) => {
       <Link href={`/tags/${tag}/1`}>
         <a title={tagTitle}>
           <div
-            className="d-flex justify-content-center mx-2 bg-primary"
+            className="d-flex justify-content-center m-2 bg-primary"
             style={{
               width: 50,
               height: 50,
