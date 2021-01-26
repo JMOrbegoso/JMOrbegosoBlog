@@ -8,6 +8,8 @@ interface ILocalResources {
   loading: string;
   posts_by_tag: string;
   no_posts_yet: string;
+  did_you_like_the_post: string;
+  share_on_social_networks: string;
 }
 
 export default ILocalResources;
