@@ -20,6 +20,7 @@ import Author from '../../types/author';
 import PostTags from '../../components/post-tags';
 import ILocalResources from '../../interfaces/ilocalresources';
 import DisqusComments from '../../components/disqus-comments';
+import ShareMenu from '../../components/share-menu';
 
 type Props = {
   author: Author;
@@ -55,6 +56,7 @@ const Post = ({ author, post, morePosts, localResources }: Props) => {
               />
               <PostBody content={post.content} />
               <PostTags tags={post.tags} />
+              <ShareMenu post={post} localResources={localResources} />
               <DisqusComments post={post} />
             </article>
           </>
