@@ -17,8 +17,6 @@ const DisqusComments = ({ post }: Props) => {
     language: router.locale,
   };
 
-  console.log('config object', disqusConfig);
-
   return (
     <div className="my-5">
       <DiscussionEmbed shortname={DISQUS_SHORTNAME} config={disqusConfig} />
