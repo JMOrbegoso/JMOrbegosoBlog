@@ -55,7 +55,7 @@ function getBaseUrl(socialNetwork: SocialNetwork): string {
     case SocialNetwork.LinkedIn:
       return 'https://www.linkedin.com/in';
     case SocialNetwork.YouTube:
-      return 'https://youtube.com';
+      return 'https://youtube.com/c';
     case SocialNetwork.Instagram:
       return 'https://instagram.com';
   }
