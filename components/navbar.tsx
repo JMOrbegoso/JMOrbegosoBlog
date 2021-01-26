@@ -28,9 +28,6 @@ const NavBar = ({ title, localResources }: Props) => {
           <Link href="/about" passHref>
             <Nav.Link>{localResources.about}</Nav.Link>
           </Link>
-          <Link href="/contact" passHref>
-            <Nav.Link>{localResources.contact}</Nav.Link>
-          </Link>
         </Nav>
         <LanguagePicker localResources={localResources} />
       </Navbar.Collapse>
