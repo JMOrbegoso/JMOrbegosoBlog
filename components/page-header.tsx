@@ -4,7 +4,7 @@ type Props = {
   children?: ReactNode;
 };
 
-const PostTitle = ({ children }: Props) => {
+const PageHeader = ({ children }: Props) => {
   return (
     <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter leading-tight md:leading-none my-8 md:my-12 text-center md:text-left">
       {children}
@@ -12,4 +12,4 @@ const PostTitle = ({ children }: Props) => {
   );
 };
 
-export default PostTitle;
+export default PageHeader;

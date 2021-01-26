@@ -9,7 +9,7 @@ import {
   getAllTags,
   getLocalResources,
 } from '../../../lib/api';
-import PostTitle from '../../../components/post-title';
+import PageHeader from '../../../components/page-header';
 import Head from 'next/head';
 import { WEB_NAME } from '../../../lib/constants';
 import PostType from '../../../types/post';
@@ -41,11 +41,11 @@ const Tag = ({
   return (
     <Layout author={author} localResources={localResources}>
       <Container>
-        <PostTitle>
+        <PageHeader>
           {localResources.posts_by_tag} - {tagTitle}
-        </PostTitle>
+        </PageHeader>
         {router.isFallback ? (
-          <PostTitle>{localResources.loading}</PostTitle>
+          <PageHeader>{localResources.loading}</PageHeader>
         ) : (
           <>
             <Head>

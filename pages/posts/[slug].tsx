@@ -11,7 +11,7 @@ import {
   getAuthorData,
   getLocalResources,
 } from '../../lib/api';
-import PostTitle from '../../components/post-title';
+import PageHeader from '../../components/page-header';
 import Head from 'next/head';
 import { WEB_NAME } from '../../lib/constants';
 import markdownToHtml from '../../lib/markdownToHtml';
@@ -20,6 +20,7 @@ import Author from '../../types/author';
 import PostTags from '../../components/post-tags';
 import ILocalResources from '../../interfaces/ilocalresources';
 import DisqusComments from '../../components/disqus-comments';
+import ShareMenu from '../../components/share-menu';
 
 type Props = {
   author: Author;
@@ -37,7 +38,7 @@ const Post = ({ author, post, morePosts, localResources }: Props) => {
     <Layout author={author} localResources={localResources}>
       <Container>
         {router.isFallback ? (
-          <PostTitle>{localResources.loading}</PostTitle>
+          <PageHeader>{localResources.loading}</PageHeader>
         ) : (
           <>
             <article className="mb-32">
@@ -55,6 +56,7 @@ const Post = ({ author, post, morePosts, localResources }: Props) => {
               />
               <PostBody content={post.content} />
               <PostTags tags={post.tags} />
+              <ShareMenu post={post} localResources={localResources} />
               <DisqusComments post={post} />
             </article>
           </>

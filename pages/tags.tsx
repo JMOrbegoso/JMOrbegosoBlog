@@ -7,7 +7,7 @@ import { WEB_NAME } from '../lib/constants';
 import { PostTag } from '../lib/enums/postTag';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
-import PostTitle from '../components/post-title';
+import PageHeader from '../components/page-header';
 import PostTags from '../components/post-tags';
 
 type Props = {
@@ -26,7 +26,7 @@ const Tags = ({ author, allTags, localResources }: Props) => {
               {WEB_NAME} - {localResources.tags}
             </title>
           </Head>
-          <PostTitle>{localResources.tags}</PostTitle>
+          <PageHeader>{localResources.tags}</PageHeader>
           <Container>
             <PostTags tags={allTags} />
           </Container>
