@@ -11,7 +11,7 @@ import {
   getAuthorData,
   getLocalResources,
 } from '../../lib/api';
-import PostTitle from '../../components/post-title';
+import PageHeader from '../../components/page-header';
 import Head from 'next/head';
 import { WEB_NAME } from '../../lib/constants';
 import markdownToHtml from '../../lib/markdownToHtml';
@@ -37,7 +37,7 @@ const Post = ({ author, post, morePosts, localResources }: Props) => {
     <Layout author={author} localResources={localResources}>
       <Container>
         {router.isFallback ? (
-          <PostTitle>{localResources.loading}</PostTitle>
+          <PageHeader>{localResources.loading}</PageHeader>
         ) : (
           <>
             <article className="mb-32">

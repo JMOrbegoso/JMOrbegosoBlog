@@ -1,7 +1,7 @@
 import Avatar from './avatar';
 import DateFormatter from './date-formatter';
 import CoverImage from './cover-image';
-import PostTitle from './post-title';
+import PageHeader from './page-header';
 import Author from '../types/author';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 const PostHeader = ({ title, coverImage, date, author }: Props) => {
   return (
     <>
-      <PostTitle>{title}</PostTitle>
+      <PageHeader>{title}</PageHeader>
       <div className="hidden md:block md:mb-12">
         <Avatar
           name={`${author.firstname} ${author.lastname}`}
