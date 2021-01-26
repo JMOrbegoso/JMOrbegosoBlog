@@ -23,7 +23,11 @@ const IndexPage = ({ author, allPosts, actualPage, localResources }: Props) => {
         <Head>
           <title> {WEB_NAME} </title>
         </Head>
-        <PostsList posts={allPosts} actualPage={actualPage} />
+        <PostsList
+          posts={allPosts}
+          actualPage={actualPage}
+          localResources={localResources}
+        />
       </Layout>
     </>
   );

@@ -21,7 +21,11 @@ const Index = ({ author, allPosts, localResources }: Props) => {
         <Head>
           <title> {WEB_NAME} </title>
         </Head>
-        <PostsList posts={allPosts} actualPage={1} />
+        <PostsList
+          posts={allPosts}
+          actualPage={1}
+          localResources={localResources}
+        />
       </Layout>
     </>
   );

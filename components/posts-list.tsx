@@ -3,13 +3,15 @@ import Post from '../types/post';
 import { POST_PER_PAGE } from '../lib/constants';
 import Container from './container';
 import PostPagination from './post-pagination';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   posts: Post[];
   actualPage: number;
+  localResources: ILocalResources;
 };
 
-const PostsList = ({ posts, actualPage }: Props) => {
+const PostsList = ({ posts, actualPage, localResources }: Props) => {
   const initialPosition = (actualPage - 1) * POST_PER_PAGE;
   const finalPosition = initialPosition + POST_PER_PAGE;
   const visiblePosts = posts.slice(initialPosition, finalPosition);
@@ -19,7 +21,7 @@ const PostsList = ({ posts, actualPage }: Props) => {
       <>
         <section>
           <Container>
-            <h1>There are no Posts yet!</h1>
+            <h1>{localResources.no_posts_yet}</h1>
           </Container>
         </section>
       </>

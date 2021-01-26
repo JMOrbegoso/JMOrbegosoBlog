@@ -7,6 +7,7 @@ interface ILocalResources {
   trademarks_copyright: string;
   loading: string;
   posts_by_tag: string;
+  no_posts_yet: string;
 }
 
 export default ILocalResources;

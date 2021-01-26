@@ -53,7 +53,11 @@ const Tag = ({
                 {WEB_NAME} - {localResources.posts_by_tag} - {tagTitle}
               </title>
             </Head>
-            <PostsList posts={postsByTag} actualPage={actualPage} />
+            <PostsList
+              posts={postsByTag}
+              actualPage={actualPage}
+              localResources={localResources}
+            />
           </>
         )}
       </Container>
