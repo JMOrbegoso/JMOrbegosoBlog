@@ -7,6 +7,7 @@ import { WEB_NAME } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
+import generateRssFeed from '../scripts/generate-rss-feed';
 
 type Props = {
   author: Author;
@@ -40,6 +41,8 @@ type Params = {
 };
 
 export const getStaticProps = async ({ locale }: Params) => {
+  await generateRssFeed();
+
   const author = getAuthorData(locale);
   const localResources = await getLocalResources(locale);
 
