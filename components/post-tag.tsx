@@ -13,7 +13,7 @@ const PostTag = ({ tag }: Props) => {
 
   return (
     <>
-      <Link href={`/tags/${tag}/1`}>
+      <Link href={{ pathname: `/tags/[id]`, query: { id: tag } }}>
         <a title={tagTitle}>
           <div
             className="d-flex justify-content-center m-2 bg-primary"
