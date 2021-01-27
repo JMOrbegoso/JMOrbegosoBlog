@@ -8,6 +8,7 @@ import Post from '../types/post';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
 import generateRssFeed from '../scripts/generate-rss-feed';
+import generateSitemap from '../scripts/generate-sitemap';
 
 type Props = {
   author: Author;
@@ -42,6 +43,7 @@ type Params = {
 
 export const getStaticProps = async ({ locale }: Params) => {
   await generateRssFeed();
+  await generateSitemap();
 
   const author = getAuthorData(locale);
   const localResources = await getLocalResources(locale);
