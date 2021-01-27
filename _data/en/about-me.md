@@ -1,7 +1,7 @@
 ---
 firstname: JM
 lastname: Orbegoso
-picture: '/assets/blog/author/profile-pic.jpg'
+picture: '/assets/author/jm.jpg'
 web: 'https://www.jmorbegoso.com'
 facebook:
 twitter: 'JMOrbegosoDev'
@@ -10,6 +10,8 @@ linkedin: 'jmorbegoso'
 youtube:
 instagram:
 ---
+
+## Lorem Ipsum
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
 
