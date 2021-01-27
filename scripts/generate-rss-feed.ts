@@ -10,6 +10,10 @@ import { Feed } from 'feed';
 import markdownToHtml from '../lib/markdownToHtml';
 
 async function generateRssFeed() {
+  if (process.env.NODE_ENV !== 'production') {
+    return;
+  }
+
   const author = getAuthor();
   const posts = getPosts();
 
