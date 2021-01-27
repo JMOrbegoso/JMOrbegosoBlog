@@ -7,6 +7,7 @@ import {
 } from '../lib/constants';
 import { getAuthorData, getAllPosts } from '../lib/api';
 import { Feed } from 'feed';
+import markdownToHtml from '../lib/markdownToHtml';
 
 async function generateRssFeed() {
   const author = getAuthor();
@@ -31,21 +32,26 @@ async function generateRssFeed() {
     author: author,
   });
 
-  posts.forEach((post) => {
-    const url = `${baseUrl}/post/${post.slug}`;
+  const entries = await Promise.all(
+    posts.map(async (post) => {
+      const url = `${baseUrl}/post/${post.slug}`;
+      const postContent = await markdownToHtml(post.content);
 
-    feed.addItem({
-      id: url,
-      link: url,
-      title: post.title,
-      description: post.excerpt,
-      content: post.content,
-      author: [author],
-      contributor: [author],
-      date: new Date(post.date),
-      image: post.image,
-    });
-  });
+      return {
+        id: url,
+        link: url,
+        title: post.title,
+        description: post.excerpt,
+        content: postContent,
+        author: [author],
+        contributor: [author],
+        date: new Date(post.date),
+        image: post.image,
+      };
+    }),
+  );
+
+  entries.forEach((entry) => feed.addItem(entry));
 
   feed.addCategory('Development');
 
