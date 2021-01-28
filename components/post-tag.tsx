@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { Image } from 'react-bootstrap';
 import { PostTag as PostTagEnum } from '../lib/enums/postTag';
 import { getTagTitle } from '../lib/tag-helpers';
+import Image from 'next/image';
 
 type Props = {
   tag: PostTagEnum;
@@ -18,12 +18,10 @@ const PostTag = ({ tag }: Props) => {
           <div
             className="d-flex justify-content-center m-2 bg-primary"
             style={{
-              width: 50,
-              height: 50,
               borderRadius: 15,
             }}
           >
-            <Image className="p-1" src={tagIconSrc} />
+            <Image className="p-1" src={tagIconSrc} height={50} width={50} />
           </div>
         </a>
       </Link>
