@@ -13,7 +13,7 @@ import {
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import Head from 'next/head';
-import { WEB_NAME } from '../../lib/constants';
+import { URL_BASE, WEB_NAME } from '../../lib/constants';
 import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
 import Author from '../../types/author';
@@ -25,15 +25,15 @@ import ShareMenu from '../../components/share-menu';
 type Props = {
   author: Author;
   post: PostType;
-  morePosts: PostType[];
   localResources: ILocalResources;
 };
 
-const Post = ({ author, post, morePosts, localResources }: Props) => {
+const Post = ({ author, post, localResources }: Props) => {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
+
   return (
     <Layout author={author} localResources={localResources}>
       <Container>
@@ -46,6 +46,21 @@ const Post = ({ author, post, morePosts, localResources }: Props) => {
                 <title>
                   {post.title} - {WEB_NAME}
                 </title>
+                <meta property="description" content={post.excerpt} />
+                <meta
+                  property="author"
+                  content={`${author.firstname} ${author.lastname}`}
+                />
+                <meta name="keywords" content={`${[...post.tags]}`} />
+                <meta name="date" content={post.date} />
+
+                <meta
+                  property="og:url"
+                  content={`${URL_BASE}${router.asPath}`}
+                />
+                <meta property="og:type" content="article" />
+                <meta property="og:title" content={post.title} />
+                <meta property="og:description" content={post.excerpt} />
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
               <PostHeader
