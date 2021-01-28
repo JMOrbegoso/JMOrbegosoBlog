@@ -1,9 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { DropdownButton, Dropdown, Image } from 'react-bootstrap';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
 import ILocalResources from '../interfaces/ilocalresources';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 
 type Props = {
   localResources: ILocalResources;
@@ -20,12 +21,7 @@ const LanguagePicker = ({ localResources }: Props) => {
     return (
       <>
         <Dropdown.Item key={locale} onSelect={() => changeLanguage(locale)}>
-          <Image
-            src={`/assets/lang/${locale}.svg`}
-            height={45}
-            width={90}
-            rounded
-          />
+          <Image src={`/assets/lang/${locale}.svg`} height={45} width={90} />
         </Dropdown.Item>
       </>
     );
