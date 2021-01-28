@@ -44,7 +44,7 @@ const Post = ({ author, post, morePosts, localResources }: Props) => {
             <article className="mb-32">
               <Head>
                 <title>
-                  {WEB_NAME} - {post.title}
+                  {post.title} - {WEB_NAME}
                 </title>
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>

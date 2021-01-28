@@ -50,7 +50,7 @@ const Tag = ({
           <>
             <Head>
               <title>
-                {WEB_NAME} - {localResources.posts_by_tag} - {tagTitle}
+                {tagTitle} - {WEB_NAME}
               </title>
             </Head>
             <PostsList
