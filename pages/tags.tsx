@@ -23,7 +23,7 @@ const Tags = ({ author, allTags, localResources }: Props) => {
         <Container>
           <Head>
             <title>
-              {WEB_NAME} - {localResources.tags}
+              {localResources.tags} - {WEB_NAME}
             </title>
           </Head>
           <PageHeader>{localResources.tags}</PageHeader>

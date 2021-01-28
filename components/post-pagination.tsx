@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Pagination } from 'react-bootstrap';
 import { POST_PER_PAGE, PAGINATION_LENGTH } from '../lib/constants';
+import { useRouter, NextRouter } from 'next/router';
 
 type Props = {
   actualPage: number;
@@ -8,6 +9,8 @@ type Props = {
 };
 
 const PostPagination = ({ actualPage, totalPosts }: Props) => {
+  const router = useRouter();
+
   // actualPage comes as string, so is converted to number
   const currentPage = +actualPage;
 
@@ -24,13 +27,13 @@ const PostPagination = ({ actualPage, totalPosts }: Props) => {
       : currentPage + PAGINATION_LENGTH;
 
   for (let i = previousPagesLimit; i < currentPage; i++) {
-    pageItems.push(generatePaginationItem(i));
+    pageItems.push(generatePaginationItem(router, i));
   }
 
-  pageItems.push(generatePaginationItem(currentPage, true));
+  pageItems.push(generatePaginationItem(router, currentPage, true));
 
   for (let i = currentPage + 1; nextPagesLimit >= i; i++) {
-    pageItems.push(generatePaginationItem(i));
+    pageItems.push(generatePaginationItem(router, i));
   }
 
   return (
@@ -44,9 +47,20 @@ const PostPagination = ({ actualPage, totalPosts }: Props) => {
 
 export default PostPagination;
 
-function generatePaginationItem(page: number, isActive: boolean = false) {
+function generatePaginationItem(
+  router: NextRouter,
+  page: number,
+  isActive: boolean = false,
+) {
+  const pathname = router.pathname.includes('[page]')
+    ? router.pathname
+    : router.pathname.slice(-1) === '/'
+    ? `${router.pathname}[page]`
+    : `${router.pathname}/[page]`;
+  const query = Object.assign({}, router.query, { page: page });
+
   return (
-    <Link key={page} href={`${page}`} passHref>
+    <Link key={page} href={{ pathname, query }} passHref>
       <Pagination.Item active={isActive}>{page}</Pagination.Item>
     </Link>
   );

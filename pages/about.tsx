@@ -20,7 +20,7 @@ const About = ({ author, localResources }: Props) => {
       <Layout author={author} localResources={localResources}>
         <Head>
           <title>
-            {WEB_NAME} - {localResources.about}
+            {localResources.about} - {WEB_NAME}
           </title>
         </Head>
         <Container>
