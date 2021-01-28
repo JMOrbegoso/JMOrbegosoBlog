@@ -3,7 +3,7 @@ import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
 import { getAuthorData, getAllPosts, getLocalResources } from '../lib/api';
 import Head from 'next/head';
-import { WEB_NAME } from '../lib/constants';
+import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
@@ -22,6 +22,20 @@ const Index = ({ author, allPosts, localResources }: Props) => {
       <Layout author={author} localResources={localResources}>
         <Head>
           <title> {WEB_NAME} </title>
+
+          <meta property="description" content={WEB_DESCRIPTION} />
+          <meta
+            property="author"
+            content={`${author.firstname} ${author.lastname}`}
+          />
+          <meta name="keywords" content={'development'} />
+          <meta name="date" content={new Date().toLocaleDateString()} />
+
+          <meta property="og:url" content={`${URL_BASE}`} />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content={WEB_NAME} />
+          <meta property="og:description" content={WEB_DESCRIPTION} />
+          <meta property="og:image" content={author.picture} />
         </Head>
         <PostsList
           posts={allPosts}
