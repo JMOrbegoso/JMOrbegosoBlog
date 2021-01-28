@@ -1,6 +1,6 @@
 import { SocialNetwork } from '../lib/enums/socialNetwork';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
+
 import {
   faFacebook,
   faTwitter,
@@ -10,15 +10,6 @@ import {
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
 
-library.add(
-  faFacebook,
-  faTwitter,
-  faGithub,
-  faLinkedin,
-  faYoutube,
-  faInstagram,
-);
-
 type Props = {
   socialNetwork: SocialNetwork;
   userName?: string;
@@ -27,15 +18,17 @@ type Props = {
 const ContactWay = ({ socialNetwork, userName }: Props) => {
   if (userName) {
     const baseUrl = getBaseUrl(socialNetwork);
-    const icon = getFontAwesomeIcon(socialNetwork);
+    const icon = getIcon(socialNetwork);
 
     return (
       <>
         <a href={`${baseUrl}/${userName}`} target="_blank">
           <FontAwesomeIcon
+            className="m-2"
             icon={icon}
-            className="m-2 fa-3x"
-            style={{ color: 'white' }}
+            size="3x"
+            color="white"
+            aria-hidden="true"
           />
         </a>
       </>
@@ -61,7 +54,7 @@ function getBaseUrl(socialNetwork: SocialNetwork): string {
   }
 }
 
-function getFontAwesomeIcon(socialNetwork: SocialNetwork) {
+function getIcon(socialNetwork: SocialNetwork) {
   switch (socialNetwork) {
     case SocialNetwork.Facebook:
       return faFacebook;
