@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from '../components/container';
 import Layout from '../components/layout';
 import { getAuthorData, getLocalResources } from '../lib/api';

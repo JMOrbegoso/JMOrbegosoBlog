@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
 import { getAuthorData, getAllPosts, getLocalResources } from '../lib/api';
