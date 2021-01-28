@@ -1,14 +1,12 @@
 import { ShareType } from '../lib/enums/shareType';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
+
 import {
   faTwitter,
   faFacebook,
   faTelegram,
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons';
-
-library.add(faFacebook, faTwitter, faTelegram, faLinkedin);
 
 type Props = {
   title: string;
@@ -18,15 +16,17 @@ type Props = {
 
 const ShareButton = ({ title, url, shareType }: Props) => {
   const shareURL = getShareURL(title, url, shareType);
-  const icon = getFontAwesomeIcon(shareType);
+  const icon = getIcon(shareType);
 
   return (
     <>
       <a href={shareURL} target="_blank">
         <FontAwesomeIcon
+          className="m-2"
           icon={icon}
-          className="m-2 fa-2x"
-          style={{ color: 'white' }}
+          size="2x"
+          color="black"
+          aria-hidden="true"
         />
       </a>
     </>
@@ -48,7 +48,7 @@ function getShareURL(title: string, url: string, shareType: ShareType) {
   }
 }
 
-function getFontAwesomeIcon(shareType: ShareType) {
+function getIcon(shareType: ShareType) {
   switch (shareType) {
     case ShareType.Twitter:
       return faTwitter;
