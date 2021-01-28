@@ -19,7 +19,7 @@ const LanguagePicker = ({ localResources }: Props) => {
   const createDropdownItem = (locale: string) => {
     return (
       <>
-        <Dropdown.Item onSelect={() => changeLanguage(locale)}>
+        <Dropdown.Item key={locale} onSelect={() => changeLanguage(locale)}>
           <Image
             src={`/assets/lang/${locale}.svg`}
             height={45}
