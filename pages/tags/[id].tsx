@@ -11,7 +11,7 @@ import {
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import Head from 'next/head';
-import { WEB_NAME } from '../../lib/constants';
+import { URL_BASE, WEB_NAME } from '../../lib/constants';
 import PostType from '../../types/post';
 import Author from '../../types/author';
 import PostsList from '../../components/posts-list';
@@ -44,6 +44,26 @@ const Tag = ({ author, tagTitle, postsByTag, localResources }: Props) => {
               <title>
                 {tagTitle} - {WEB_NAME}
               </title>
+
+              <meta
+                property="description"
+                content={`${localResources.posts_by_tag} - ${tagTitle}`}
+              />
+              <meta
+                property="author"
+                content={`${author.firstname} ${author.lastname}`}
+              />
+              <meta name="keywords" content={tagTitle} />
+              <meta name="date" content={new Date().toLocaleDateString()} />
+
+              <meta property="og:url" content={`${URL_BASE}${router.asPath}`} />
+              <meta property="og:type" content="website" />
+              <meta property="og:title" content={`${tagTitle} - ${WEB_NAME}`} />
+              <meta
+                property="og:description"
+                content={`${localResources.posts_by_tag} - ${tagTitle}`}
+              />
+              <meta property="og:image" content={author.picture} />
             </Head>
             <PostsList
               posts={postsByTag}
