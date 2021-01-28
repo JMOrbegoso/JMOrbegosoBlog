@@ -38,3 +38,6 @@ yarn-error.log*
 
 # Sitemap file
 /public/sitemap.xml
+
+# Favicon files
+/public/favicon/
