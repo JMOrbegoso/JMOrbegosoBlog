@@ -1,7 +1,7 @@
 import { WEB_NAME, WEB_DESCRIPTION } from '../src/lib/constants';
 import { getAuthorData } from '../src/lib/api';
 import favicons, { FaviconOptions } from 'favicons';
-import { existsSync, unlinkSync, writeFileSync } from 'fs';
+import { mkdirSync, existsSync, unlinkSync, writeFileSync } from 'fs';
 
 async function generateFavicons() {
   if (process.env.NODE_ENV !== 'production') {
@@ -60,20 +60,25 @@ async function generateFavicons() {
       console.log(error.message); // Error description e.g. "An unknown error has occurred"
       return;
     }
+
+    const folderPath = './public/favicon';
+
+    mkdirSync(folderPath, { recursive: true });
+
     // Save the elements in the respective folder
     // response.images: Array of { name: string, contents: <buffer> }
     response.images.forEach((icon: any) => {
-      writeFile(`./public/favicon/${icon.name}`, icon.contents);
+      writeFile(`${folderPath}/${icon.name}`, icon.contents);
     });
 
     // response.files: Array of { name: string, contents: <string> }
     response.files.forEach((file: any) => {
-      writeFile(`./public/favicon/${file.name}`, file.contents);
+      writeFile(`${folderPath}/${file.name}`, file.contents);
     });
 
     // response.html: Array of strings (html elements)
     writeFile(
-      `./public/favicon/meta.html`,
+      `${folderPath}/meta.html`,
       [...response.html].join('\n').replaceAll(`">`, `"/>`),
     );
   };
