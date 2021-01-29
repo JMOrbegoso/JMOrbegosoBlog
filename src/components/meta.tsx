@@ -5,7 +5,7 @@ import {
   HOME_OG_IMAGE_URL,
   THEME_COLOR,
   MS_APPLICATION_TILE_COLOR,
-} from '../lib/constants';
+} from '../../lib/constants';
 
 const Meta = () => {
   return (

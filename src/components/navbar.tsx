@@ -1,9 +1,9 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import LanguagePicker from './language-picker';
-import ILocalResources from '../interfaces/ilocalresources';
+import ILocalResources from '../../interfaces/ilocalresources';
 import Link from 'next/link';
+import LanguagePicker from './language-picker';
 
 type Props = {
   title: string;

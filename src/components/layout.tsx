@@ -1,9 +1,9 @@
 import Footer from './footer';
 import Meta from './meta';
 import NavBar from './navbar';
-import { WEB_NAME } from '../lib/constants';
-import Author from '../types/author';
-import ILocalResources from '../interfaces/ilocalresources';
+import { WEB_NAME } from '../../lib/constants';
+import Author from '../../types/author';
+import ILocalResources from '../../interfaces/ilocalresources';
 
 type Props = {
   author: Author;

@@ -1,10 +1,10 @@
-import PostType from '../types/post';
+import PostType from '../../types/post';
 import { useRouter } from 'next/router';
 import Container from './container';
 import ShareButton from './share-button';
-import { ShareType } from '../lib/enums/shareType';
-import { URL_BASE } from '../lib/constants';
-import ILocalResources from '../interfaces/ilocalresources';
+import { ShareType } from '../../lib/enums/shareType';
+import { URL_BASE } from '../../lib/constants';
+import ILocalResources from '../../interfaces/ilocalresources';
 
 type Props = {
   post: PostType;

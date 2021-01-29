@@ -1,4 +1,4 @@
-import { SocialNetwork } from '../lib/enums/socialNetwork';
+import { SocialNetwork } from '../../lib/enums/socialNetwork';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {

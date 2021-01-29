@@ -1,5 +1,5 @@
-import PostsList from '../components/posts-list';
-import Layout from '../components/layout';
+import PostsList from '../src/components/posts-list';
+import Layout from '../src/components/layout';
 import { getAuthorData, getAllPosts, getLocalResources } from '../lib/api';
 import Head from 'next/head';
 import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../lib/constants';

@@ -1,6 +1,6 @@
 import DateFormatter from './date-formatter';
 import Link from 'next/link';
-import { PostTag as PostTagEnum } from '../lib/enums/postTag';
+import { PostTag as PostTagEnum } from '../../lib/enums/postTag';
 import PostTags from './post-tags';
 
 type Props = {

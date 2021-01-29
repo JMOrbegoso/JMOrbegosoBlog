@@ -1,13 +1,13 @@
-import Container from '../components/container';
-import Layout from '../components/layout';
+import Container from '../src/components/container';
+import Layout from '../src/components/layout';
 import { getAllTags, getAuthorData, getLocalResources } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import { PostTag } from '../lib/enums/postTag';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
-import PageHeader from '../components/page-header';
-import PostTags from '../components/post-tags';
+import PageHeader from '../src/components/page-header';
+import PostTags from '../src/components/post-tags';
 
 type Props = {
   author: Author;

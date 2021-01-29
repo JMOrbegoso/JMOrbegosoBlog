@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { PostTag as PostTagEnum } from '../lib/enums/postTag';
-import { getTagTitle } from '../lib/tag-helpers';
+import { PostTag as PostTagEnum } from '../../lib/enums/postTag';
+import { getTagTitle } from '../../lib/tag-helpers';
 import Image from 'next/image';
 
 type Props = {

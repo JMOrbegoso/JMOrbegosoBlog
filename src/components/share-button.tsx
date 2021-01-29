@@ -1,4 +1,4 @@
-import { ShareType } from '../lib/enums/shareType';
+import { ShareType } from '../../lib/enums/shareType';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {

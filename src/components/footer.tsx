@@ -1,9 +1,9 @@
 import ContactWay from './contact-way';
-import { SocialNetwork } from '../lib/enums/socialNetwork';
+import { SocialNetwork } from '../../lib/enums/socialNetwork';
 import Container from './container';
-import { CREDITS, COPYRIGHT } from '../lib/constants';
-import Author from '../types/author';
-import ILocalResources from '../interfaces/ilocalresources';
+import { CREDITS, COPYRIGHT } from '../../lib/constants';
+import Author from '../../types/author';
+import ILocalResources from '../../interfaces/ilocalresources';
 
 type Props = {
   author: Author;

@@ -1,19 +1,19 @@
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
-import Container from '../../../components/container';
-import Layout from '../../../components/layout';
+import Container from '../../../src/components/container';
+import Layout from '../../../src/components/layout';
 import {
   getAllPosts,
   getAuthorData,
   getAllTags,
   getLocalResources,
 } from '../../../lib/api';
-import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../src/components/page-header';
 import Head from 'next/head';
 import { WEB_NAME } from '../../../lib/constants';
 import PostType from '../../../types/post';
 import Author from '../../../types/author';
-import PostsList from '../../../components/posts-list';
+import PostsList from '../../../src/components/posts-list';
 import { getTagTitle } from '../../../lib/tag-helpers';
 import { POST_PER_PAGE } from '../../../lib/constants';
 import ILocalResources from '../../../interfaces/ilocalresources';
