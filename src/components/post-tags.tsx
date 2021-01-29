@@ -1,4 +1,4 @@
-import { PostTag as PostTagEnum } from '../../lib/enums/postTag';
+import { PostTag as PostTagEnum } from '../enums/postTag';
 import PostTag from './post-tag';
 
 type Props = {

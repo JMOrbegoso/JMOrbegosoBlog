@@ -1,4 +1,4 @@
-import { PostTag } from './enums/postTag';
+import { PostTag } from '../src/enums/postTag';
 
 export function getTagTitle(tag: string) {
   switch (tag) {
