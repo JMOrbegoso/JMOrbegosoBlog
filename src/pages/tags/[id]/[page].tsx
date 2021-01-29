@@ -1,30 +1,38 @@
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
-import Container from '../../src/components/container';
-import Layout from '../../src/components/layout';
+import Container from '../../../components/container';
+import Layout from '../../../components/layout';
 import {
   getAllPosts,
   getAuthorData,
   getAllTags,
   getLocalResources,
-} from '../../lib/api';
-import PageHeader from '../../src/components/page-header';
+} from '../../../../lib/api';
+import PageHeader from '../../../components/page-header';
 import Head from 'next/head';
-import { URL_BASE, WEB_NAME } from '../../lib/constants';
-import PostType from '../../types/post';
-import Author from '../../types/author';
-import PostsList from '../../src/components/posts-list';
-import { getTagTitle } from '../../lib/tag-helpers';
-import ILocalResources from '../../interfaces/ilocalresources';
+import { WEB_NAME } from '../../../../lib/constants';
+import PostType from '../../../../types/post';
+import Author from '../../../../types/author';
+import PostsList from '../../../components/posts-list';
+import { getTagTitle } from '../../../../lib/tag-helpers';
+import { POST_PER_PAGE } from '../../../../lib/constants';
+import ILocalResources from '../../../../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
   tagTitle: string;
   postsByTag: PostType[];
+  actualPage: number;
   localResources: ILocalResources;
 };
 
-const Tag = ({ author, tagTitle, postsByTag, localResources }: Props) => {
+const Tag = ({
+  author,
+  tagTitle,
+  postsByTag,
+  actualPage,
+  localResources,
+}: Props) => {
   const router = useRouter();
   if (!router.isFallback && !tagTitle) {
     return <ErrorPage statusCode={404} />;
@@ -43,30 +51,10 @@ const Tag = ({ author, tagTitle, postsByTag, localResources }: Props) => {
               <title>
                 {tagTitle} - {WEB_NAME}
               </title>
-
-              <meta
-                property="description"
-                content={`${localResources.posts_by_tag} - ${tagTitle}`}
-              />
-              <meta
-                property="author"
-                content={`${author.firstname} ${author.lastname}`}
-              />
-              <meta name="keywords" content={tagTitle} />
-              <meta name="date" content={new Date().toLocaleDateString()} />
-
-              <meta property="og:url" content={`${URL_BASE}${router.asPath}`} />
-              <meta property="og:type" content="website" />
-              <meta property="og:title" content={`${tagTitle} - ${WEB_NAME}`} />
-              <meta
-                property="og:description"
-                content={`${localResources.posts_by_tag} - ${tagTitle}`}
-              />
-              <meta property="og:image" content={author.picture} />
             </Head>
             <PostsList
               posts={postsByTag}
-              actualPage={1}
+              actualPage={actualPage}
               localResources={localResources}
             />
           </>
@@ -104,28 +92,49 @@ export const getStaticProps = async ({ params, locale }: Params) => {
 
   const tagTitle = getTagTitle(params.id);
 
+  const actualPage = params.page;
+
   return {
     props: {
       author,
       tagTitle,
       postsByTag,
+      actualPage,
       localResources: localResources.default,
     },
   };
 };
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const paths: { locale: string; params: { id: string } }[] = [];
+  const paths: { locale: string; params: { id: string; page: string } }[] = [];
 
   locales.forEach((locale) => {
     const allTags = getAllTags(locale);
     const paginatedPostsByTags: {
       tag: string;
+      page: number;
       locale: string;
     }[] = [];
 
     allTags.forEach((tag) => {
-      paginatedPostsByTags.push({ tag, locale });
+      const allPosts = getAllPosts(locale, ['tags']);
+      const allPostsByTag = allPosts.filter((p) => p.tags.includes(tag));
+
+      const totalPages = Math.ceil(allPostsByTag.length / POST_PER_PAGE);
+
+      const pagesArray: number[] = [];
+
+      for (let i = 1; i <= totalPages; i++) {
+        pagesArray.push(i);
+      }
+
+      pagesArray.forEach((page) => {
+        paginatedPostsByTags.push({
+          tag: tag,
+          page: page,
+          locale: locale,
+        });
+      });
     });
 
     const pagePath = paginatedPostsByTags.map((pt) => {
@@ -133,6 +142,7 @@ export async function getStaticPaths({ locales }: { locales: string[] }) {
         locale: pt.locale,
         params: {
           id: pt.tag,
+          page: pt.page.toString(),
         },
       };
     });

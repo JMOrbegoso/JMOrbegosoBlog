@@ -1,5 +1,5 @@
 import { AppProps } from 'next/app';
-import '../styles/index.css';
+import '../../styles/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 

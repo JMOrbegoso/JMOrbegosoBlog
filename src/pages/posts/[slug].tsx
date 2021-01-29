@@ -1,25 +1,25 @@
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
-import Container from '../../src/components/container';
-import PostBody from '../../src/components/post-body';
-import PostHeader from '../../src/components/post-header';
-import Layout from '../../src/components/layout';
+import Container from '../../components/container';
+import PostBody from '../../components/post-body';
+import PostHeader from '../../components/post-header';
+import Layout from '../../components/layout';
 import {
   getPostBySlug,
   getAllPosts,
   getAuthorData,
   getLocalResources,
-} from '../../lib/api';
-import PageHeader from '../../src/components/page-header';
+} from '../../../lib/api';
+import PageHeader from '../../components/page-header';
 import Head from 'next/head';
-import { URL_BASE, WEB_NAME } from '../../lib/constants';
-import markdownToHtml from '../../lib/markdownToHtml';
-import PostType from '../../types/post';
-import Author from '../../types/author';
-import PostTags from '../../src/components/post-tags';
-import ILocalResources from '../../interfaces/ilocalresources';
-import DisqusComments from '../../src/components/disqus-comments';
-import ShareMenu from '../../src/components/share-menu';
+import { URL_BASE, WEB_NAME } from '../../../lib/constants';
+import markdownToHtml from '../../../lib/markdownToHtml';
+import PostType from '../../../types/post';
+import Author from '../../../types/author';
+import PostTags from '../../components/post-tags';
+import ILocalResources from '../../../interfaces/ilocalresources';
+import DisqusComments from '../../components/disqus-comments';
+import ShareMenu from '../../components/share-menu';
 
 type Props = {
   author: Author;

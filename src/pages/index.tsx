@@ -1,14 +1,14 @@
-import PostsList from '../src/components/posts-list';
-import Layout from '../src/components/layout';
-import { getAuthorData, getAllPosts, getLocalResources } from '../lib/api';
+import PostsList from '../components/posts-list';
+import Layout from '../components/layout';
+import { getAuthorData, getAllPosts, getLocalResources } from '../../lib/api';
 import Head from 'next/head';
-import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../lib/constants';
-import Post from '../types/post';
-import Author from '../types/author';
-import ILocalResources from '../interfaces/ilocalresources';
-import generateRssFeed from '../scripts/generate-rss-feed';
-import generateSitemap from '../scripts/generate-sitemap';
-import generateFavicons from '../scripts/generate-favicons';
+import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../../lib/constants';
+import Post from '../../types/post';
+import Author from '../../types/author';
+import ILocalResources from '../../interfaces/ilocalresources';
+import generateRssFeed from '../../scripts/generate-rss-feed';
+import generateSitemap from '../../scripts/generate-sitemap';
+import generateFavicons from '../../scripts/generate-favicons';
 
 type Props = {
   author: Author;
