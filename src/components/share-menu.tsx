@@ -1,4 +1,4 @@
-import PostType from '../../types/post';
+import PostType from '../types/post';
 import { useRouter } from 'next/router';
 import Container from './container';
 import ShareButton from './share-button';

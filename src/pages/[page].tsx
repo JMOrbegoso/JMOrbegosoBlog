@@ -3,8 +3,8 @@ import Layout from '../components/layout';
 import { getAuthorData, getAllPosts, getLocalResources } from '../../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../../lib/constants';
-import Post from '../../types/post';
-import Author from '../../types/author';
+import Post from '../types/post';
+import Author from '../types/author';
 import { POST_PER_PAGE } from '../../lib/constants';
 import ILocalResources from '../interfaces/ilocalresources';
 

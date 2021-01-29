@@ -1,4 +1,4 @@
-import { PostTag } from '../src/enums/postTag';
+import { PostTag } from '../enums/postTag';
 
 type PostType = {
   slug: string;

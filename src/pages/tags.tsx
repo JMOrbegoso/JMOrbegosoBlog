@@ -4,7 +4,7 @@ import { getAllTags, getAuthorData, getLocalResources } from '../../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../../lib/constants';
 import { PostTag } from '../enums/postTag';
-import Author from '../../types/author';
+import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
 import PageHeader from '../components/page-header';
 import PostTags from '../components/post-tags';

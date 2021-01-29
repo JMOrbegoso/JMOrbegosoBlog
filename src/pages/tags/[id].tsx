@@ -11,8 +11,8 @@ import {
 import PageHeader from '../../components/page-header';
 import Head from 'next/head';
 import { URL_BASE, WEB_NAME } from '../../../lib/constants';
-import PostType from '../../../types/post';
-import Author from '../../../types/author';
+import PostType from '../../types/post';
+import Author from '../../types/author';
 import PostsList from '../../components/posts-list';
 import { getTagTitle } from '../../../lib/tag-helpers';
 import ILocalResources from '../../interfaces/ilocalresources';
