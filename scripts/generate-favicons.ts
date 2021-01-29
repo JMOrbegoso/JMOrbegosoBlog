@@ -1,5 +1,5 @@
-import { WEB_NAME, WEB_DESCRIPTION } from '../lib/constants';
-import { getAuthorData } from '../lib/api';
+import { WEB_NAME, WEB_DESCRIPTION } from '../src/lib/constants';
+import { getAuthorData } from '../src/lib/api';
 import favicons, { FaviconOptions } from 'favicons';
 import { existsSync, unlinkSync, writeFileSync } from 'fs';
 

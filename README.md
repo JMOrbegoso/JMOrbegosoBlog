@@ -22,6 +22,7 @@ To create the blog posts we use [`remark`](https://github.com/remarkjs/remark) a
 - Share post menu (Twitter, Facebook, Telegram, LikedIn)
 - RSS Feed.
 - Sitemap.xml.
+- Favicons generation script.
 
 ## How to use
 

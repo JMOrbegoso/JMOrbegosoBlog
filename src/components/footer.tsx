@@ -1,5 +1,5 @@
 import ContactWay from './contact-way';
-import { SocialNetwork } from '../lib/enums/socialNetwork';
+import { SocialNetwork } from '../enums/socialNetwork';
 import Container from './container';
 import { CREDITS, COPYRIGHT } from '../lib/constants';
 import Author from '../types/author';

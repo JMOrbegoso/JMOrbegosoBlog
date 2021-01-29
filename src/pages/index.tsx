@@ -6,9 +6,9 @@ import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
-import generateRssFeed from '../scripts/generate-rss-feed';
-import generateSitemap from '../scripts/generate-sitemap';
-import generateFavicons from '../scripts/generate-favicons';
+import generateRssFeed from '../../scripts/generate-rss-feed';
+import generateSitemap from '../../scripts/generate-sitemap';
+import generateFavicons from '../../scripts/generate-favicons';
 
 type Props = {
   author: Author;
