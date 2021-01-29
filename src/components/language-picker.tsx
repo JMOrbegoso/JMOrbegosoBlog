@@ -17,16 +17,6 @@ const LanguagePicker = ({ localResources }: Props) => {
     router.push(router.asPath, router.asPath, { locale: param });
   };
 
-  const createDropdownItem = (locale: string) => {
-    return (
-      <>
-        <Dropdown.Item key={locale} onSelect={() => changeLanguage(locale)}>
-          <Image src={`/assets/lang/${locale}.svg`} height={45} width={90} />
-        </Dropdown.Item>
-      </>
-    );
-  };
-
   return (
     <>
       <DropdownButton
@@ -40,7 +30,11 @@ const LanguagePicker = ({ localResources }: Props) => {
           />
         }
       >
-        {router.locales?.map((locale: string) => createDropdownItem(locale))}
+        {router.locales?.map((locale: string) => (
+          <Dropdown.Item key={locale} onSelect={() => changeLanguage(locale)}>
+            <Image src={`/assets/lang/${locale}.svg`} height={45} width={90} />
+          </Dropdown.Item>
+        ))}
       </DropdownButton>
     </>
   );
