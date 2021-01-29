@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { WEB_NAME } from '../../lib/constants';
 import { PostTag } from '../../lib/enums/postTag';
 import Author from '../../types/author';
-import ILocalResources from '../../interfaces/ilocalresources';
+import ILocalResources from '../interfaces/ilocalresources';
 import PageHeader from '../components/page-header';
 import PostTags from '../components/post-tags';
 

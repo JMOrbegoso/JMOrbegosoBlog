@@ -3,7 +3,7 @@ import Post from '../../types/post';
 import { POST_PER_PAGE } from '../../lib/constants';
 import Container from './container';
 import PostPagination from './post-pagination';
-import ILocalResources from '../../interfaces/ilocalresources';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   posts: Post[];

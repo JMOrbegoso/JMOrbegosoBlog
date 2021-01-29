@@ -17,7 +17,7 @@ import markdownToHtml from '../../../lib/markdownToHtml';
 import PostType from '../../../types/post';
 import Author from '../../../types/author';
 import PostTags from '../../components/post-tags';
-import ILocalResources from '../../../interfaces/ilocalresources';
+import ILocalResources from '../../interfaces/ilocalresources';
 import DisqusComments from '../../components/disqus-comments';
 import ShareMenu from '../../components/share-menu';
 

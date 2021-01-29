@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
-import ILocalResources from '../../interfaces/ilocalresources';
+import ILocalResources from '../interfaces/ilocalresources';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';

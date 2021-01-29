@@ -15,7 +15,7 @@ import PostType from '../../../types/post';
 import Author from '../../../types/author';
 import PostsList from '../../components/posts-list';
 import { getTagTitle } from '../../../lib/tag-helpers';
-import ILocalResources from '../../../interfaces/ilocalresources';
+import ILocalResources from '../../interfaces/ilocalresources';
 
 type Props = {
   author: Author;

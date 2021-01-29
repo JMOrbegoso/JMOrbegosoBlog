@@ -6,7 +6,7 @@ import { WEB_NAME } from '../../lib/constants';
 import Author from '../../types/author';
 import markdownToHtml from '../../lib/markdownToHtml';
 import markdownStyles from '../components/markdown-styles.module.css';
-import ILocalResources from '../../interfaces/ilocalresources';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
