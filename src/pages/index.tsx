@@ -1,8 +1,8 @@
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
-import { getAuthorData, getAllPosts, getLocalResources } from '../../lib/api';
+import { getAuthorData, getAllPosts, getLocalResources } from '../lib/api';
 import Head from 'next/head';
-import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../../lib/constants';
+import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';

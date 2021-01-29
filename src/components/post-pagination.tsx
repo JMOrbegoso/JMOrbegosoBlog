@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Pagination } from 'react-bootstrap';
-import { POST_PER_PAGE, PAGINATION_LENGTH } from '../../lib/constants';
+import { POST_PER_PAGE, PAGINATION_LENGTH } from '../lib/constants';
 import { useRouter, NextRouter } from 'next/router';
 
 type Props = {

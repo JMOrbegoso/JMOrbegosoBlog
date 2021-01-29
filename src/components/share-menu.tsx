@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Container from './container';
 import ShareButton from './share-button';
 import { ShareType } from '../enums/shareType';
-import { URL_BASE } from '../../lib/constants';
+import { URL_BASE } from '../lib/constants';
 import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {

@@ -1,7 +1,7 @@
 import ContactWay from './contact-way';
 import { SocialNetwork } from '../enums/socialNetwork';
 import Container from './container';
-import { CREDITS, COPYRIGHT } from '../../lib/constants';
+import { CREDITS, COPYRIGHT } from '../lib/constants';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
 

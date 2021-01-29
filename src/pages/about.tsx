@@ -1,10 +1,10 @@
 import Container from '../components/container';
 import Layout from '../components/layout';
-import { getAuthorData, getLocalResources } from '../../lib/api';
+import { getAuthorData, getLocalResources } from '../lib/api';
 import Head from 'next/head';
-import { WEB_NAME } from '../../lib/constants';
+import { WEB_NAME } from '../lib/constants';
 import Author from '../types/author';
-import markdownToHtml from '../../lib/markdownToHtml';
+import markdownToHtml from '../lib/markdownToHtml';
 import markdownStyles from '../components/markdown-styles.module.css';
 import ILocalResources from '../interfaces/ilocalresources';
 

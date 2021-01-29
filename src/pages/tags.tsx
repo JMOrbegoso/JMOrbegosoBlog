@@ -1,8 +1,8 @@
 import Container from '../components/container';
 import Layout from '../components/layout';
-import { getAllTags, getAuthorData, getLocalResources } from '../../lib/api';
+import { getAllTags, getAuthorData, getLocalResources } from '../lib/api';
 import Head from 'next/head';
-import { WEB_NAME } from '../../lib/constants';
+import { WEB_NAME } from '../lib/constants';
 import { PostTag } from '../enums/postTag';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';

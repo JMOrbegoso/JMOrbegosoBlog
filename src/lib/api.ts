@@ -120,5 +120,5 @@ export function getAllTags(locale: string) {
 }
 
 export async function getLocalResources(locale: string) {
-  return await import(`../lang/${locale}.json`);
+  return await import(`../../lang/${locale}.json`);
 }

@@ -1,6 +1,6 @@
 import { DiscussionEmbed } from 'disqus-react';
 import PostType from '../types/post';
-import { URL_BASE, DISQUS_SHORTNAME } from '../../lib/constants';
+import { URL_BASE, DISQUS_SHORTNAME } from '../lib/constants';
 import { useRouter } from 'next/router';
 
 type Props = {

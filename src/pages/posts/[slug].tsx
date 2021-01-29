@@ -9,11 +9,11 @@ import {
   getAllPosts,
   getAuthorData,
   getLocalResources,
-} from '../../../lib/api';
+} from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import Head from 'next/head';
-import { URL_BASE, WEB_NAME } from '../../../lib/constants';
-import markdownToHtml from '../../../lib/markdownToHtml';
+import { URL_BASE, WEB_NAME } from '../../lib/constants';
+import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
 import Author from '../../types/author';
 import PostTags from '../../components/post-tags';

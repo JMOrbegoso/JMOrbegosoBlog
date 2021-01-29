@@ -1,6 +1,6 @@
 import { existsSync, unlinkSync, writeFileSync } from 'fs';
-import { URL_BASE } from '../lib/constants';
-import { getAllPosts, getAllTags } from '../lib/api';
+import { URL_BASE } from '../src/lib/constants';
+import { getAllPosts, getAllTags } from '../src/lib/api';
 import globby from 'globby';
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { Readable } from 'stream';

@@ -1,6 +1,6 @@
 import PostPreview from './post-preview';
 import Post from '../types/post';
-import { POST_PER_PAGE } from '../../lib/constants';
+import { POST_PER_PAGE } from '../lib/constants';
 import Container from './container';
 import PostPagination from './post-pagination';
 import ILocalResources from '../interfaces/ilocalresources';

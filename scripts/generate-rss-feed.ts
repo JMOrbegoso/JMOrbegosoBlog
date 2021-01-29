@@ -4,10 +4,10 @@ import {
   WEB_DESCRIPTION,
   URL_BASE,
   COPYRIGHT,
-} from '../lib/constants';
-import { getAuthorData, getAllPosts } from '../lib/api';
+} from '../src/lib/constants';
+import { getAuthorData, getAllPosts } from '../src/lib/api';
 import { Feed } from 'feed';
-import markdownToHtml from '../lib/markdownToHtml';
+import markdownToHtml from '../src/lib/markdownToHtml';
 
 async function generateRssFeed() {
   if (process.env.NODE_ENV !== 'production') {
