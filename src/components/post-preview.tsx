@@ -2,6 +2,7 @@ import DateFormatter from './date-formatter';
 import Link from 'next/link';
 import { PostTag as PostTagEnum } from '../enums/postTag';
 import PostTags from './post-tags';
+import CoverImage from './cover-image';
 
 type Props = {
   title: string;
@@ -12,7 +13,14 @@ type Props = {
   tags: PostTagEnum[];
 };
 
-const PostPreview = ({ title, date, excerpt, slug, tags }: Props) => {
+const PostPreview = ({
+  title,
+  coverImage,
+  date,
+  excerpt,
+  slug,
+  tags,
+}: Props) => {
   return (
     <div>
       <h3 className="text-3xl mb-3 leading-snug">
@@ -22,6 +30,9 @@ const PostPreview = ({ title, date, excerpt, slug, tags }: Props) => {
       </h3>
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
+      </div>
+      <div className="mb-5">
+        <CoverImage slug={slug} title={title} src={coverImage} />
       </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
       <PostTags tags={tags} />

@@ -69,6 +69,7 @@ export const getStaticProps = async ({ locale }: Params) => {
   const allPosts = getAllPosts(locale, [
     'title',
     'date',
+    'coverImage',
     'slug',
     'excerpt',
     'tags',
