@@ -96,6 +96,7 @@ export function getAllPostsPreviews(locale: string) {
     'date',
     'coverImage',
     'excerpt',
+    'content',
     'tags',
   ]);
 }
