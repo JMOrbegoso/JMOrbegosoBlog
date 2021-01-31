@@ -10,6 +10,8 @@ interface ILocalResources {
   no_posts_yet: string;
   did_you_like_the_post: string;
   share_on_social_networks: string;
+  read_time: string;
+  minutes_prefix: string;
 }
 
 export default ILocalResources;

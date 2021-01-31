@@ -6,6 +6,7 @@ import Container from '../../../components/container';
 import Layout from '../../../components/layout';
 import {
   getAllPosts,
+  getAllPostsPreviews,
   getAuthorData,
   getAllTags,
   getLocalResources,
@@ -80,17 +81,10 @@ type Params = {
 
 export const getStaticProps = async ({ params, locale }: Params) => {
   const author = getAuthorData(locale);
+  const allPostsPreviews = getAllPostsPreviews(locale);
   const localResources = await getLocalResources(locale);
 
-  const allPosts = getAllPosts(locale, [
-    'title',
-    'date',
-    'slug',
-    'excerpt',
-    'tags',
-  ]);
-
-  const postsByTag = allPosts.filter((p) => p.tags.includes(params.id));
+  const postsByTag = allPostsPreviews.filter((p) => p.tags.includes(params.id));
 
   const tagTitle = getTagTitle(params.id);
 

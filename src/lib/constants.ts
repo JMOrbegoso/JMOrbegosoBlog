@@ -14,3 +14,4 @@ export const POST_PER_PAGE = 6;
 export const PAGINATION_LENGTH = 2;
 export const DISQUS_SHORTNAME = 'your-disqus-shortname';
 export const TABLE_OF_CONTENT_KEYWORDS = ['Index', 'Índice'];
+export const READ_WORDS_PER_MINUTE = 200;

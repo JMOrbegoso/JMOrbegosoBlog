@@ -89,6 +89,18 @@ export function getAllPosts(locale: string, fields: string[] = []) {
   return posts;
 }
 
+export function getAllPostsPreviews(locale: string) {
+  return getAllPosts(locale, [
+    'slug',
+    'title',
+    'date',
+    'coverImage',
+    'excerpt',
+    'content',
+    'tags',
+  ]);
+}
+
 export function getAuthorData(locale: string) {
   const slugs = getDataSlugs(locale);
   const [aboutMeSlug] = slugs.filter((slug) => slug.includes('about-me'));

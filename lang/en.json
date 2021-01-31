@@ -9,5 +9,7 @@
   "posts_by_tag": "Posts by Tag",
   "no_posts_yet": "There are no Posts yet!",
   "did_you_like_the_post": "Did you like the post?",
-  "share_on_social_networks": "Share it on your social networks"
+  "share_on_social_networks": "Share it on your social networks",
+  "read_time": "Estimated read time",
+  "minutes_prefix": "min"
 }

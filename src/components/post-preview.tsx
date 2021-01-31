@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { PostTag as PostTagEnum } from '../enums/postTag';
 import PostTags from './post-tags';
 import CoverImage from './cover-image';
+import ReadTime from './read-time';
+import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   title: string;
@@ -10,7 +12,9 @@ type Props = {
   date: string;
   excerpt: string;
   slug: string;
+  content: string;
   tags: PostTagEnum[];
+  localResources: ILocalResources;
 };
 
 const PostPreview = ({
@@ -19,7 +23,9 @@ const PostPreview = ({
   date,
   excerpt,
   slug,
+  content,
   tags,
+  localResources,
 }: Props) => {
   return (
     <div>
@@ -29,7 +35,14 @@ const PostPreview = ({
         </Link>
       </h3>
       <div className="text-lg mb-4">
-        <DateFormatter dateString={date} />
+        <div className="row">
+          <div className="col-6 text-left">
+            <DateFormatter dateString={date} />
+          </div>
+          <div className="col-6 text-right">
+            <ReadTime content={content} localResources={localResources} />
+          </div>
+        </div>
       </div>
       <div className="mb-5">
         <CoverImage slug={slug} title={title} src={coverImage} />
