@@ -40,7 +40,9 @@ const PostsList = ({ posts, actualPage, localResources }: Props) => {
               date={post.date}
               slug={post.slug}
               excerpt={post.excerpt}
+              content={post.content}
               tags={post.tags}
+              localResources={localResources}
             />
           ))}
         </div>
