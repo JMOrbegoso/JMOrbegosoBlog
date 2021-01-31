@@ -9,5 +9,7 @@
   "posts_by_tag": "Posts por tema",
   "no_posts_yet": "¡Aún no hay publicaciones!",
   "did_you_like_the_post": "¿Te gustó la publicación?",
-  "share_on_social_networks": "Compártela en tus redes sociales"
+  "share_on_social_networks": "Compártela en tus redes sociales",
+  "read_time": "Tiempo de lectura estimado",
+  "minutes_prefix": "min"
 }
