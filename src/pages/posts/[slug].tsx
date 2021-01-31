@@ -68,7 +68,9 @@ const Post = ({ author, post, localResources }: Props) => {
                 title={post.title}
                 coverImage={post.coverImage}
                 date={post.date}
+                content={post.content}
                 author={author}
+                localResources={localResources}
               />
               <PostBody content={post.content} />
               <PostTags tags={post.tags} />
