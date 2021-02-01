@@ -7,7 +7,6 @@ import { WEB_NAME } from '../../lib/constants';
 import Author from '../../types/author';
 import ILocalResources from '../../interfaces/ilocalresources';
 import { Button, Form } from 'react-bootstrap';
-import Link from 'next/link';
 import {
   getAllPostsPreviews,
   getAuthorData,
@@ -15,6 +14,7 @@ import {
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 
 type Props = {
   author: Author;
@@ -22,7 +22,17 @@ type Props = {
 };
 
 const PostsSearcher = ({ author, localResources }: Props) => {
+  const router = useRouter();
+
   const [searchTerm, setSearchTerm] = useState('');
+
+  const onFormSubmit = (e: any) => {
+    e.preventDefault();
+    router.push({
+      pathname: searchTerm ? '/posts/search/[find]' : '/posts/search/',
+      query: { find: searchTerm },
+    });
+  };
 
   return (
     <>
@@ -34,7 +44,7 @@ const PostsSearcher = ({ author, localResources }: Props) => {
         </Head>
         <Container>
           <PageHeader>{`${localResources.words_to_find}`}</PageHeader>
-          <Form>
+          <Form onSubmit={onFormSubmit}>
             <Form.Group>
               <Form.Control
                 type="text"
@@ -43,19 +53,9 @@ const PostsSearcher = ({ author, localResources }: Props) => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </Form.Group>
-            <Link
-              href={{
-                pathname: searchTerm
-                  ? '/posts/search/[find]'
-                  : '/posts/search/',
-                query: { find: searchTerm },
-              }}
-              passHref
-            >
-              <Button variant="primary" type="submit">
-                {localResources.search_post}
-              </Button>
-            </Link>
+            <Button variant="primary" type="submit">
+              {localResources.search_post}
+            </Button>
           </Form>
         </Container>
       </Layout>
