@@ -25,7 +25,7 @@ const About = ({ author, localResources }: Props) => {
           </title>
         </Head>
         <Container>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto text-justify">
             <div
               className={markdownStyles['markdown']}
               dangerouslySetInnerHTML={{ __html: author.content }}
