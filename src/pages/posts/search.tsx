@@ -45,7 +45,9 @@ const PostsSearcher = ({ author, localResources }: Props) => {
             </Form.Group>
             <Link
               href={{
-                pathname: '/posts/search/[find]',
+                pathname: searchTerm
+                  ? '/posts/search/[find]'
+                  : '/posts/search/',
                 query: { find: searchTerm },
               }}
               passHref
