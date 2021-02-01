@@ -25,6 +25,9 @@ const NavBar = ({ title, localResources }: Props) => {
           <Link href="/tags" passHref>
             <Nav.Link>{localResources.tags}</Nav.Link>
           </Link>
+          <Link href="/posts/search" passHref>
+            <Nav.Link>{localResources.search_post}</Nav.Link>
+          </Link>
           <Link href="/about" passHref>
             <Nav.Link>{localResources.about}</Nav.Link>
           </Link>

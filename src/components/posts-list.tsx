@@ -19,9 +19,9 @@ const PostsList = ({ posts, actualPage, localResources }: Props) => {
   if (0 >= posts.length) {
     return (
       <>
-        <section>
+        <section className="text-center">
           <Container>
-            <h1>{localResources.no_posts_yet}</h1>
+            <h1>{localResources.no_posts_found}</h1>
           </Container>
         </section>
       </>
