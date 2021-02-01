@@ -21,7 +21,7 @@ const PostsList = ({ posts, actualPage, localResources }: Props) => {
       <>
         <section>
           <Container>
-            <h1>{localResources.no_posts_yet}</h1>
+            <h1>{localResources.no_posts_found}</h1>
           </Container>
         </section>
       </>
