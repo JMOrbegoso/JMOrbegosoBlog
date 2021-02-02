@@ -1,7 +1,8 @@
 import { WEB_NAME, WEB_DESCRIPTION } from '../src/lib/constants';
 import { getAuthorData } from '../src/lib/api';
 import favicons, { FaviconOptions } from 'favicons';
-import { mkdirSync, existsSync, unlinkSync, writeFileSync } from 'fs';
+import { mkdirSync } from 'fs';
+import { writeFile } from '../src/lib/write-file';
 
 async function generateFavicons() {
   if (process.env.NODE_ENV !== 'production') {
@@ -94,18 +95,4 @@ function getAuthor() {
     name: `${authorData.firstname} ${authorData.lastname}`,
     link: authorData.web,
   };
-}
-
-function writeFile(filePath: string, fileContent: string | Buffer) {
-  try {
-    if (existsSync(filePath)) {
-      unlinkSync(filePath);
-    }
-    writeFileSync(filePath, fileContent);
-    console.info(`${filePath} file successfully created`);
-  } catch (error) {
-    console.info(
-      `Could not generate the ${filePath} file or the previous file could not be deleted`,
-    );
-  }
 }

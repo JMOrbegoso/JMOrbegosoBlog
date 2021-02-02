@@ -1,9 +1,9 @@
-import { existsSync, unlinkSync, writeFileSync } from 'fs';
 import { URL_BASE } from '../src/lib/constants';
 import { getAllPosts, getAllTags } from '../src/lib/api';
 import globby from 'globby';
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { Readable } from 'stream';
+import { writeFile } from '../src/lib/write-file';
 
 const blocklist = ['/404'];
 
@@ -59,24 +59,10 @@ async function generateSitemap() {
     Readable.from(links).pipe(stream),
   ).then((data) => data.toString());
 
-  writeRssFile('./public/sitemap.xml', xml);
+  writeFile('./public/sitemap.xml', xml);
 }
 
 export default generateSitemap;
-
-function writeRssFile(filePath: string, fileContent: string) {
-  try {
-    if (existsSync(filePath)) {
-      unlinkSync(filePath);
-    }
-    writeFileSync(filePath, fileContent);
-    console.info(`${filePath} file successfully created`);
-  } catch (error) {
-    console.info(
-      `Could not generate the ${filePath} file or the previous file could not be deleted`,
-    );
-  }
-}
 
 function getPosts() {
   return getAllPosts('en', [

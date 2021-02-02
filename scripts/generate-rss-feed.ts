@@ -1,4 +1,3 @@
-import { existsSync, unlinkSync, writeFileSync } from 'fs';
 import {
   WEB_NAME,
   WEB_DESCRIPTION,
@@ -8,6 +7,7 @@ import {
 import { getAuthorData, getAllPostsPreviews } from '../src/lib/api';
 import { Feed } from 'feed';
 import markdownToHtml from '../src/lib/markdownToHtml';
+import { writeFile } from '../src/lib/write-file';
 
 async function generateRssFeed() {
   if (process.env.NODE_ENV !== 'production') {
@@ -60,26 +60,12 @@ async function generateRssFeed() {
 
   feed.addContributor(author);
 
-  writeRssFile('./public/feed.xml', feed.rss2());
-  writeRssFile('./public/atom.xml', feed.atom1());
-  writeRssFile('./public/feed.json', feed.json1());
+  writeFile('./public/feed.xml', feed.rss2());
+  writeFile('./public/atom.xml', feed.atom1());
+  writeFile('./public/feed.json', feed.json1());
 }
 
 export default generateRssFeed;
-
-function writeRssFile(filePath: string, fileContent: string) {
-  try {
-    if (existsSync(filePath)) {
-      unlinkSync(filePath);
-    }
-    writeFileSync(filePath, fileContent);
-    console.info(`${filePath} file successfully created`);
-  } catch (error) {
-    console.info(
-      `Could not generate the ${filePath} file or the previous file could not be deleted`,
-    );
-  }
-}
 
 function getAuthor() {
   const authorData = getAuthorData('en');
