@@ -2,12 +2,13 @@ import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-const dataDirectory = (locale: string) => join(process.cwd(), '_data', locale);
+const authorDirectory = (locale: string) =>
+  join(process.cwd(), '_author', locale);
 const postsDirectory = (locale: string) =>
   join(process.cwd(), '_posts', locale);
 
-export function getDataSlugs(locale: string) {
-  return fs.readdirSync(dataDirectory(locale));
+export function getAuthorSlugs(locale: string) {
+  return fs.readdirSync(authorDirectory(locale));
 }
 
 export function getPostSlugs(locale: string) {
@@ -47,13 +48,13 @@ export function getPostBySlug(
   return items;
 }
 
-export function getDataBySlug(
+export function getAuthorBySlug(
   locale: string,
   slug: string,
   fields: string[] = [],
 ) {
   const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(dataDirectory(locale), `${realSlug}.md`);
+  const fullPath = join(authorDirectory(locale), `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
@@ -102,9 +103,9 @@ export function getAllPostsPreviews(locale: string) {
 }
 
 export function getAuthorData(locale: string) {
-  const slugs = getDataSlugs(locale);
+  const slugs = getAuthorSlugs(locale);
   const [aboutMeSlug] = slugs.filter((slug) => slug.includes('about-me'));
-  const aboutMeData = getDataBySlug(locale, aboutMeSlug, [
+  const aboutMeData = getAuthorBySlug(locale, aboutMeSlug, [
     'firstname',
     'lastname',
     'picture',
