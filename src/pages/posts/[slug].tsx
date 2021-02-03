@@ -7,10 +7,10 @@ import PostBody from '../../components/post-body';
 import PostHeader from '../../components/post-header';
 import Layout from '../../components/layout';
 import {
+  getPostBySlug,
   getAuthor,
-  getPostBySlugSlug,
-  getLocalResources,
   getLocalizedPosts,
+  getLocalResources,
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import Head from 'next/head';
@@ -97,7 +97,7 @@ type Params = {
 
 export async function getStaticProps({ params, locale }: Params) {
   const author = await getAuthor(locale);
-  const post = await getPostBySlugSlug(locale, params.slug);
+  const post = await getPostBySlug(locale, params.slug);
   const localResources = await getLocalResources(locale);
 
   const content = await markdownToHtml(post.content || '');

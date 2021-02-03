@@ -4,7 +4,7 @@ import {
   URL_BASE,
   COPYRIGHT,
 } from '../src/lib/constants';
-import { getAuthor, getAllPostsPreviews } from '../src/lib/api';
+import { getAuthor, getLocalizedPosts } from '../src/lib/api';
 import { Feed } from 'feed';
 import markdownToHtml from '../src/lib/markdownToHtml';
 import { writeFile } from '../src/lib/write-file';
@@ -16,7 +16,7 @@ async function generateRssFeed() {
 
   const author = await getAuthorData();
 
-  const posts = getAllPostsPreviews('en');
+  const posts = await getLocalizedPosts('en');
 
   const baseUrl = URL_BASE;
 
@@ -38,7 +38,7 @@ async function generateRssFeed() {
   });
 
   const entries = await Promise.all(
-    posts.map(async (post) => {
+    posts.map(async (post: any) => {
       const url = `${baseUrl}/post/${post.slug}`;
 
       return {
@@ -55,7 +55,7 @@ async function generateRssFeed() {
     }),
   );
 
-  entries.forEach((entry) => feed.addItem(entry));
+  entries.forEach((entry: any) => feed.addItem(entry));
 
   feed.addCategory('Development');
 

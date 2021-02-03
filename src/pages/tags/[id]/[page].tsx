@@ -5,8 +5,7 @@ import ErrorPage from 'next/error';
 import Container from '../../../components/container';
 import Layout from '../../../components/layout';
 import {
-  getAllPosts,
-  getAllPostsPreviews,
+  getLocalizedPosts,
   getAuthor,
   getLocalizedTags,
   getLocalResources,
@@ -81,10 +80,10 @@ type Params = {
 
 export const getStaticProps = async ({ params, locale }: Params) => {
   const author = await getAuthor(locale);
-  const allPostsPreviews = getAllPostsPreviews(locale);
+  const postsByTag = (await getLocalizedPosts(locale)).filter((p: any) =>
+    p.tags.includes(params.id),
+  );
   const localResources = await getLocalResources(locale);
-
-  const postsByTag = allPostsPreviews.filter((p) => p.tags.includes(params.id));
 
   const tagTitle = getTagTitle(params.id);
 
@@ -108,15 +107,17 @@ export async function getStaticPaths({ locales }: { locales: string[] }) {
     locales.map(async (locale) => {
       const allTags = await getLocalizedTags(locale);
 
-      const postsQuantity = allTags.map((tag: any) => {
-        return {
-          locale: locale,
-          tag: tag,
-          quantity: getAllPostsPreviews(locale).filter((p) =>
-            p.tags.includes(tag),
-          ).length,
-        };
-      });
+      const postsQuantity = await Promise.all(
+        allTags.map(async (tag: any) => {
+          return {
+            locale: locale,
+            tag: tag,
+            quantity: (await getLocalizedPosts(locale)).filter((p: any) =>
+              p.tags.includes(tag),
+            ).length,
+          };
+        }),
+      );
 
       const postsQuantityPaginated = postsQuantity.map((posts: any) => {
         const totalPages = Math.ceil(posts.quantity / POST_PER_PAGE);

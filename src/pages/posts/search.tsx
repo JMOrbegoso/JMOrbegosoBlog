@@ -7,11 +7,7 @@ import { WEB_NAME } from '../../lib/constants';
 import Author from '../../types/author';
 import ILocalResources from '../../interfaces/ilocalresources';
 import { Button, Form } from 'react-bootstrap';
-import {
-  getAllPostsPreviews,
-  getAuthor,
-  getLocalResources,
-} from '../../lib/api';
+import { getLocalizedPosts, getAuthor, getLocalResources } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -73,13 +69,13 @@ type Params = {
 
 export const getStaticProps = async ({ locale }: Params) => {
   const author = await getAuthor(locale);
-  const allPostsPreviews = getAllPostsPreviews(locale);
+  const localizedPosts = await getLocalizedPosts(locale);
   const localResources = await getLocalResources(locale);
 
   return {
     props: {
       author,
-      allPosts: allPostsPreviews,
+      allPosts: localizedPosts,
       localResources: localResources.default,
     },
   };
