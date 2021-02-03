@@ -2,14 +2,8 @@ import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-const authorDirectory = (locale: string) =>
-  join(process.cwd(), '_author', locale);
 const postsDirectory = (locale: string) =>
   join(process.cwd(), '_posts', locale);
-
-export function getAuthorSlugs(locale: string) {
-  return fs.readdirSync(authorDirectory(locale));
-}
 
 export function getPostSlugs(locale: string) {
   return fs.readdirSync(postsDirectory(locale));
@@ -22,39 +16,6 @@ export function getPostBySlug(
 ) {
   const realSlug = slug.replace(/\.md$/, '');
   const fullPath = join(postsDirectory(locale), `${realSlug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  const { data, content } = matter(fileContents);
-
-  type Items = {
-    [key: string]: string;
-  };
-
-  const items: Items = {};
-
-  // Ensure only the minimal needed data is exposed
-  fields.forEach((field) => {
-    if (field === 'slug') {
-      items[field] = realSlug;
-    }
-    if (field === 'content') {
-      items[field] = content;
-    }
-
-    if (data[field]) {
-      items[field] = data[field];
-    }
-  });
-
-  return items;
-}
-
-export function getAuthorBySlug(
-  locale: string,
-  slug: string,
-  fields: string[] = [],
-) {
-  const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(authorDirectory(locale), `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
