@@ -9,6 +9,12 @@ export function getPostSlugs(locale: string) {
   return fs.readdirSync(postsDirectory(locale));
 }
 
+export async function getPostBySlugSlug(locale: string, slug: string) {
+  const localizedPosts = await getLocalizedPosts(locale);
+  const post = localizedPosts.find((post: any) => post.slug === slug);
+  return post;
+}
+
 export function getPostBySlug(
   locale: string,
   slug: string,
