@@ -4,7 +4,7 @@ import {
   URL_BASE,
   COPYRIGHT,
 } from '../src/lib/constants';
-import { getAuthorData, getAllPostsPreviews } from '../src/lib/api';
+import { getAuthor, getAllPostsPreviews } from '../src/lib/api';
 import { Feed } from 'feed';
 import markdownToHtml from '../src/lib/markdownToHtml';
 import { writeFile } from '../src/lib/write-file';
@@ -14,7 +14,8 @@ async function generateRssFeed() {
     return;
   }
 
-  const author = getAuthor();
+  const author = await getAuthorData();
+
   const posts = getAllPostsPreviews('en');
 
   const baseUrl = URL_BASE;
@@ -67,8 +68,8 @@ async function generateRssFeed() {
 
 export default generateRssFeed;
 
-function getAuthor() {
-  const authorData = getAuthorData('en');
+async function getAuthorData() {
+  const authorData = await getAuthor('en');
   return {
     name: `${authorData.firstname} ${authorData.lastname}`,
     link: authorData.web,

@@ -102,23 +102,13 @@ export function getAllPostsPreviews(locale: string) {
   ]);
 }
 
-export function getAuthorData(locale: string) {
-  const slugs = getAuthorSlugs(locale);
-  const [aboutMeSlug] = slugs.filter((slug) => slug.includes('about-me'));
-  const aboutMeData = getAuthorBySlug(locale, aboutMeSlug, [
-    'firstname',
-    'lastname',
-    'picture',
-    'web',
-    'facebook',
-    'twitter',
-    'github',
-    'linkedin',
-    'youtube',
-    'instagram',
-    'content',
-  ]);
-  return aboutMeData;
+export async function getAuthor(locale: string) {
+  const localizedAuthorData = await import(
+    `../../public/blog-cache/author/${locale}.json`
+  );
+  const localizedAuthor = localizedAuthorData.default;
+  const [author] = localizedAuthor;
+  return author;
 }
 
 export function getAllTags(locale: string) {

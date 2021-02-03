@@ -9,7 +9,7 @@ import ILocalResources from '../../interfaces/ilocalresources';
 import { Button, Form } from 'react-bootstrap';
 import {
   getAllPostsPreviews,
-  getAuthorData,
+  getAuthor,
   getLocalResources,
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
@@ -72,7 +72,7 @@ type Params = {
 };
 
 export const getStaticProps = async ({ locale }: Params) => {
-  const author = getAuthorData(locale);
+  const author = await getAuthor(locale);
   const allPostsPreviews = getAllPostsPreviews(locale);
   const localResources = await getLocalResources(locale);
 

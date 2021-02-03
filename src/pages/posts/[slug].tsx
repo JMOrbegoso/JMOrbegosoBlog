@@ -9,7 +9,7 @@ import Layout from '../../components/layout';
 import {
   getPostBySlug,
   getAllPosts,
-  getAuthorData,
+  getAuthor,
   getLocalResources,
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
@@ -96,7 +96,7 @@ type Params = {
 };
 
 export async function getStaticProps({ params, locale }: Params) {
-  const author = getAuthorData(locale);
+  const author = await getAuthor(locale);
   const localResources = await getLocalResources(locale);
 
   const post = getPostBySlug(locale, params.slug, [

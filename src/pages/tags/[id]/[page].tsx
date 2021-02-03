@@ -7,7 +7,7 @@ import Layout from '../../../components/layout';
 import {
   getAllPosts,
   getAllPostsPreviews,
-  getAuthorData,
+  getAuthor,
   getAllTags,
   getLocalResources,
 } from '../../../lib/api';
@@ -80,7 +80,7 @@ type Params = {
 };
 
 export const getStaticProps = async ({ params, locale }: Params) => {
-  const author = getAuthorData(locale);
+  const author = await getAuthor(locale);
   const allPostsPreviews = getAllPostsPreviews(locale);
   const localResources = await getLocalResources(locale);
 

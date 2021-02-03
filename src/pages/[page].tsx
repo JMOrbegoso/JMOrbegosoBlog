@@ -3,7 +3,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
 import {
-  getAuthorData,
+  getAuthor,
   getAllPostsPreviews,
   getAllPosts,
   getLocalResources,
@@ -51,7 +51,7 @@ type Params = {
 };
 
 export const getStaticProps = async ({ params, locale }: Params) => {
-  const author = getAuthorData(locale);
+  const author = await getAuthor(locale);
   const allPostsPreviews = getAllPostsPreviews(locale);
   const localResources = await getLocalResources(locale);
 
