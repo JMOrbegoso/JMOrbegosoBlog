@@ -8,6 +8,7 @@ import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
 import ILocalResources from '../interfaces/ilocalresources';
+import generateBlogCache from '../../scripts/generate-blog-cache';
 import generateRssFeed from '../../scripts/generate-rss-feed';
 import generateSitemap from '../../scripts/generate-sitemap';
 import generateFavicons from '../../scripts/generate-favicons';
@@ -59,6 +60,7 @@ type Params = {
 
 export const getStaticProps = async ({ locale }: Params) => {
   // Run one-time scripts
+  await generateBlogCache();
   await generateRssFeed();
   await generateSitemap();
   await generateFavicons();
