@@ -38,7 +38,7 @@ async function generateRssFeed() {
   });
 
   const entries = await Promise.all(
-    posts.map(async (post: any) => {
+    posts.map(async (post) => {
       const url = `${baseUrl}/post/${post.slug}`;
 
       return {
@@ -55,7 +55,7 @@ async function generateRssFeed() {
     }),
   );
 
-  entries.forEach((entry: any) => feed.addItem(entry));
+  entries.forEach((entry) => feed.addItem(entry));
 
   feed.addCategory('Development');
 

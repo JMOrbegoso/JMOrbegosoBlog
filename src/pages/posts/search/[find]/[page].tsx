@@ -80,7 +80,7 @@ type Params = {
 
 export async function getServerSideProps({ query, locale }: Params) {
   const author = await getLocalizedAuthor(locale);
-  const postsFound = (await getLocalizedPosts(locale)).filter((p: any) =>
+  const postsFound = (await getLocalizedPosts(locale)).filter((p) =>
     p.title.toLowerCase().includes(query.find.toLowerCase()),
   );
   const localResources = await getLocalResources(locale);

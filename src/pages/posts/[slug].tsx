@@ -100,7 +100,7 @@ export async function getStaticProps({ params, locale }: Params) {
   const post = await getPostBySlug(locale, params.slug);
   const localResources = await getLocalResources(locale);
 
-  const content = await markdownToHtml(post.content || '');
+  const content = await markdownToHtml(post?.content ?? '');
 
   return {
     props: {
@@ -120,7 +120,7 @@ export async function getStaticPaths({ locales }: { locales: string[] }) {
       locales.map(async (locale) => {
         const posts = await getLocalizedPosts(locale);
 
-        return posts.map((post: any) => {
+        return posts.map((post) => {
           return {
             locale: locale,
             slug: post.slug,

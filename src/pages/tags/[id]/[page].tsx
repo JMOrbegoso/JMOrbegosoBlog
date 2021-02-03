@@ -19,6 +19,7 @@ import PostsList from '../../../components/posts-list';
 import { getTagTitle } from '../../../lib/tag-helpers';
 import { POST_PER_PAGE } from '../../../lib/constants';
 import ILocalResources from '../../../interfaces/ilocalresources';
+import { PostTag } from '../../../enums/postTag';
 
 type Props = {
   author: Author;
@@ -70,7 +71,7 @@ export default Tag;
 
 type Params = {
   params: {
-    id: string;
+    id: PostTag;
     page: number;
   };
   locales: string[];
@@ -80,7 +81,7 @@ type Params = {
 
 export const getStaticProps = async ({ params, locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
-  const postsByTag = (await getLocalizedPosts(locale)).filter((p: any) =>
+  const postsByTag = (await getLocalizedPosts(locale)).filter((p) =>
     p.tags.includes(params.id),
   );
   const localResources = await getLocalResources(locale);
@@ -101,25 +102,25 @@ export const getStaticProps = async ({ params, locale }: Params) => {
 };
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const params: { locale: string; id: string; page: string }[] = [];
+  const params: { locale: string; id: PostTag; page: number }[] = [];
 
   await Promise.all(
     locales.map(async (locale) => {
       const allTags = await getLocalizedTags(locale);
 
       const postsQuantity = await Promise.all(
-        allTags.map(async (tag: any) => {
+        allTags.map(async (tag) => {
           return {
             locale: locale,
             tag: tag,
-            quantity: (await getLocalizedPosts(locale)).filter((p: any) =>
+            quantity: (await getLocalizedPosts(locale)).filter((p) =>
               p.tags.includes(tag),
             ).length,
           };
         }),
       );
 
-      const postsQuantityPaginated = postsQuantity.map((posts: any) => {
+      const postsQuantityPaginated = postsQuantity.map((posts) => {
         const totalPages = Math.ceil(posts.quantity / POST_PER_PAGE);
 
         const pagesArray: number[] = [];
@@ -128,7 +129,7 @@ export async function getStaticPaths({ locales }: { locales: string[] }) {
           pagesArray.push(i);
         }
 
-        return pagesArray.map((page: any) => {
+        return pagesArray.map((page) => {
           return {
             locale: locale,
             id: posts.tag,
@@ -143,7 +144,7 @@ export async function getStaticPaths({ locales }: { locales: string[] }) {
 
   const paths: {
     locale: string;
-    params: { id: string; page: string };
+    params: { id: PostTag; page: string };
   }[] = params.map((param) => {
     return {
       locale: param.locale,

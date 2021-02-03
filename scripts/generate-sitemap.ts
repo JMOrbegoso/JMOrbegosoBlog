@@ -38,7 +38,7 @@ async function generateSitemap() {
 
   // post routes
   const posts = await getLocalizedPosts('en');
-  const postLinks = posts.map((post: any) => ({
+  const postLinks = posts.map((post) => ({
     url: `posts/${post.slug}`,
     changefreq: 'daily',
     priority: 0.7,
@@ -46,7 +46,7 @@ async function generateSitemap() {
 
   // tag routes
   const tags = await getLocalizedTags('en');
-  const tagLinks = tags.map((tag: any) => ({
+  const tagLinks = tags.map((tag) => ({
     url: `/tags/${tag}`,
     changefreq: 'daily',
     priority: 0.7,

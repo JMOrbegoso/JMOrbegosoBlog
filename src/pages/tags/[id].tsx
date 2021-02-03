@@ -18,6 +18,7 @@ import Author from '../../types/author';
 import PostsList from '../../components/posts-list';
 import { getTagTitle } from '../../lib/tag-helpers';
 import ILocalResources from '../../interfaces/ilocalresources';
+import { PostTag } from '../../enums/postTag';
 
 type Props = {
   author: Author;
@@ -82,7 +83,7 @@ export default Tag;
 
 type Params = {
   params: {
-    id: string;
+    id: PostTag;
     page: number;
   };
   locales: string[];
@@ -92,7 +93,7 @@ type Params = {
 
 export const getStaticProps = async ({ params, locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
-  const postsByTag = (await getLocalizedPosts(locale)).filter((p: any) =>
+  const postsByTag = (await getLocalizedPosts(locale)).filter((p) =>
     p.tags.includes(params.id),
   );
   const localResources = await getLocalResources(locale);
@@ -110,25 +111,25 @@ export const getStaticProps = async ({ params, locale }: Params) => {
 };
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const paginatedPostsByTags: {
+  const paths: {
     locale: string;
-    params: { id: string };
-  }[] = await Promise.all(
-    locales.map(async (locale) => {
-      const allTags = await getLocalizedTags(locale);
+    params: { id: PostTag };
+  }[] = (
+    await Promise.all(
+      locales.map(async (locale) => {
+        const allTags = await getLocalizedTags(locale);
 
-      return allTags.map((tag: any) => {
-        return {
-          locale: locale,
-          params: {
-            id: tag,
-          },
-        };
-      });
-    }),
-  );
-
-  const paths = paginatedPostsByTags.flat();
+        return allTags.map((tag) => {
+          return {
+            locale: locale,
+            params: {
+              id: tag,
+            },
+          };
+        });
+      }),
+    )
+  ).flat();
 
   return {
     paths: paths,
