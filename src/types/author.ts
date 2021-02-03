@@ -1,4 +1,5 @@
 type Author = {
+  fileName: string;
   firstname: string;
   lastname: string;
   picture: string;
