@@ -8,8 +8,8 @@ import PostHeader from '../../components/post-header';
 import Layout from '../../components/layout';
 import {
   getPostBySlug,
-  getAllPosts,
-  getAuthorData,
+  getLocalizedAuthor,
+  getLocalizedPosts,
   getLocalResources,
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
@@ -96,19 +96,11 @@ type Params = {
 };
 
 export async function getStaticProps({ params, locale }: Params) {
-  const author = getAuthorData(locale);
+  const author = await getLocalizedAuthor(locale);
+  const post = await getPostBySlug(locale, params.slug);
   const localResources = await getLocalResources(locale);
 
-  const post = getPostBySlug(locale, params.slug, [
-    'title',
-    'date',
-    'slug',
-    'content',
-    'ogImage',
-    'coverImage',
-    'tags',
-  ]);
-  const content = await markdownToHtml(post.content || '');
+  const content = await markdownToHtml(post?.content ?? '');
 
   return {
     props: {
@@ -123,20 +115,31 @@ export async function getStaticProps({ params, locale }: Params) {
 }
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const paths: { locale: string; params: { slug: string } }[] = [];
+  const params = (
+    await Promise.all(
+      locales.map(async (locale) => {
+        const posts = await getLocalizedPosts(locale);
 
-  locales.forEach((locale) => {
-    const postPath = getAllPosts(locale, ['slug']).map((post) => {
+        return posts.map((post) => {
+          return {
+            locale: locale,
+            slug: post.slug,
+          };
+        });
+      }),
+    )
+  ).flat();
+
+  const paths: { locale: string; params: { slug: string } }[] = params.map(
+    (param) => {
       return {
-        locale: locale,
+        locale: param.locale,
         params: {
-          slug: post.slug,
+          slug: param.slug,
         },
       };
-    });
-
-    paths.push(...postPath);
-  });
+    },
+  );
 
   return {
     paths: paths,

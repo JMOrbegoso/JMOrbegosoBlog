@@ -5,10 +5,9 @@ import ErrorPage from 'next/error';
 import Container from '../../../components/container';
 import Layout from '../../../components/layout';
 import {
-  getAllPosts,
-  getAllPostsPreviews,
-  getAuthorData,
-  getAllTags,
+  getLocalizedPosts,
+  getLocalizedAuthor,
+  getLocalizedTags,
   getLocalResources,
 } from '../../../lib/api';
 import PageHeader from '../../../components/page-header';
@@ -20,6 +19,7 @@ import PostsList from '../../../components/posts-list';
 import { getTagTitle } from '../../../lib/tag-helpers';
 import { POST_PER_PAGE } from '../../../lib/constants';
 import ILocalResources from '../../../interfaces/ilocalresources';
+import { PostTag } from '../../../enums/postTag';
 
 type Props = {
   author: Author;
@@ -71,7 +71,7 @@ export default Tag;
 
 type Params = {
   params: {
-    id: string;
+    id: PostTag;
     page: number;
   };
   locales: string[];
@@ -80,11 +80,11 @@ type Params = {
 };
 
 export const getStaticProps = async ({ params, locale }: Params) => {
-  const author = getAuthorData(locale);
-  const allPostsPreviews = getAllPostsPreviews(locale);
+  const author = await getLocalizedAuthor(locale);
+  const postsByTag = (await getLocalizedPosts(locale)).filter((p) =>
+    p.tags.includes(params.id),
+  );
   const localResources = await getLocalResources(locale);
-
-  const postsByTag = allPostsPreviews.filter((p) => p.tags.includes(params.id));
 
   const tagTitle = getTagTitle(params.id);
 
@@ -102,48 +102,57 @@ export const getStaticProps = async ({ params, locale }: Params) => {
 };
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const paths: { locale: string; params: { id: string; page: string } }[] = [];
+  const params: { locale: string; id: PostTag; page: number }[] = [];
 
-  locales.forEach((locale) => {
-    const allTags = getAllTags(locale);
-    const paginatedPostsByTags: {
-      tag: string;
-      page: number;
-      locale: string;
-    }[] = [];
+  await Promise.all(
+    locales.map(async (locale) => {
+      const allTags = await getLocalizedTags(locale);
 
-    allTags.forEach((tag) => {
-      const allPosts = getAllPosts(locale, ['tags']);
-      const allPostsByTag = allPosts.filter((p) => p.tags.includes(tag));
+      const postsQuantity = await Promise.all(
+        allTags.map(async (tag) => {
+          return {
+            locale: locale,
+            tag: tag,
+            quantity: (await getLocalizedPosts(locale)).filter((p) =>
+              p.tags.includes(tag),
+            ).length,
+          };
+        }),
+      );
 
-      const totalPages = Math.ceil(allPostsByTag.length / POST_PER_PAGE);
+      const postsQuantityPaginated = postsQuantity.map((posts) => {
+        const totalPages = Math.ceil(posts.quantity / POST_PER_PAGE);
 
-      const pagesArray: number[] = [];
+        const pagesArray: number[] = [];
 
-      for (let i = 1; i <= totalPages; i++) {
-        pagesArray.push(i);
-      }
+        for (let i = 1; i <= totalPages; i++) {
+          pagesArray.push(i);
+        }
 
-      pagesArray.forEach((page) => {
-        paginatedPostsByTags.push({
-          tag: tag,
-          page: page,
-          locale: locale,
+        return pagesArray.map((page) => {
+          return {
+            locale: locale,
+            id: posts.tag,
+            page: page,
+          };
         });
       });
-    });
 
-    const pagePath = paginatedPostsByTags.map((pt) => {
-      return {
-        locale: pt.locale,
-        params: {
-          id: pt.tag,
-          page: pt.page.toString(),
-        },
-      };
-    });
+      params.push(...postsQuantityPaginated.flat());
+    }),
+  );
 
-    paths.push(...pagePath);
+  const paths: {
+    locale: string;
+    params: { id: PostTag; page: string };
+  }[] = params.map((param) => {
+    return {
+      locale: param.locale,
+      params: {
+        id: param.id,
+        page: param.page.toString(),
+      },
+    };
   });
 
   return {

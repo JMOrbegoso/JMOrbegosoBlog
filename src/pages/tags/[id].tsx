@@ -5,9 +5,9 @@ import ErrorPage from 'next/error';
 import Container from '../../components/container';
 import Layout from '../../components/layout';
 import {
-  getAuthorData,
-  getAllPostsPreviews,
-  getAllTags,
+  getLocalizedAuthor,
+  getLocalizedPosts,
+  getLocalizedTags,
   getLocalResources,
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
@@ -18,6 +18,7 @@ import Author from '../../types/author';
 import PostsList from '../../components/posts-list';
 import { getTagTitle } from '../../lib/tag-helpers';
 import ILocalResources from '../../interfaces/ilocalresources';
+import { PostTag } from '../../enums/postTag';
 
 type Props = {
   author: Author;
@@ -82,7 +83,7 @@ export default Tag;
 
 type Params = {
   params: {
-    id: string;
+    id: PostTag;
     page: number;
   };
   locales: string[];
@@ -91,11 +92,11 @@ type Params = {
 };
 
 export const getStaticProps = async ({ params, locale }: Params) => {
-  const author = getAuthorData(locale);
-  const allPostsPreviews = getAllPostsPreviews(locale);
+  const author = await getLocalizedAuthor(locale);
+  const postsByTag = (await getLocalizedPosts(locale)).filter((p) =>
+    p.tags.includes(params.id),
+  );
   const localResources = await getLocalResources(locale);
-
-  const postsByTag = allPostsPreviews.filter((p) => p.tags.includes(params.id));
 
   const tagTitle = getTagTitle(params.id);
 
@@ -110,30 +111,25 @@ export const getStaticProps = async ({ params, locale }: Params) => {
 };
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const paths: { locale: string; params: { id: string } }[] = [];
+  const paths: {
+    locale: string;
+    params: { id: PostTag };
+  }[] = (
+    await Promise.all(
+      locales.map(async (locale) => {
+        const allTags = await getLocalizedTags(locale);
 
-  locales.forEach((locale) => {
-    const allTags = getAllTags(locale);
-    const paginatedPostsByTags: {
-      tag: string;
-      locale: string;
-    }[] = [];
-
-    allTags.forEach((tag) => {
-      paginatedPostsByTags.push({ tag, locale });
-    });
-
-    const pagePath = paginatedPostsByTags.map((pt) => {
-      return {
-        locale: pt.locale,
-        params: {
-          id: pt.tag,
-        },
-      };
-    });
-
-    paths.push(...pagePath);
-  });
+        return allTags.map((tag) => {
+          return {
+            locale: locale,
+            params: {
+              id: tag,
+            },
+          };
+        });
+      }),
+    )
+  ).flat();
 
   return {
     paths: paths,

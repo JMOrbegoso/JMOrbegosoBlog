@@ -1,6 +1,7 @@
 import { PostTag } from '../enums/postTag';
 
 type PostType = {
+  fileName: string;
   slug: string;
   title: string;
   date: string;

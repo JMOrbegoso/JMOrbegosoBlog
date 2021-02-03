@@ -8,8 +8,8 @@ import Author from '../../types/author';
 import ILocalResources from '../../interfaces/ilocalresources';
 import { Button, Form } from 'react-bootstrap';
 import {
-  getAllPostsPreviews,
-  getAuthorData,
+  getLocalizedPosts,
+  getLocalizedAuthor,
   getLocalResources,
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
@@ -72,14 +72,14 @@ type Params = {
 };
 
 export const getStaticProps = async ({ locale }: Params) => {
-  const author = getAuthorData(locale);
-  const allPostsPreviews = getAllPostsPreviews(locale);
+  const author = await getLocalizedAuthor(locale);
+  const localizedPosts = await getLocalizedPosts(locale);
   const localResources = await getLocalResources(locale);
 
   return {
     props: {
       author,
-      allPosts: allPostsPreviews,
+      allPosts: localizedPosts,
       localResources: localResources.default,
     },
   };

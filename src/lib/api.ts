@@ -1,134 +1,45 @@
-import fs from 'fs';
-import { join } from 'path';
-import matter from 'gray-matter';
+import { PostTag } from '../enums/postTag';
+import Author from '../types/author';
+import Post from '../types/post';
 
-const dataDirectory = (locale: string) => join(process.cwd(), '_data', locale);
-const postsDirectory = (locale: string) =>
-  join(process.cwd(), '_posts', locale);
-
-export function getDataSlugs(locale: string) {
-  return fs.readdirSync(dataDirectory(locale));
+export async function getLocalizedAuthor(locale: string): Promise<Author> {
+  const localizedAuthorData = await import(
+    `../../public/blog-cache/author/${locale}.json`
+  );
+  const localizedAuthor = localizedAuthorData.default;
+  const [author] = localizedAuthor;
+  return author;
 }
 
-export function getPostSlugs(locale: string) {
-  return fs.readdirSync(postsDirectory(locale));
+export async function getLocalizedPosts(locale: string): Promise<Post[]> {
+  const localizedPostsData = await import(
+    `../../public/blog-cache/posts/${locale}.json`
+  );
+  const localizedPosts: Post[] = localizedPostsData.default;
+  const sortedPosts = localizedPosts.sort((post1, post2) =>
+    post1.date > post2.date ? -1 : 1,
+  );
+  return sortedPosts;
 }
 
-export function getPostBySlug(
-  locale: string,
-  slug: string,
-  fields: string[] = [],
-) {
-  const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(postsDirectory(locale), `${realSlug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  const { data, content } = matter(fileContents);
+export async function getLocalizedTags(locale: string): Promise<PostTag[]> {
+  const localizedPosts = await getLocalizedPosts(locale);
+  const allTags = localizedPosts.map((p) => p.tags).flat(1);
 
-  type Items = {
-    [key: string]: string;
-  };
-
-  const items: Items = {};
-
-  // Ensure only the minimal needed data is exposed
-  fields.forEach((field) => {
-    if (field === 'slug') {
-      items[field] = realSlug;
-    }
-    if (field === 'content') {
-      items[field] = content;
-    }
-
-    if (data[field]) {
-      items[field] = data[field];
-    }
-  });
-
-  return items;
-}
-
-export function getDataBySlug(
-  locale: string,
-  slug: string,
-  fields: string[] = [],
-) {
-  const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(dataDirectory(locale), `${realSlug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  const { data, content } = matter(fileContents);
-
-  type Items = {
-    [key: string]: string;
-  };
-
-  const items: Items = {};
-
-  // Ensure only the minimal needed data is exposed
-  fields.forEach((field) => {
-    if (field === 'slug') {
-      items[field] = realSlug;
-    }
-    if (field === 'content') {
-      items[field] = content;
-    }
-
-    if (data[field]) {
-      items[field] = data[field];
-    }
-  });
-
-  return items;
-}
-
-export function getAllPosts(locale: string, fields: string[] = []) {
-  const slugs = getPostSlugs(locale);
-  const posts = slugs
-    .map((slug) => getPostBySlug(locale, slug, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
-  return posts;
-}
-
-export function getAllPostsPreviews(locale: string) {
-  return getAllPosts(locale, [
-    'slug',
-    'title',
-    'date',
-    'coverImage',
-    'excerpt',
-    'content',
-    'tags',
-  ]);
-}
-
-export function getAuthorData(locale: string) {
-  const slugs = getDataSlugs(locale);
-  const [aboutMeSlug] = slugs.filter((slug) => slug.includes('about-me'));
-  const aboutMeData = getDataBySlug(locale, aboutMeSlug, [
-    'firstname',
-    'lastname',
-    'picture',
-    'web',
-    'facebook',
-    'twitter',
-    'github',
-    'linkedin',
-    'youtube',
-    'instagram',
-    'content',
-  ]);
-  return aboutMeData;
-}
-
-export function getAllTags(locale: string) {
-  const allPosts = getAllPosts(locale, ['tags']);
-  const allTags = allPosts.map((p) => p.tags).flat(1);
-
-  const allUniqueTags = allTags
-    .filter((item, index) => allTags.indexOf(item) === index)
+  const uniqueTags = allTags
+    .filter((item: any, index: any) => allTags.indexOf(item) === index)
     .sort((tag1, tag2) => tag1.localeCompare(tag2));
 
-  return allUniqueTags;
+  return uniqueTags;
+}
+
+export async function getPostBySlug(
+  locale: string,
+  slug: string,
+): Promise<Post | undefined> {
+  const localizedPosts = await getLocalizedPosts(locale);
+  const post = localizedPosts.find((post) => post.slug === slug);
+  return post;
 }
 
 export async function getLocalResources(locale: string) {

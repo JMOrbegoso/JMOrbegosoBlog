@@ -16,7 +16,7 @@ const PostPagination = ({ actualPage, totalPosts }: Props) => {
 
   let pageItems = [];
 
-  const totalPages = Math.round(totalPosts / POST_PER_PAGE);
+  const totalPages = Math.ceil(totalPosts / POST_PER_PAGE);
 
   const previousPagesLimit =
     0 >= currentPage - PAGINATION_LENGTH ? 1 : currentPage - PAGINATION_LENGTH;

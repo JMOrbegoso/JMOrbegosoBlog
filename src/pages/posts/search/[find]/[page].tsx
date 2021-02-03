@@ -2,8 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import Layout from '../../../../components/layout';
 import {
-  getAllPostsPreviews,
-  getAuthorData,
+  getLocalizedPosts,
+  getLocalizedAuthor,
   getLocalResources,
 } from '../../../../lib/api';
 import Head from 'next/head';
@@ -79,8 +79,8 @@ type Params = {
 };
 
 export async function getServerSideProps({ query, locale }: Params) {
-  const author = getAuthorData(locale);
-  const allPostsPreviews = getAllPostsPreviews(locale).filter((p) =>
+  const author = await getLocalizedAuthor(locale);
+  const postsFound = (await getLocalizedPosts(locale)).filter((p) =>
     p.title.toLowerCase().includes(query.find.toLowerCase()),
   );
   const localResources = await getLocalResources(locale);
@@ -88,7 +88,7 @@ export async function getServerSideProps({ query, locale }: Params) {
   return {
     props: {
       author,
-      allPosts: allPostsPreviews,
+      allPosts: postsFound,
       actualPage: query.page,
       localResources: localResources.default,
       searchTerm: query.find,

@@ -3,9 +3,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
 import {
-  getAuthorData,
-  getAllPostsPreviews,
-  getAllPosts,
+  getLocalizedAuthor,
+  getLocalizedPosts,
   getLocalResources,
 } from '../lib/api';
 import Head from 'next/head';
@@ -51,8 +50,8 @@ type Params = {
 };
 
 export const getStaticProps = async ({ params, locale }: Params) => {
-  const author = getAuthorData(locale);
-  const allPostsPreviews = getAllPostsPreviews(locale);
+  const author = await getLocalizedAuthor(locale);
+  const localizedPosts = await getLocalizedPosts(locale);
   const localResources = await getLocalResources(locale);
 
   const actualPage = params.page;
@@ -60,7 +59,7 @@ export const getStaticProps = async ({ params, locale }: Params) => {
   return {
     props: {
       author,
-      allPosts: allPostsPreviews,
+      allPosts: localizedPosts,
       actualPage,
       localResources: localResources.default,
     },
@@ -70,27 +69,27 @@ export const getStaticProps = async ({ params, locale }: Params) => {
 export async function getStaticPaths({ locales }: { locales: string[] }) {
   const paths: { locale: string; params: { page: string } }[] = [];
 
-  locales.forEach((locale) => {
-    const allPosts = getAllPosts(locale, ['slug']);
+  await Promise.all(
+    locales.map(async (locale) => {
+      const localizedPosts = await getLocalizedPosts(locale);
 
-    const totalPages = Math.ceil(allPosts.length / POST_PER_PAGE);
-    const pagesArray: number[] = [];
+      const totalPages = Math.ceil(localizedPosts.length / POST_PER_PAGE);
+      const pagesArray: number[] = [];
 
-    for (let i = 1; i <= totalPages; i++) {
-      pagesArray.push(i);
-    }
+      for (let i = 1; i <= totalPages; i++) {
+        pagesArray.push(i);
+      }
 
-    const pagePath = pagesArray.map((page) => {
-      return {
-        locale: locale,
-        params: {
-          page: page.toString(),
-        },
-      };
-    });
-
-    paths.push(...pagePath);
-  });
+      pagesArray.forEach((page) =>
+        paths.push({
+          locale: locale,
+          params: {
+            page: page.toString(),
+          },
+        }),
+      );
+    }),
+  );
 
   return {
     paths: paths,
