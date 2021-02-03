@@ -3,7 +3,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import Layout from '../../../../components/layout';
 import {
   getLocalizedPosts,
-  getAuthor,
+  getLocalizedAuthor,
   getLocalResources,
 } from '../../../../lib/api';
 import Head from 'next/head';
@@ -79,7 +79,7 @@ type Params = {
 };
 
 export async function getServerSideProps({ query, locale }: Params) {
-  const author = await getAuthor(locale);
+  const author = await getLocalizedAuthor(locale);
   const postsFound = (await getLocalizedPosts(locale)).filter((p: any) =>
     p.title.toLowerCase().includes(query.find.toLowerCase()),
   );

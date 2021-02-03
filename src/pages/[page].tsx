@@ -2,7 +2,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
-import { getAuthor, getLocalizedPosts, getLocalResources } from '../lib/api';
+import {
+  getLocalizedAuthor,
+  getLocalizedPosts,
+  getLocalResources,
+} from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Post from '../types/post';
@@ -46,7 +50,7 @@ type Params = {
 };
 
 export const getStaticProps = async ({ params, locale }: Params) => {
-  const author = await getAuthor(locale);
+  const author = await getLocalizedAuthor(locale);
   const localizedPosts = await getLocalizedPosts(locale);
   const localResources = await getLocalResources(locale);
 

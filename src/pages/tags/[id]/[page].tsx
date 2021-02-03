@@ -6,7 +6,7 @@ import Container from '../../../components/container';
 import Layout from '../../../components/layout';
 import {
   getLocalizedPosts,
-  getAuthor,
+  getLocalizedAuthor,
   getLocalizedTags,
   getLocalResources,
 } from '../../../lib/api';
@@ -79,7 +79,7 @@ type Params = {
 };
 
 export const getStaticProps = async ({ params, locale }: Params) => {
-  const author = await getAuthor(locale);
+  const author = await getLocalizedAuthor(locale);
   const postsByTag = (await getLocalizedPosts(locale)).filter((p: any) =>
     p.tags.includes(params.id),
   );

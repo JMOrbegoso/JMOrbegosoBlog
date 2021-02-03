@@ -8,7 +8,7 @@ import PostHeader from '../../components/post-header';
 import Layout from '../../components/layout';
 import {
   getPostBySlug,
-  getAuthor,
+  getLocalizedAuthor,
   getLocalizedPosts,
   getLocalResources,
 } from '../../lib/api';
@@ -96,7 +96,7 @@ type Params = {
 };
 
 export async function getStaticProps({ params, locale }: Params) {
-  const author = await getAuthor(locale);
+  const author = await getLocalizedAuthor(locale);
   const post = await getPostBySlug(locale, params.slug);
   const localResources = await getLocalResources(locale);
 

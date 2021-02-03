@@ -1,4 +1,4 @@
-export async function getAuthor(locale: string) {
+export async function getLocalizedAuthor(locale: string) {
   const localizedAuthorData = await import(
     `../../public/blog-cache/author/${locale}.json`
   );

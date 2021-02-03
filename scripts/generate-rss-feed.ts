@@ -4,7 +4,7 @@ import {
   URL_BASE,
   COPYRIGHT,
 } from '../src/lib/constants';
-import { getAuthor, getLocalizedPosts } from '../src/lib/api';
+import { getLocalizedAuthor, getLocalizedPosts } from '../src/lib/api';
 import { Feed } from 'feed';
 import markdownToHtml from '../src/lib/markdownToHtml';
 import { writeFile } from '../src/lib/write-file';
@@ -69,7 +69,7 @@ async function generateRssFeed() {
 export default generateRssFeed;
 
 async function getAuthorData() {
-  const authorData = await getAuthor('en');
+  const authorData = await getLocalizedAuthor('en');
   return {
     name: `${authorData.firstname} ${authorData.lastname}`,
     link: authorData.web,

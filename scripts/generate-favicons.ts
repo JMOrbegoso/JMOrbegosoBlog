@@ -1,5 +1,5 @@
 import { WEB_NAME, WEB_DESCRIPTION } from '../src/lib/constants';
-import { getAuthor } from '../src/lib/api';
+import { getLocalizedAuthor } from '../src/lib/api';
 import favicons, { FaviconOptions } from 'favicons';
 import { mkdirSync } from 'fs';
 import { writeFile } from '../src/lib/write-file';
@@ -90,7 +90,7 @@ async function generateFavicons() {
 export default generateFavicons;
 
 async function getAuthorData() {
-  const authorData = await getAuthor('en');
+  const authorData = await getLocalizedAuthor('en');
   return {
     name: `${authorData.firstname} ${authorData.lastname}`,
     link: authorData.web,
