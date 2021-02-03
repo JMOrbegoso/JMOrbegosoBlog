@@ -8,7 +8,7 @@ import {
   getAllPosts,
   getAllPostsPreviews,
   getAuthor,
-  getAllTags,
+  getLocalizedTags,
   getLocalResources,
 } from '../../../lib/api';
 import PageHeader from '../../../components/page-header';
@@ -102,48 +102,55 @@ export const getStaticProps = async ({ params, locale }: Params) => {
 };
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const paths: { locale: string; params: { id: string; page: string } }[] = [];
+  const params: { locale: string; id: string; page: string }[] = [];
 
-  locales.forEach((locale) => {
-    const allTags = getAllTags(locale);
-    const paginatedPostsByTags: {
-      tag: string;
-      page: number;
-      locale: string;
-    }[] = [];
+  await Promise.all(
+    locales.map(async (locale) => {
+      const allTags = await getLocalizedTags(locale);
 
-    allTags.forEach((tag) => {
-      const allPosts = getAllPosts(locale, ['tags']);
-      const allPostsByTag = allPosts.filter((p) => p.tags.includes(tag));
-
-      const totalPages = Math.ceil(allPostsByTag.length / POST_PER_PAGE);
-
-      const pagesArray: number[] = [];
-
-      for (let i = 1; i <= totalPages; i++) {
-        pagesArray.push(i);
-      }
-
-      pagesArray.forEach((page) => {
-        paginatedPostsByTags.push({
-          tag: tag,
-          page: page,
+      const postsQuantity = allTags.map((tag: any) => {
+        return {
           locale: locale,
+          tag: tag,
+          quantity: getAllPostsPreviews(locale).filter((p) =>
+            p.tags.includes(tag),
+          ).length,
+        };
+      });
+
+      const postsQuantityPaginated = postsQuantity.map((posts: any) => {
+        const totalPages = Math.ceil(posts.quantity / POST_PER_PAGE);
+
+        const pagesArray: number[] = [];
+
+        for (let i = 1; i <= totalPages; i++) {
+          pagesArray.push(i);
+        }
+
+        return pagesArray.map((page: any) => {
+          return {
+            locale: locale,
+            id: posts.tag,
+            page: page,
+          };
         });
       });
-    });
 
-    const pagePath = paginatedPostsByTags.map((pt) => {
-      return {
-        locale: pt.locale,
-        params: {
-          id: pt.tag,
-          page: pt.page.toString(),
-        },
-      };
-    });
+      params.push(...postsQuantityPaginated.flat());
+    }),
+  );
 
-    paths.push(...pagePath);
+  const paths: {
+    locale: string;
+    params: { id: string; page: string };
+  }[] = params.map((param) => {
+    return {
+      locale: param.locale,
+      params: {
+        id: param.id,
+        page: param.page.toString(),
+      },
+    };
   });
 
   return {

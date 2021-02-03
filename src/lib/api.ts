@@ -72,15 +72,26 @@ export async function getAuthor(locale: string) {
   return author;
 }
 
-export function getAllTags(locale: string) {
-  const allPosts = getAllPosts(locale, ['tags']);
-  const allTags = allPosts.map((p) => p.tags).flat(1);
+export async function getLocalizedPosts(locale: string) {
+  const localizedPostsData = await import(
+    `../../public/blog-cache/posts/${locale}.json`
+  );
+  const localizedPosts = localizedPostsData.default;
+  const sortedPosts = localizedPosts.sort((post1: any, post2: any) =>
+    post1.date > post2.date ? -1 : 1,
+  );
+  return sortedPosts;
+}
 
-  const allUniqueTags = allTags
-    .filter((item, index) => allTags.indexOf(item) === index)
-    .sort((tag1, tag2) => tag1.localeCompare(tag2));
+export async function getLocalizedTags(locale: string) {
+  const localizedPosts = await getLocalizedPosts(locale);
+  const allTags = localizedPosts.map((p: any) => p.tags).flat(1);
 
-  return allUniqueTags;
+  const uniqueTags = allTags
+    .filter((item: any, index: any) => allTags.indexOf(item) === index)
+    .sort((tag1: any, tag2: any) => tag1.localeCompare(tag2));
+
+  return uniqueTags;
 }
 
 export async function getLocalResources(locale: string) {

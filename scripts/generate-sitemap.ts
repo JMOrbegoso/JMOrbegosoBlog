@@ -1,5 +1,5 @@
 import { URL_BASE } from '../src/lib/constants';
-import { getAllPosts, getAllTags } from '../src/lib/api';
+import { getAllPosts, getLocalizedTags } from '../src/lib/api';
 import globby from 'globby';
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { Readable } from 'stream';
@@ -45,8 +45,8 @@ async function generateSitemap() {
   }));
 
   // tag routes
-  const tags = getTags();
-  const tagLinks = tags.map((tag) => ({
+  const tags = await getLocalizedTags('en');
+  const tagLinks = tags.map((tag: any) => ({
     url: `/tags/${tag}`,
     changefreq: 'daily',
     priority: 0.7,
@@ -72,8 +72,4 @@ function getPosts() {
     'excerpt',
     'content',
   ]).sort((post1: any, post2: any) => (post1.date > post2.date ? -1 : 1));
-}
-
-function getTags() {
-  return getAllTags('en');
 }

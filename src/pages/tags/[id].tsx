@@ -7,7 +7,7 @@ import Layout from '../../components/layout';
 import {
   getAuthor,
   getAllPostsPreviews,
-  getAllTags,
+  getLocalizedTags,
   getLocalResources,
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
@@ -110,30 +110,25 @@ export const getStaticProps = async ({ params, locale }: Params) => {
 };
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const paths: { locale: string; params: { id: string } }[] = [];
+  const paginatedPostsByTags: {
+    locale: string;
+    params: { id: string };
+  }[] = await Promise.all(
+    locales.map(async (locale) => {
+      const allTags = await getLocalizedTags(locale);
 
-  locales.forEach((locale) => {
-    const allTags = getAllTags(locale);
-    const paginatedPostsByTags: {
-      tag: string;
-      locale: string;
-    }[] = [];
+      return allTags.map((tag: any) => {
+        return {
+          locale: locale,
+          params: {
+            id: tag,
+          },
+        };
+      });
+    }),
+  );
 
-    allTags.forEach((tag) => {
-      paginatedPostsByTags.push({ tag, locale });
-    });
-
-    const pagePath = paginatedPostsByTags.map((pt) => {
-      return {
-        locale: pt.locale,
-        params: {
-          id: pt.tag,
-        },
-      };
-    });
-
-    paths.push(...pagePath);
-  });
+  const paths = paginatedPostsByTags.flat();
 
   return {
     paths: paths,
