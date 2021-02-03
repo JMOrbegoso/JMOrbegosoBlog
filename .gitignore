@@ -33,6 +33,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Blog Cache
+/public/blog-cache/
+
 # RSS feed
 /public/feed.xml
 /public/atom.xml
