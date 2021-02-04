@@ -20,6 +20,8 @@ import Author from '../../types/author';
 import PostTags from '../../components/post-tags';
 import DisqusComments from '../../components/disqus-comments';
 import ShareMenu from '../../components/share-menu';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../../enums/translationResource';
 
 type Props = {
   author: Author;
@@ -28,15 +30,17 @@ type Props = {
 
 const Post = ({ author, post }: Props) => {
   const router = useRouter();
+  const { t, lang } = useTranslation('common');
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
 
   return (
-    <Layout author={author} localResources={localResources}>
+    <Layout author={author}>
       <Container>
         {router.isFallback ? (
-          <PageHeader>{localResources.loading}</PageHeader>
+          <PageHeader>{t(TranslationResource.loading)}</PageHeader>
         ) : (
           <>
             <article className="mb-32">
@@ -67,11 +71,10 @@ const Post = ({ author, post }: Props) => {
                 date={post.date}
                 content={post.content}
                 author={author}
-                localResources={localResources}
               />
               <PostBody content={post.content} />
               <PostTags tags={post.tags} />
-              <ShareMenu post={post} localResources={localResources} />
+              <ShareMenu post={post} />
               <DisqusComments post={post} />
             </article>
           </>

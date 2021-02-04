@@ -8,18 +8,22 @@ import { WEB_NAME } from '../lib/constants';
 import Author from '../types/author';
 import markdownToHtml from '../lib/markdownToHtml';
 import markdownStyles from '../components/markdown-styles.module.css';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../enums/translationResource';
 
 type Props = {
   author: Author;
 };
 
 const About = ({ author }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Head>
           <title>
-            {localResources.about} - {WEB_NAME}
+            {t(TranslationResource.about)} - {WEB_NAME}
           </title>
         </Head>
         <Container>

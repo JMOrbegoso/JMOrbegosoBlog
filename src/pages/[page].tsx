@@ -18,15 +18,11 @@ type Props = {
 const IndexPage = ({ author, posts, actualPage }: Props) => {
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Head>
           <title> {WEB_NAME} </title>
         </Head>
-        <PostsList
-          posts={posts}
-          actualPage={actualPage}
-          localResources={localResources}
-        />
+        <PostsList posts={posts} actualPage={actualPage} />
       </Layout>
     </>
   );

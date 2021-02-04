@@ -17,6 +17,8 @@ import Author from '../../types/author';
 import PostsList from '../../components/posts-list';
 import { getTagTitle } from '../../lib/tag-helpers';
 import { PostTag } from '../../enums/postTag';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../../enums/translationResource';
 
 type Props = {
   author: Author;
@@ -26,17 +28,19 @@ type Props = {
 
 const Tag = ({ author, tagTitle, posts }: Props) => {
   const router = useRouter();
+  const { t, lang } = useTranslation('common');
+
   if (!router.isFallback && !tagTitle) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout author={author} localResources={localResources}>
+    <Layout author={author}>
       <Container>
         <PageHeader>
-          {localResources.posts_by_tag} - {tagTitle}
+          {t(TranslationResource.posts_by_tag)} - {tagTitle}
         </PageHeader>
         {router.isFallback ? (
-          <PageHeader>{localResources.loading}</PageHeader>
+          <PageHeader>{t(TranslationResource.loading)}</PageHeader>
         ) : (
           <>
             <Head>
@@ -46,7 +50,7 @@ const Tag = ({ author, tagTitle, posts }: Props) => {
 
               <meta
                 property="description"
-                content={`${localResources.posts_by_tag} - ${tagTitle}`}
+                content={`${t(TranslationResource.posts_by_tag)} - ${tagTitle}`}
               />
               <meta
                 property="author"
@@ -60,15 +64,11 @@ const Tag = ({ author, tagTitle, posts }: Props) => {
               <meta property="og:title" content={`${tagTitle} - ${WEB_NAME}`} />
               <meta
                 property="og:description"
-                content={`${localResources.posts_by_tag} - ${tagTitle}`}
+                content={`${t(TranslationResource.posts_by_tag)} - ${tagTitle}`}
               />
               <meta property="og:image" content={author.picture} />
             </Head>
-            <PostsList
-              posts={posts}
-              actualPage={1}
-              localResources={localResources}
-            />
+            <PostsList posts={posts} actualPage={1} />
           </>
         )}
       </Container>

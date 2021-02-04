@@ -9,6 +9,8 @@ import Author from '../../../../types/author';
 import PostsList from '../../../../components/posts-list';
 import Container from '../../../../components/container';
 import PageHeader from '../../../../components/page-header';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../../../../enums/translationResource';
 
 type Props = {
   author: Author;
@@ -18,11 +20,15 @@ type Props = {
 };
 
 const FindPostPage = ({ author, posts, actualPage, searchTerm }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Head>
-          <title> {`${localResources.search_results} - ${WEB_NAME}`} </title>
+          <title>
+            {`${t(TranslationResource.search_results)} - ${WEB_NAME}`}{' '}
+          </title>
 
           <meta property="description" content={WEB_DESCRIPTION} />
           <meta
@@ -36,18 +42,14 @@ const FindPostPage = ({ author, posts, actualPage, searchTerm }: Props) => {
           <meta property="og:type" content="website" />
           <meta
             property="og:title"
-            content={`${localResources.search_results} - ${WEB_NAME}`}
+            content={`${t(TranslationResource.search_results)} - ${WEB_NAME}`}
           />
           <meta property="og:description" content={WEB_DESCRIPTION} />
           <meta property="og:image" content={author.picture} />
         </Head>
         <Container>
-          <PageHeader>{`${localResources.search_results}`}</PageHeader>
-          <PostsList
-            posts={posts}
-            actualPage={actualPage}
-            localResources={localResources}
-          />
+          <PageHeader>{`${t(TranslationResource.search_results)}`}</PageHeader>
+          <PostsList posts={posts} actualPage={actualPage} />
         </Container>
       </Layout>
     </>

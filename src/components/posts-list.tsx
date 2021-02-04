@@ -3,6 +3,8 @@ import Post from '../types/post';
 import { POST_PER_PAGE } from '../lib/constants';
 import Container from './container';
 import PostPagination from './post-pagination';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../enums/translationResource';
 
 type Props = {
   posts: Post[];
@@ -10,6 +12,8 @@ type Props = {
 };
 
 const PostsList = ({ posts, actualPage }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   const initialPosition = (actualPage - 1) * POST_PER_PAGE;
   const finalPosition = initialPosition + POST_PER_PAGE;
   const visiblePosts = posts.slice(initialPosition, finalPosition);
@@ -19,7 +23,7 @@ const PostsList = ({ posts, actualPage }: Props) => {
       <>
         <section className="text-center">
           <Container>
-            <h1>{localResources.no_posts_found}</h1>
+            <h1>{t(TranslationResource.no_posts_found)}</h1>
           </Container>
         </section>
       </>
@@ -40,7 +44,6 @@ const PostsList = ({ posts, actualPage }: Props) => {
               excerpt={post.excerpt}
               content={post.content}
               tags={post.tags}
-              localResources={localResources}
             />
           ))}
         </div>

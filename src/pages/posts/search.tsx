@@ -10,6 +10,8 @@ import { getLocalizedPosts, getLocalizedAuthor } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../../enums/translationResource';
 
 type Props = {
   author: Author;
@@ -17,6 +19,7 @@ type Props = {
 
 const PostsSearcher = ({ author }: Props) => {
   const router = useRouter();
+  const { t, lang } = useTranslation('common');
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -30,25 +33,25 @@ const PostsSearcher = ({ author }: Props) => {
 
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Head>
           <title>
-            {localResources.search_post} - {WEB_NAME}
+            {t(TranslationResource.search_post)} - {WEB_NAME}
           </title>
         </Head>
         <Container>
-          <PageHeader>{`${localResources.words_to_find}`}</PageHeader>
+          <PageHeader>{`${t(TranslationResource.words_to_find)}`}</PageHeader>
           <Form onSubmit={onFormSubmit}>
             <Form.Group>
               <Form.Control
                 type="text"
-                placeholder={localResources.search_term}
+                placeholder={t(TranslationResource.search_term)}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </Form.Group>
             <Button variant="primary" type="submit">
-              {localResources.search_post}
+              {t(TranslationResource.search_post)}
             </Button>
           </Form>
         </Container>

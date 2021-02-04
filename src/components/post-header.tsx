@@ -41,7 +41,7 @@ const PostHeader = ({ title, coverImage, date, content, author }: Props) => {
               <DateFormatter dateString={date} />
             </div>
             <div className="col-6 text-right">
-              <ReadTime content={content} localResources={localResources} />
+              <ReadTime content={content} />
             </div>
           </div>
         </div>

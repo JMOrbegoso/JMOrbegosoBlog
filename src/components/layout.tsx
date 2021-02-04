@@ -14,11 +14,11 @@ const Layout = ({ author, children }: Props) => {
     <>
       <Meta />
       <div className="min-h-screen">
-        <NavBar title={WEB_NAME} localResources={localResources} />
+        <NavBar title={WEB_NAME} />
         <main style={{ paddingTop: 70 }}>{children}</main>
       </div>
 
-      <Footer author={author} localResources={localResources} />
+      <Footer author={author} />
     </>
   );
 };

@@ -11,6 +11,7 @@ import generateBlogCache from '../../scripts/generate-blog-cache';
 import generateRssFeed from '../../scripts/generate-rss-feed';
 import generateSitemap from '../../scripts/generate-sitemap';
 import generateFavicons from '../../scripts/generate-favicons';
+import useTranslation from 'next-translate/useTranslation';
 
 type Props = {
   author: Author;
@@ -18,9 +19,11 @@ type Props = {
 };
 
 const Index = ({ author, posts }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Head>
           <title> {WEB_NAME} </title>
 
@@ -38,11 +41,7 @@ const Index = ({ author, posts }: Props) => {
           <meta property="og:description" content={WEB_DESCRIPTION} />
           <meta property="og:image" content={author.picture} />
         </Head>
-        <PostsList
-          posts={posts}
-          actualPage={1}
-          localResources={localResources}
-        />
+        <PostsList posts={posts} actualPage={1} />
       </Layout>
     </>
   );

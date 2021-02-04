@@ -9,6 +9,8 @@ import { PostTag } from '../enums/postTag';
 import Author from '../types/author';
 import PageHeader from '../components/page-header';
 import PostTags from '../components/post-tags';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../enums/translationResource';
 
 type Props = {
   author: Author;
@@ -16,16 +18,18 @@ type Props = {
 };
 
 const Tags = ({ author, tags }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Container>
           <Head>
             <title>
-              {localResources.tags} - {WEB_NAME}
+              {t(TranslationResource.tags)} - {WEB_NAME}
             </title>
           </Head>
-          <PageHeader>{localResources.tags}</PageHeader>
+          <PageHeader>{t(TranslationResource.tags)}</PageHeader>
           <Container>
             <PostTags tags={tags} />
           </Container>
