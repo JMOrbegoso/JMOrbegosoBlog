@@ -1,0 +1,19 @@
+{
+  "home": "Home",
+  "tags": "Tags",
+  "about": "About Me",
+  "contact": "Contact",
+  "change_language": "Change Language",
+  "trademarks_copyright": "All trademarks belong to their respective owners",
+  "loading": "Loading…",
+  "posts_by_tag": "Posts by Tag",
+  "no_posts_found": "No posts found!",
+  "did_you_like_the_post": "Did you like the post?",
+  "share_on_social_networks": "Share it on your social networks",
+  "read_time": "Estimated read time",
+  "minutes_prefix": "min",
+  "search_post": "Search post",
+  "words_to_find": "Search",
+  "search_term": "Search Term",
+  "search_results": "Search Results"
+}

@@ -1,0 +1,19 @@
+{
+  "home": "Inicio",
+  "tags": "Temas",
+  "about": "Sobre Mi",
+  "contact": "Contacto",
+  "change_language": "Cambiar Lenguaje",
+  "trademarks_copyright": "Todas las marcas registradas pertenecen a sus respectivos dueños",
+  "loading": "Cargando…",
+  "posts_by_tag": "Posts por tema",
+  "no_posts_found": "¡No se han encontrado publicaciones!",
+  "did_you_like_the_post": "¿Te gustó la publicación?",
+  "share_on_social_networks": "Compártela en tus redes sociales",
+  "read_time": "Tiempo de lectura estimado",
+  "minutes_prefix": "min",
+  "search_post": "Buscar publicación",
+  "words_to_find": "Buscar",
+  "search_term": "Término de búsqueda",
+  "search_results": "Resultados de la búsqueda"
+}
