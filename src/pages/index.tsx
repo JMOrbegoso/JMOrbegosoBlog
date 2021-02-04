@@ -19,11 +19,11 @@ import generateFavicons from '../../scripts/generate-favicons';
 
 type Props = {
   author: Author;
-  allPosts: Post[];
+  posts: Post[];
   localResources: ILocalResources;
 };
 
-const Index = ({ author, allPosts, localResources }: Props) => {
+const Index = ({ author, posts, localResources }: Props) => {
   return (
     <>
       <Layout author={author} localResources={localResources}>
@@ -45,7 +45,7 @@ const Index = ({ author, allPosts, localResources }: Props) => {
           <meta property="og:image" content={author.picture} />
         </Head>
         <PostsList
-          posts={allPosts}
+          posts={posts}
           actualPage={1}
           localResources={localResources}
         />
@@ -70,13 +70,13 @@ export const getStaticProps = async ({ locale }: Params) => {
   await generateFavicons();
 
   const author = await getLocalizedAuthor(locale);
-  const localizedPosts = await getLocalizedPosts(locale);
+  const posts = await getLocalizedPosts(locale);
   const localResources = await getLocalResources(locale);
 
   return {
     props: {
       author,
-      allPosts: localizedPosts,
+      posts,
       localResources: localResources.default,
     },
   };

@@ -24,7 +24,7 @@ import { PostTag } from '../../../enums/postTag';
 type Props = {
   author: Author;
   tagTitle: string;
-  postsByTag: PostType[];
+  posts: PostType[];
   actualPage: number;
   localResources: ILocalResources;
 };
@@ -32,7 +32,7 @@ type Props = {
 const Tag = ({
   author,
   tagTitle,
-  postsByTag,
+  posts,
   actualPage,
   localResources,
 }: Props) => {
@@ -56,7 +56,7 @@ const Tag = ({
               </title>
             </Head>
             <PostsList
-              posts={postsByTag}
+              posts={posts}
               actualPage={actualPage}
               localResources={localResources}
             />
@@ -81,7 +81,7 @@ type Params = {
 
 export const getStaticProps = async ({ params, locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
-  const postsByTag = (await getLocalizedPosts(locale)).filter((p) =>
+  const posts = (await getLocalizedPosts(locale)).filter((p) =>
     p.tags.includes(params.id),
   );
   const localResources = await getLocalResources(locale);
@@ -94,7 +94,7 @@ export const getStaticProps = async ({ params, locale }: Params) => {
     props: {
       author,
       tagTitle,
-      postsByTag,
+      posts,
       actualPage,
       localResources: localResources.default,
     },

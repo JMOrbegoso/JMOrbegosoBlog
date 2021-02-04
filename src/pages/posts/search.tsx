@@ -73,13 +73,13 @@ type Params = {
 
 export const getStaticProps = async ({ locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
-  const localizedPosts = await getLocalizedPosts(locale);
+  const posts = await getLocalizedPosts(locale);
   const localResources = await getLocalResources(locale);
 
   return {
     props: {
       author,
-      allPosts: localizedPosts,
+      posts,
       localResources: localResources.default,
     },
   };
