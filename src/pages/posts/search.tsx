@@ -5,24 +5,21 @@ import Layout from '../../components/layout';
 import Head from 'next/head';
 import { WEB_NAME } from '../../lib/constants';
 import Author from '../../types/author';
-import ILocalResources from '../../interfaces/ilocalresources';
 import { Button, Form } from 'react-bootstrap';
-import {
-  getLocalizedPosts,
-  getLocalizedAuthor,
-  getLocalResources,
-} from '../../lib/api';
+import { getLocalizedPosts, getLocalizedAuthor } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../../enums/translationResource';
 
 type Props = {
   author: Author;
-  localResources: ILocalResources;
 };
 
-const PostsSearcher = ({ author, localResources }: Props) => {
+const PostsSearcher = ({ author }: Props) => {
   const router = useRouter();
+  const { t, lang } = useTranslation('common');
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -36,25 +33,25 @@ const PostsSearcher = ({ author, localResources }: Props) => {
 
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Head>
           <title>
-            {localResources.search_post} - {WEB_NAME}
+            {t(TranslationResource.search_post)} - {WEB_NAME}
           </title>
         </Head>
         <Container>
-          <PageHeader>{`${localResources.words_to_find}`}</PageHeader>
+          <PageHeader>{`${t(TranslationResource.words_to_find)}`}</PageHeader>
           <Form onSubmit={onFormSubmit}>
             <Form.Group>
               <Form.Control
                 type="text"
-                placeholder={localResources.search_term}
+                placeholder={t(TranslationResource.search_term)}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </Form.Group>
             <Button variant="primary" type="submit">
-              {localResources.search_post}
+              {t(TranslationResource.search_post)}
             </Button>
           </Form>
         </Container>
@@ -74,13 +71,11 @@ type Params = {
 export const getStaticProps = async ({ locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
   const posts = await getLocalizedPosts(locale);
-  const localResources = await getLocalResources(locale);
 
   return {
     props: {
       author,
       posts,
-      localResources: localResources.default,
     },
   };
 };

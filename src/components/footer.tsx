@@ -3,14 +3,16 @@ import { SocialNetwork } from '../enums/socialNetwork';
 import Container from './container';
 import { CREDITS, COPYRIGHT } from '../lib/constants';
 import Author from '../types/author';
-import ILocalResources from '../interfaces/ilocalresources';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../enums/translationResource';
 
 type Props = {
   author: Author;
-  localResources: ILocalResources;
 };
 
-const Footer = ({ author, localResources }: Props) => {
+const Footer = ({ author }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   return (
     <footer className="bg-primary">
       <Container>
@@ -52,7 +54,7 @@ const Footer = ({ author, localResources }: Props) => {
       </Container>
       <div className="footer-copyright container-fluid text-center py-3">
         <p className="text-white-50">
-          {COPYRIGHT} - {localResources.trademarks_copyright}
+          {COPYRIGHT} - {t(TranslationResource.trademarks_copyright)}
         </p>
       </div>
     </footer>

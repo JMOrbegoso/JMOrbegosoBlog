@@ -1,16 +1,18 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import ILocalResources from '../interfaces/ilocalresources';
 import Link from 'next/link';
 import LanguagePicker from './language-picker';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../enums/translationResource';
 
 type Props = {
   title: string;
-  localResources: ILocalResources;
 };
 
-const NavBar = ({ title, localResources }: Props) => {
+const NavBar = ({ title }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   return (
     <Navbar bg="primary" variant="dark" fixed="top" expand="lg">
       <Link href="/" passHref>
@@ -20,19 +22,19 @@ const NavBar = ({ title, localResources }: Props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Link href="/" passHref>
-            <Nav.Link>{localResources.home}</Nav.Link>
+            <Nav.Link>{t(TranslationResource.home)}</Nav.Link>
           </Link>
           <Link href="/tags" passHref>
-            <Nav.Link>{localResources.tags}</Nav.Link>
+            <Nav.Link>{t(TranslationResource.tags)}</Nav.Link>
           </Link>
           <Link href="/posts/search" passHref>
-            <Nav.Link>{localResources.search_post}</Nav.Link>
+            <Nav.Link>{t(TranslationResource.search_post)}</Nav.Link>
           </Link>
           <Link href="/about" passHref>
-            <Nav.Link>{localResources.about}</Nav.Link>
+            <Nav.Link>{t(TranslationResource.about)}</Nav.Link>
           </Link>
         </Nav>
-        <LanguagePicker localResources={localResources} />
+        <LanguagePicker />
       </Navbar.Collapse>
     </Navbar>
   );

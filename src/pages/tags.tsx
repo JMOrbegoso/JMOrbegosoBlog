@@ -2,36 +2,34 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import Container from '../components/container';
 import Layout from '../components/layout';
-import {
-  getLocalizedTags,
-  getLocalizedAuthor,
-  getLocalResources,
-} from '../lib/api';
+import { getLocalizedTags, getLocalizedAuthor } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import { PostTag } from '../enums/postTag';
 import Author from '../types/author';
-import ILocalResources from '../interfaces/ilocalresources';
 import PageHeader from '../components/page-header';
 import PostTags from '../components/post-tags';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../enums/translationResource';
 
 type Props = {
   author: Author;
   tags: PostTag[];
-  localResources: ILocalResources;
 };
 
-const Tags = ({ author, tags, localResources }: Props) => {
+const Tags = ({ author, tags }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Container>
           <Head>
             <title>
-              {localResources.tags} - {WEB_NAME}
+              {t(TranslationResource.tags)} - {WEB_NAME}
             </title>
           </Head>
-          <PageHeader>{localResources.tags}</PageHeader>
+          <PageHeader>{t(TranslationResource.tags)}</PageHeader>
           <Container>
             <PostTags tags={tags} />
           </Container>
@@ -51,10 +49,9 @@ type Params = {
 
 export const getStaticProps = async ({ locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
-  const localResources = await getLocalResources(locale);
   const tags = await getLocalizedTags(locale);
 
   return {
-    props: { author, tags, localResources: localResources.default },
+    props: { author, tags },
   };
 };

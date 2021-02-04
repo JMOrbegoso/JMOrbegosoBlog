@@ -1,0 +1,20 @@
+enum TranslationResource {
+  home = 'home',
+  tags = 'tags',
+  about = 'about',
+  contact = 'contact',
+  change_language = 'change_language',
+  trademarks_copyright = 'trademarks_copyright',
+  loading = 'loading',
+  posts_by_tag = 'posts_by_tag',
+  no_posts_found = 'no_posts_found',
+  did_you_like_the_post = 'did_you_like_the_post',
+  share_on_social_networks = 'share_on_social_networks',
+  read_time = 'read_time',
+  minutes_prefix = 'minutes_prefix',
+  search_post = 'search_post',
+  words_to_find = 'words_to_find',
+  search_term = 'search_term',
+  search_results = 'search_results',
+}
+export default TranslationResource;

@@ -10,7 +10,6 @@ import {
   getPostBySlug,
   getLocalizedAuthor,
   getLocalizedPosts,
-  getLocalResources,
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import Head from 'next/head';
@@ -19,27 +18,29 @@ import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
 import Author from '../../types/author';
 import PostTags from '../../components/post-tags';
-import ILocalResources from '../../interfaces/ilocalresources';
 import DisqusComments from '../../components/disqus-comments';
 import ShareMenu from '../../components/share-menu';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../../enums/translationResource';
 
 type Props = {
   author: Author;
   post: PostType;
-  localResources: ILocalResources;
 };
 
-const Post = ({ author, post, localResources }: Props) => {
+const Post = ({ author, post }: Props) => {
   const router = useRouter();
+  const { t, lang } = useTranslation('common');
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
 
   return (
-    <Layout author={author} localResources={localResources}>
+    <Layout author={author}>
       <Container>
         {router.isFallback ? (
-          <PageHeader>{localResources.loading}</PageHeader>
+          <PageHeader>{t(TranslationResource.loading)}</PageHeader>
         ) : (
           <>
             <article className="mb-32">
@@ -70,11 +71,10 @@ const Post = ({ author, post, localResources }: Props) => {
                 date={post.date}
                 content={post.content}
                 author={author}
-                localResources={localResources}
               />
               <PostBody content={post.content} />
               <PostTags tags={post.tags} />
-              <ShareMenu post={post} localResources={localResources} />
+              <ShareMenu post={post} />
               <DisqusComments post={post} />
             </article>
           </>
@@ -98,7 +98,6 @@ type Params = {
 export async function getStaticProps({ params, locale }: Params) {
   const author = await getLocalizedAuthor(locale);
   const post = await getPostBySlug(locale, params.slug);
-  const localResources = await getLocalResources(locale);
 
   const content = await markdownToHtml(post?.content ?? '');
 
@@ -109,7 +108,6 @@ export async function getStaticProps({ params, locale }: Params) {
         ...post,
         content,
       },
-      localResources: localResources.default,
     },
   };
 }

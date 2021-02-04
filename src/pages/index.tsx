@@ -2,31 +2,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
-import {
-  getLocalizedAuthor,
-  getLocalizedPosts,
-  getLocalResources,
-} from '../lib/api';
+import { getLocalizedAuthor, getLocalizedPosts } from '../lib/api';
 import Head from 'next/head';
 import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
-import ILocalResources from '../interfaces/ilocalresources';
 import generateBlogCache from '../../scripts/generate-blog-cache';
 import generateRssFeed from '../../scripts/generate-rss-feed';
 import generateSitemap from '../../scripts/generate-sitemap';
 import generateFavicons from '../../scripts/generate-favicons';
+import useTranslation from 'next-translate/useTranslation';
 
 type Props = {
   author: Author;
   posts: Post[];
-  localResources: ILocalResources;
 };
 
-const Index = ({ author, posts, localResources }: Props) => {
+const Index = ({ author, posts }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Head>
           <title> {WEB_NAME} </title>
 
@@ -44,11 +41,7 @@ const Index = ({ author, posts, localResources }: Props) => {
           <meta property="og:description" content={WEB_DESCRIPTION} />
           <meta property="og:image" content={author.picture} />
         </Head>
-        <PostsList
-          posts={posts}
-          actualPage={1}
-          localResources={localResources}
-        />
+        <PostsList posts={posts} actualPage={1} />
       </Layout>
     </>
   );
@@ -71,13 +64,11 @@ export const getStaticProps = async ({ locale }: Params) => {
 
   const author = await getLocalizedAuthor(locale);
   const posts = await getLocalizedPosts(locale);
-  const localResources = await getLocalResources(locale);
 
   return {
     props: {
       author,
       posts,
-      localResources: localResources.default,
     },
   };
 };

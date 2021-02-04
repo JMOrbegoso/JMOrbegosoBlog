@@ -2,26 +2,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import Container from '../components/container';
 import Layout from '../components/layout';
-import { getLocalizedAuthor, getLocalResources } from '../lib/api';
+import { getLocalizedAuthor } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Author from '../types/author';
 import markdownToHtml from '../lib/markdownToHtml';
 import markdownStyles from '../components/markdown-styles.module.css';
-import ILocalResources from '../interfaces/ilocalresources';
+import useTranslation from 'next-translate/useTranslation';
+import TranslationResource from '../enums/translationResource';
 
 type Props = {
   author: Author;
-  localResources: ILocalResources;
 };
 
-const About = ({ author, localResources }: Props) => {
+const About = ({ author }: Props) => {
+  const { t, lang } = useTranslation('common');
+
   return (
     <>
-      <Layout author={author} localResources={localResources}>
+      <Layout author={author}>
         <Head>
           <title>
-            {localResources.about} - {WEB_NAME}
+            {t(TranslationResource.about)} - {WEB_NAME}
           </title>
         </Head>
         <Container>
@@ -47,7 +49,6 @@ type Params = {
 
 export const getStaticProps = async ({ locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
-  const localResources = await getLocalResources(locale);
 
   const content = await markdownToHtml(author.content || '');
 
@@ -57,7 +58,6 @@ export const getStaticProps = async ({ locale }: Params) => {
         ...author,
         content,
       },
-      localResources: localResources.default,
     },
   };
 };
