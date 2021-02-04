@@ -17,12 +17,12 @@ import PageHeader from '../../../components/page-header';
 
 type Props = {
   author: Author;
-  allPosts: PostType[];
+  posts: PostType[];
   localResources: ILocalResources;
   searchTerm: string;
 };
 
-const FindPost = ({ author, allPosts, localResources, searchTerm }: Props) => {
+const FindPost = ({ author, posts, localResources, searchTerm }: Props) => {
   return (
     <>
       <Layout author={author} localResources={localResources}>
@@ -49,7 +49,7 @@ const FindPost = ({ author, allPosts, localResources, searchTerm }: Props) => {
         <Container>
           <PageHeader>{`${localResources.search_results}`}</PageHeader>
           <PostsList
-            posts={allPosts}
+            posts={posts}
             actualPage={1}
             localResources={localResources}
           />
@@ -72,7 +72,7 @@ type Params = {
 
 export async function getServerSideProps({ query, locale }: Params) {
   const author = await getLocalizedAuthor(locale);
-  const postsFound = (await getLocalizedPosts(locale)).filter((p) =>
+  const posts = (await getLocalizedPosts(locale)).filter((p) =>
     p.title.toLowerCase().includes(query.find.toLowerCase()),
   );
   const localResources = await getLocalResources(locale);
@@ -80,7 +80,7 @@ export async function getServerSideProps({ query, locale }: Params) {
   return {
     props: {
       author,
-      allPosts: postsFound,
+      posts,
       localResources: localResources.default,
       searchTerm: query.find,
     },

@@ -16,12 +16,12 @@ import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
-  allPosts: Post[];
+  posts: Post[];
   actualPage: number;
   localResources: ILocalResources;
 };
 
-const IndexPage = ({ author, allPosts, actualPage, localResources }: Props) => {
+const IndexPage = ({ author, posts, actualPage, localResources }: Props) => {
   return (
     <>
       <Layout author={author} localResources={localResources}>
@@ -29,7 +29,7 @@ const IndexPage = ({ author, allPosts, actualPage, localResources }: Props) => {
           <title> {WEB_NAME} </title>
         </Head>
         <PostsList
-          posts={allPosts}
+          posts={posts}
           actualPage={actualPage}
           localResources={localResources}
         />
@@ -51,7 +51,7 @@ type Params = {
 
 export const getStaticProps = async ({ params, locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
-  const localizedPosts = await getLocalizedPosts(locale);
+  const posts = await getLocalizedPosts(locale);
   const localResources = await getLocalResources(locale);
 
   const actualPage = params.page;
@@ -59,7 +59,7 @@ export const getStaticProps = async ({ params, locale }: Params) => {
   return {
     props: {
       author,
-      allPosts: localizedPosts,
+      posts,
       actualPage,
       localResources: localResources.default,
     },

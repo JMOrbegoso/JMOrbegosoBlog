@@ -23,11 +23,11 @@ import { PostTag } from '../../enums/postTag';
 type Props = {
   author: Author;
   tagTitle: string;
-  postsByTag: PostType[];
+  posts: PostType[];
   localResources: ILocalResources;
 };
 
-const Tag = ({ author, tagTitle, postsByTag, localResources }: Props) => {
+const Tag = ({ author, tagTitle, posts, localResources }: Props) => {
   const router = useRouter();
   if (!router.isFallback && !tagTitle) {
     return <ErrorPage statusCode={404} />;
@@ -68,7 +68,7 @@ const Tag = ({ author, tagTitle, postsByTag, localResources }: Props) => {
               <meta property="og:image" content={author.picture} />
             </Head>
             <PostsList
-              posts={postsByTag}
+              posts={posts}
               actualPage={1}
               localResources={localResources}
             />
@@ -93,7 +93,7 @@ type Params = {
 
 export const getStaticProps = async ({ params, locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
-  const postsByTag = (await getLocalizedPosts(locale)).filter((p) =>
+  const posts = (await getLocalizedPosts(locale)).filter((p) =>
     p.tags.includes(params.id),
   );
   const localResources = await getLocalResources(locale);
@@ -104,7 +104,7 @@ export const getStaticProps = async ({ params, locale }: Params) => {
     props: {
       author,
       tagTitle,
-      postsByTag,
+      posts,
       localResources: localResources.default,
     },
   };
