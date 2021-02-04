@@ -1,16 +1,14 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import ILocalResources from '../interfaces/ilocalresources';
 import Link from 'next/link';
 import LanguagePicker from './language-picker';
 
 type Props = {
   title: string;
-  localResources: ILocalResources;
 };
 
-const NavBar = ({ title, localResources }: Props) => {
+const NavBar = ({ title }: Props) => {
   return (
     <Navbar bg="primary" variant="dark" fixed="top" expand="lg">
       <Link href="/" passHref>

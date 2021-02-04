@@ -8,7 +8,6 @@ import {
   getLocalizedPosts,
   getLocalizedAuthor,
   getLocalizedTags,
-  getLocalResources,
 } from '../../../lib/api';
 import PageHeader from '../../../components/page-header';
 import Head from 'next/head';
@@ -18,7 +17,6 @@ import Author from '../../../types/author';
 import PostsList from '../../../components/posts-list';
 import { getTagTitle } from '../../../lib/tag-helpers';
 import { POST_PER_PAGE } from '../../../lib/constants';
-import ILocalResources from '../../../interfaces/ilocalresources';
 import { PostTag } from '../../../enums/postTag';
 
 type Props = {
@@ -26,16 +24,9 @@ type Props = {
   tagTitle: string;
   posts: PostType[];
   actualPage: number;
-  localResources: ILocalResources;
 };
 
-const Tag = ({
-  author,
-  tagTitle,
-  posts,
-  actualPage,
-  localResources,
-}: Props) => {
+const Tag = ({ author, tagTitle, posts, actualPage }: Props) => {
   const router = useRouter();
   if (!router.isFallback && !tagTitle) {
     return <ErrorPage statusCode={404} />;
@@ -84,7 +75,6 @@ export const getStaticProps = async ({ params, locale }: Params) => {
   const posts = (await getLocalizedPosts(locale)).filter((p) =>
     p.tags.includes(params.id),
   );
-  const localResources = await getLocalResources(locale);
 
   const tagTitle = getTagTitle(params.id);
 
@@ -96,7 +86,6 @@ export const getStaticProps = async ({ params, locale }: Params) => {
       tagTitle,
       posts,
       actualPage,
-      localResources: localResources.default,
     },
   };
 };

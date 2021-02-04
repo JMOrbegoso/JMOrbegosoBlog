@@ -4,7 +4,6 @@ import CoverImage from './cover-image';
 import PageHeader from './page-header';
 import Author from '../types/author';
 import ReadTime from './read-time';
-import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   title: string;
@@ -12,17 +11,9 @@ type Props = {
   date: string;
   content: string;
   author: Author;
-  localResources: ILocalResources;
 };
 
-const PostHeader = ({
-  title,
-  coverImage,
-  date,
-  content,
-  author,
-  localResources,
-}: Props) => {
+const PostHeader = ({ title, coverImage, date, content, author }: Props) => {
   return (
     <>
       <PageHeader>{title}</PageHeader>

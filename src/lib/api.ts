@@ -41,7 +41,3 @@ export async function getPostBySlug(
   const post = localizedPosts.find((post) => post.slug === slug);
   return post;
 }
-
-export async function getLocalResources(locale: string) {
-  return await import(`../../lang/${locale}.json`);
-}

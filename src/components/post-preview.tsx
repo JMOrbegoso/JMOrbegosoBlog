@@ -4,7 +4,6 @@ import { PostTag as PostTagEnum } from '../enums/postTag';
 import PostTags from './post-tags';
 import CoverImage from './cover-image';
 import ReadTime from './read-time';
-import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   title: string;
@@ -14,7 +13,6 @@ type Props = {
   slug: string;
   content: string;
   tags: PostTagEnum[];
-  localResources: ILocalResources;
 };
 
 const PostPreview = ({
@@ -25,7 +23,6 @@ const PostPreview = ({
   slug,
   content,
   tags,
-  localResources,
 }: Props) => {
   return (
     <div className="my-3">

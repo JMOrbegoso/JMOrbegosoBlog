@@ -3,14 +3,12 @@ import { SocialNetwork } from '../enums/socialNetwork';
 import Container from './container';
 import { CREDITS, COPYRIGHT } from '../lib/constants';
 import Author from '../types/author';
-import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
-  localResources: ILocalResources;
 };
 
-const Footer = ({ author, localResources }: Props) => {
+const Footer = ({ author }: Props) => {
   return (
     <footer className="bg-primary">
       <Container>

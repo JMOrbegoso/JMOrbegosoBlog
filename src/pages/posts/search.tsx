@@ -5,23 +5,17 @@ import Layout from '../../components/layout';
 import Head from 'next/head';
 import { WEB_NAME } from '../../lib/constants';
 import Author from '../../types/author';
-import ILocalResources from '../../interfaces/ilocalresources';
 import { Button, Form } from 'react-bootstrap';
-import {
-  getLocalizedPosts,
-  getLocalizedAuthor,
-  getLocalResources,
-} from '../../lib/api';
+import { getLocalizedPosts, getLocalizedAuthor } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
 type Props = {
   author: Author;
-  localResources: ILocalResources;
 };
 
-const PostsSearcher = ({ author, localResources }: Props) => {
+const PostsSearcher = ({ author }: Props) => {
   const router = useRouter();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -74,13 +68,11 @@ type Params = {
 export const getStaticProps = async ({ locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
   const posts = await getLocalizedPosts(locale);
-  const localResources = await getLocalResources(locale);
 
   return {
     props: {
       author,
       posts,
-      localResources: localResources.default,
     },
   };
 };

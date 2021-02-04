@@ -1,16 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import Layout from '../../../../components/layout';
-import {
-  getLocalizedPosts,
-  getLocalizedAuthor,
-  getLocalResources,
-} from '../../../../lib/api';
+import { getLocalizedPosts, getLocalizedAuthor } from '../../../../lib/api';
 import Head from 'next/head';
 import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../../../../lib/constants';
 import PostType from '../../../../types/post';
 import Author from '../../../../types/author';
-import ILocalResources from '../../../../interfaces/ilocalresources';
 import PostsList from '../../../../components/posts-list';
 import Container from '../../../../components/container';
 import PageHeader from '../../../../components/page-header';
@@ -19,17 +14,10 @@ type Props = {
   author: Author;
   posts: PostType[];
   actualPage: number;
-  localResources: ILocalResources;
   searchTerm: string;
 };
 
-const FindPostPage = ({
-  author,
-  posts,
-  actualPage,
-  localResources,
-  searchTerm,
-}: Props) => {
+const FindPostPage = ({ author, posts, actualPage, searchTerm }: Props) => {
   return (
     <>
       <Layout author={author} localResources={localResources}>
@@ -83,14 +71,13 @@ export async function getServerSideProps({ query, locale }: Params) {
   const posts = (await getLocalizedPosts(locale)).filter((p) =>
     p.title.toLowerCase().includes(query.find.toLowerCase()),
   );
-  const localResources = await getLocalResources(locale);
 
   return {
     props: {
       author,
       posts,
       actualPage: query.page,
-      localResources: localResources.default,
+
       searchTerm: query.find,
     },
   };

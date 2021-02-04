@@ -10,7 +10,6 @@ import {
   getPostBySlug,
   getLocalizedAuthor,
   getLocalizedPosts,
-  getLocalResources,
 } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import Head from 'next/head';
@@ -19,17 +18,15 @@ import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
 import Author from '../../types/author';
 import PostTags from '../../components/post-tags';
-import ILocalResources from '../../interfaces/ilocalresources';
 import DisqusComments from '../../components/disqus-comments';
 import ShareMenu from '../../components/share-menu';
 
 type Props = {
   author: Author;
   post: PostType;
-  localResources: ILocalResources;
 };
 
-const Post = ({ author, post, localResources }: Props) => {
+const Post = ({ author, post }: Props) => {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -98,7 +95,6 @@ type Params = {
 export async function getStaticProps({ params, locale }: Params) {
   const author = await getLocalizedAuthor(locale);
   const post = await getPostBySlug(locale, params.slug);
-  const localResources = await getLocalResources(locale);
 
   const content = await markdownToHtml(post?.content ?? '');
 
@@ -109,7 +105,6 @@ export async function getStaticProps({ params, locale }: Params) {
         ...post,
         content,
       },
-      localResources: localResources.default,
     },
   };
 }

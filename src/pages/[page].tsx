@@ -2,26 +2,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
-import {
-  getLocalizedAuthor,
-  getLocalizedPosts,
-  getLocalResources,
-} from '../lib/api';
+import { getLocalizedAuthor, getLocalizedPosts } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
 import { POST_PER_PAGE } from '../lib/constants';
-import ILocalResources from '../interfaces/ilocalresources';
 
 type Props = {
   author: Author;
   posts: Post[];
   actualPage: number;
-  localResources: ILocalResources;
 };
 
-const IndexPage = ({ author, posts, actualPage, localResources }: Props) => {
+const IndexPage = ({ author, posts, actualPage }: Props) => {
   return (
     <>
       <Layout author={author} localResources={localResources}>
@@ -52,7 +46,6 @@ type Params = {
 export const getStaticProps = async ({ params, locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
   const posts = await getLocalizedPosts(locale);
-  const localResources = await getLocalResources(locale);
 
   const actualPage = params.page;
 
@@ -61,7 +54,6 @@ export const getStaticProps = async ({ params, locale }: Params) => {
       author,
       posts,
       actualPage,
-      localResources: localResources.default,
     },
   };
 };
