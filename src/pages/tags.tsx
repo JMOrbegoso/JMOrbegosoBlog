@@ -17,11 +17,11 @@ import PostTags from '../components/post-tags';
 
 type Props = {
   author: Author;
-  allTags: PostTag[];
+  tags: PostTag[];
   localResources: ILocalResources;
 };
 
-const Tags = ({ author, allTags, localResources }: Props) => {
+const Tags = ({ author, tags, localResources }: Props) => {
   return (
     <>
       <Layout author={author} localResources={localResources}>
@@ -33,7 +33,7 @@ const Tags = ({ author, allTags, localResources }: Props) => {
           </Head>
           <PageHeader>{localResources.tags}</PageHeader>
           <Container>
-            <PostTags tags={allTags} />
+            <PostTags tags={tags} />
           </Container>
         </Container>
       </Layout>
@@ -52,9 +52,9 @@ type Params = {
 export const getStaticProps = async ({ locale }: Params) => {
   const author = await getLocalizedAuthor(locale);
   const localResources = await getLocalResources(locale);
-  const allTags = await getLocalizedTags(locale);
+  const tags = await getLocalizedTags(locale);
 
   return {
-    props: { author, allTags, localResources: localResources.default },
+    props: { author, tags, localResources: localResources.default },
   };
 };
