@@ -10,6 +10,7 @@ import Author from '../types/author';
 import generateRssFeed from '../../scripts/generate-rss-feed';
 import generateSitemap from '../../scripts/generate-sitemap';
 import generateFavicons from '../../scripts/generate-favicons';
+import generateBlogCache from '../../scripts/generate-blog-cache';
 import useTranslation from 'next-translate/useTranslation';
 
 type Props = {
@@ -59,6 +60,7 @@ export const getStaticProps = async ({ locale }: Params) => {
   await generateRssFeed();
   await generateSitemap();
   await generateFavicons();
+  await generateBlogCache();
 
   const author = getAuthorData(locale);
   const posts = getAllPostsPreviews(locale);
