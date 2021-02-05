@@ -4,14 +4,14 @@ import matter from 'gray-matter';
 import { getResourcesFileNames, localeDirectory } from './file-system-helpers';
 import { DirectoryType } from '../enums/directoryType';
 
-function getPostFullPath(locale: string, slug: string) {
+function getPostFullName(locale: string, slug: string) {
   const postsFiles = getResourcesFileNames(DirectoryType.Posts, locale);
   const regex = new RegExp(`([0-9]{4}-[0-9]{2}-[0-9]{2}-${slug}.md)`);
   const post = postsFiles.find((postFile) => regex.test(postFile));
   return post;
 }
 
-export function getPostByFilePath(
+export function getPostByFileName(
   locale: string,
   slug: string,
   fields: string[] = [],
@@ -53,7 +53,7 @@ export function getPostBySlug(
   fields: string[] = [],
 ) {
   const realSlug = slug.replace(/\.md$/, '');
-  const fullName = getPostFullPath(locale, slug);
+  const fullName = getPostFullName(locale, slug);
   if (!fullName) {
     return {};
   }
@@ -121,9 +121,9 @@ export function getAuthorBySlug(
 }
 
 export function getAllPosts(locale: string, fields: string[] = []) {
-  const slugs = getResourcesFileNames(DirectoryType.Posts, locale);
-  const posts = slugs
-    .map((slug) => getPostByFilePath(locale, slug, fields))
+  const postsFileNames = getResourcesFileNames(DirectoryType.Posts, locale);
+  const posts = postsFileNames
+    .map((fileName) => getPostByFileName(locale, fileName, fields))
     // sort posts by date in descending order
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;
@@ -142,8 +142,10 @@ export function getAllPostsPreviews(locale: string) {
 }
 
 export function getAuthorData(locale: string) {
-  const slugs = getResourcesFileNames(DirectoryType.Author, locale);
-  const [aboutMeSlug] = slugs.filter((slug) => slug.includes('about-me'));
+  const authorFileNames = getResourcesFileNames(DirectoryType.Author, locale);
+  const [aboutMeSlug] = authorFileNames.filter((fileName) =>
+    fileName.includes('about-me'),
+  );
   const aboutMeData = getAuthorBySlug(locale, aboutMeSlug, [
     'firstname',
     'lastname',
