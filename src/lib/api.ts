@@ -11,14 +11,15 @@ function getPostFullName(locale: string, slug: string) {
   return post;
 }
 
-export function getPostByFileName(
+export function getResourceByFileName(
+  directoryType: DirectoryType,
   locale: string,
   slug: string,
   fields: string[] = [],
 ) {
   const realSlug = slug.replace(/\.md$/, '');
   const fullPath = join(
-    localeDirectory(DirectoryType.Posts, locale),
+    localeDirectory(directoryType, locale),
     `${realSlug}.md`,
   );
   const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -123,7 +124,9 @@ export function getAuthorBySlug(
 export function getAllPosts(locale: string, fields: string[] = []) {
   const postsFileNames = getResourcesFileNames(DirectoryType.Posts, locale);
   const posts = postsFileNames
-    .map((fileName) => getPostByFileName(locale, fileName, fields))
+    .map((fileName) =>
+      getResourceByFileName(DirectoryType.Posts, locale, fileName, fields),
+    )
     // sort posts by date in descending order
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;
