@@ -1,8 +1,8 @@
 import { WEB_NAME, WEB_DESCRIPTION } from '../src/lib/constants';
-import { getLocalizedAuthor } from '../src/lib/api';
+import { getAuthorData } from '../src/lib/api';
 import favicons, { FaviconOptions } from 'favicons';
 import { mkdirSync } from 'fs';
-import { writeFile } from '../src/lib/write-file';
+import { writeFile } from '../src/lib/file-system-helpers';
 
 async function generateFavicons() {
   if (process.env.NODE_ENV !== 'production') {
@@ -11,7 +11,7 @@ async function generateFavicons() {
 
   console.log('Generating favicons...');
 
-  const author = await getAuthorData();
+  const author = getAuthor();
 
   const source = 'public/assets/blog/logo.png'; // Source image(s). `string`, `buffer` or array of `string`
   const configuration: Partial<FaviconOptions> = {
@@ -89,8 +89,8 @@ async function generateFavicons() {
 
 export default generateFavicons;
 
-async function getAuthorData() {
-  const authorData = await getLocalizedAuthor('en');
+function getAuthor() {
+  const authorData = getAuthorData('en');
   return {
     name: `${authorData.firstname} ${authorData.lastname}`,
     link: authorData.web,

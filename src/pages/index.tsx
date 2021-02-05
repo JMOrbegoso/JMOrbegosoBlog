@@ -2,15 +2,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import PostsList from '../components/posts-list';
 import Layout from '../components/layout';
-import { getLocalizedAuthor, getLocalizedPosts } from '../lib/api';
+import { getAuthorData, getAllPostsPreviews } from '../lib/api';
 import Head from 'next/head';
 import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../lib/constants';
 import Post from '../types/post';
 import Author from '../types/author';
-import generateBlogCache from '../../scripts/generate-blog-cache';
 import generateRssFeed from '../../scripts/generate-rss-feed';
 import generateSitemap from '../../scripts/generate-sitemap';
 import generateFavicons from '../../scripts/generate-favicons';
+import generateBlogCache from '../../scripts/generate-blog-cache';
 import useTranslation from 'next-translate/useTranslation';
 
 type Props = {
@@ -57,18 +57,18 @@ type Params = {
 
 export const getStaticProps = async ({ locale }: Params) => {
   // Run one-time scripts
-  await generateBlogCache();
   await generateRssFeed();
   await generateSitemap();
   await generateFavicons();
+  await generateBlogCache();
 
-  const author = await getLocalizedAuthor(locale);
-  const posts = await getLocalizedPosts(locale);
+  const author = getAuthorData(locale);
+  const posts = getAllPostsPreviews(locale);
 
   return {
     props: {
       author,
-      posts,
+      posts: posts,
     },
   };
 };
