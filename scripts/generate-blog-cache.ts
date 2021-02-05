@@ -7,10 +7,6 @@ import {
 import { mkdirSync } from 'fs';
 
 async function generateBlogCache() {
-  if (process.env.NODE_ENV !== 'production') {
-    return;
-  }
-
   console.log('Generating blog cache…');
 
   generateBlogCacheFiles(DirectoryType.Posts, [
