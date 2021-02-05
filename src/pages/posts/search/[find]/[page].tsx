@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import Layout from '../../../../components/layout';
-import { getLocalizedPosts, getLocalizedAuthor } from '../../../../lib/api';
+import { getAllPostsPreviews, getAuthorData } from '../../../../lib/api';
 import Head from 'next/head';
 import { URL_BASE, WEB_NAME, WEB_DESCRIPTION } from '../../../../lib/constants';
 import PostType from '../../../../types/post';
@@ -69,8 +69,8 @@ type Params = {
 };
 
 export async function getServerSideProps({ query, locale }: Params) {
-  const author = await getLocalizedAuthor(locale);
-  const posts = (await getLocalizedPosts(locale)).filter((p) =>
+  const author = getAuthorData(locale);
+  const posts = getAllPostsPreviews(locale).filter((p) =>
     p.title.toLowerCase().includes(query.find.toLowerCase()),
   );
 
@@ -79,7 +79,6 @@ export async function getServerSideProps({ query, locale }: Params) {
       author,
       posts,
       actualPage: query.page,
-
       searchTerm: query.find,
     },
   };

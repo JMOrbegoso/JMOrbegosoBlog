@@ -6,11 +6,7 @@ import Container from '../../components/container';
 import PostBody from '../../components/post-body';
 import PostHeader from '../../components/post-header';
 import Layout from '../../components/layout';
-import {
-  getPostBySlug,
-  getLocalizedAuthor,
-  getLocalizedPosts,
-} from '../../lib/api';
+import { getPostBySlug, getAllPosts, getAuthorData } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import Head from 'next/head';
 import { URL_BASE, WEB_NAME } from '../../lib/constants';
@@ -96,10 +92,18 @@ type Params = {
 };
 
 export async function getStaticProps({ params, locale }: Params) {
-  const author = await getLocalizedAuthor(locale);
-  const post = await getPostBySlug(locale, params.slug);
+  const author = getAuthorData(locale);
 
-  const content = await markdownToHtml(post?.content ?? '');
+  const post = getPostBySlug(locale, params.slug, [
+    'title',
+    'date',
+    'slug',
+    'content',
+    'ogImage',
+    'coverImage',
+    'tags',
+  ]);
+  const content = await markdownToHtml(post.content || '');
 
   return {
     props: {
@@ -113,31 +117,20 @@ export async function getStaticProps({ params, locale }: Params) {
 }
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const params = (
-    await Promise.all(
-      locales.map(async (locale) => {
-        const posts = await getLocalizedPosts(locale);
+  const paths: { locale: string; params: { slug: string } }[] = [];
 
-        return posts.map((post) => {
-          return {
-            locale: locale,
-            slug: post.slug,
-          };
-        });
-      }),
-    )
-  ).flat();
-
-  const paths: { locale: string; params: { slug: string } }[] = params.map(
-    (param) => {
+  locales.forEach((locale) => {
+    const postPath = getAllPosts(locale, ['slug']).map((post) => {
       return {
-        locale: param.locale,
+        locale: locale,
         params: {
-          slug: param.slug,
+          slug: post.slug,
         },
       };
-    },
-  );
+    });
+
+    paths.push(...postPath);
+  });
 
   return {
     paths: paths,

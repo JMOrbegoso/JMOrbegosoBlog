@@ -4,11 +4,7 @@ import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
 import Container from '../../components/container';
 import Layout from '../../components/layout';
-import {
-  getLocalizedAuthor,
-  getLocalizedPosts,
-  getLocalizedTags,
-} from '../../lib/api';
+import { getAuthorData, getAllPostsPreviews, getAllTags } from '../../lib/api';
 import PageHeader from '../../components/page-header';
 import Head from 'next/head';
 import { URL_BASE, WEB_NAME } from '../../lib/constants';
@@ -16,7 +12,6 @@ import PostType from '../../types/post';
 import Author from '../../types/author';
 import PostsList from '../../components/posts-list';
 import { getTagTitle } from '../../lib/tag-helpers';
-import { PostTag } from '../../enums/postTag';
 import useTranslation from 'next-translate/useTranslation';
 import TranslationResource from '../../enums/translationResource';
 
@@ -80,7 +75,7 @@ export default Tag;
 
 type Params = {
   params: {
-    id: PostTag;
+    id: string;
     page: number;
   };
   locales: string[];
@@ -89,8 +84,8 @@ type Params = {
 };
 
 export const getStaticProps = async ({ params, locale }: Params) => {
-  const author = await getLocalizedAuthor(locale);
-  const posts = (await getLocalizedPosts(locale)).filter((p) =>
+  const author = getAuthorData(locale);
+  const posts = getAllPostsPreviews(locale).filter((p) =>
     p.tags.includes(params.id),
   );
 
@@ -99,32 +94,37 @@ export const getStaticProps = async ({ params, locale }: Params) => {
   return {
     props: {
       author,
-      tagTitle,
       posts,
+      tagTitle,
     },
   };
 };
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const paths: {
-    locale: string;
-    params: { id: PostTag };
-  }[] = (
-    await Promise.all(
-      locales.map(async (locale) => {
-        const allTags = await getLocalizedTags(locale);
+  const paths: { locale: string; params: { id: string } }[] = [];
 
-        return allTags.map((tag) => {
-          return {
-            locale: locale,
-            params: {
-              id: tag,
-            },
-          };
-        });
-      }),
-    )
-  ).flat();
+  locales.forEach((locale) => {
+    const allTags = getAllTags(locale);
+    const paginatedPostsByTags: {
+      tag: string;
+      locale: string;
+    }[] = [];
+
+    allTags.forEach((tag) => {
+      paginatedPostsByTags.push({ tag, locale });
+    });
+
+    const pagePath = paginatedPostsByTags.map((pt) => {
+      return {
+        locale: pt.locale,
+        params: {
+          id: pt.tag,
+        },
+      };
+    });
+
+    paths.push(...pagePath);
+  });
 
   return {
     paths: paths,

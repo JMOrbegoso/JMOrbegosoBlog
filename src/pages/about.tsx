@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import Container from '../components/container';
 import Layout from '../components/layout';
-import { getLocalizedAuthor } from '../lib/api';
+import { getAuthorData } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Author from '../types/author';
@@ -48,7 +48,7 @@ type Params = {
 };
 
 export const getStaticProps = async ({ locale }: Params) => {
-  const author = await getLocalizedAuthor(locale);
+  const author = getAuthorData(locale);
 
   const content = await markdownToHtml(author.content || '');
 

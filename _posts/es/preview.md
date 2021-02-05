@@ -1,13 +1,12 @@
 ---
-title: 'Learn How to Pre-render Pages Using Static Generation with Next.js'
+title: 'Modo previo para la generación estática'
 excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus.'
-coverImage: '/assets/posts/hello-world/cover.jpg'
-date: '2020-03-14T05:35:07.322Z'
+coverImage: '/assets/posts/preview/cover.jpg'
+date: '2020-03-16T05:35:07.322Z'
 ogImage:
-  url: '/assets/posts/hello-world/cover.jpg'
+  url: '/assets/posts/preview/cover.jpg'
 tags:
-  - wsl
-  - angular
+  - react-js
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
