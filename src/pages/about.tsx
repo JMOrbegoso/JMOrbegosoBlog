@@ -3,6 +3,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import Container from '../components/container';
 import Layout from '../components/layout';
 import { getAuthorData } from '../lib/api';
+import PageHeader from '../components/page-header';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
 import Author from '../types/author';
@@ -26,6 +27,7 @@ const About = ({ author }: Props) => {
             {t(TranslationResource.about)} - {WEB_NAME}
           </title>
         </Head>
+        <PageHeader>{t(TranslationResource.about)}</PageHeader>
         <Container>
           <div className="max-w-2xl mx-auto text-justify">
             <div
