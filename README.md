@@ -85,8 +85,9 @@ Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&ut
 
 ### Add a Tag
 
-- Add the tag as enum in /lib/postTag.ts
+- Add the tag as enum in src/lib/postTag.ts
 - Add the svg image of the tag in public/assets/tags/
+- Add the tag title in the the file src/lib/tag-helpers.ts.
 - That's all, now the tag can be used on any post.
 
 ### Favicons
