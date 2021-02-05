@@ -1,23 +1,11 @@
 import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
-
-const authorDirectory = (locale: string) =>
-  join(process.cwd(), '_author', locale);
-const postsDirectory = (locale: string) =>
-  join(process.cwd(), '_posts', locale);
-
-export function getAuthorSlugs(locale: string) {
-  return fs.readdirSync(authorDirectory(locale));
-}
-
-export function getPostSlugs(locale: string) {
-  return fs.readdirSync(postsDirectory(locale));
-}
+import { getResourcesFileNames, localeDirectory } from './file-system-helpers';
+import { DirectoryType } from '../enums/directoryType';
 
 function getPostFullPath(locale: string, slug: string) {
-  const dir = postsDirectory(locale);
-  const postsFiles = fs.readdirSync(dir);
+  const postsFiles = getResourcesFileNames(DirectoryType.Posts, locale);
   const regex = new RegExp(`([0-9]{4}-[0-9]{2}-[0-9]{2}-${slug}.md)`);
   const post = postsFiles.find((postFile) => regex.test(postFile));
   return post;
@@ -29,7 +17,10 @@ export function getPostByFilePath(
   fields: string[] = [],
 ) {
   const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(postsDirectory(locale), `${realSlug}.md`);
+  const fullPath = join(
+    localeDirectory(DirectoryType.Posts, locale),
+    `${realSlug}.md`,
+  );
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
@@ -66,7 +57,7 @@ export function getPostBySlug(
   if (!fullName) {
     return {};
   }
-  const fullPath = join(postsDirectory(locale), fullName);
+  const fullPath = join(localeDirectory(DirectoryType.Posts, locale), fullName);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
@@ -99,7 +90,10 @@ export function getAuthorBySlug(
   fields: string[] = [],
 ) {
   const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(authorDirectory(locale), `${realSlug}.md`);
+  const fullPath = join(
+    localeDirectory(DirectoryType.Author, locale),
+    `${realSlug}.md`,
+  );
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
@@ -127,7 +121,7 @@ export function getAuthorBySlug(
 }
 
 export function getAllPosts(locale: string, fields: string[] = []) {
-  const slugs = getPostSlugs(locale);
+  const slugs = getResourcesFileNames(DirectoryType.Posts, locale);
   const posts = slugs
     .map((slug) => getPostByFilePath(locale, slug, fields))
     // sort posts by date in descending order
@@ -148,7 +142,7 @@ export function getAllPostsPreviews(locale: string) {
 }
 
 export function getAuthorData(locale: string) {
-  const slugs = getAuthorSlugs(locale);
+  const slugs = getResourcesFileNames(DirectoryType.Author, locale);
   const [aboutMeSlug] = slugs.filter((slug) => slug.includes('about-me'));
   const aboutMeData = getAuthorBySlug(locale, aboutMeSlug, [
     'firstname',

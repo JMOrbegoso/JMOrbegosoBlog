@@ -1,8 +1,14 @@
-import { readdirSync, readFileSync, mkdirSync } from 'fs';
+import { readFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 import { DirectoryType } from '../src/enums/directoryType';
-import { writeFile } from '../src/lib/file-system-helpers';
+import {
+  getResourcesFileNames,
+  getSubDirectories,
+  localeDirectory,
+  rootDirectory,
+  writeFile,
+} from '../src/lib/file-system-helpers';
 
 async function generateBlogCache() {
   if (process.env.NODE_ENV !== 'production') {
@@ -62,7 +68,7 @@ const generateBlogCacheFiles = (
 const getfileNamesByLocale = (directoryType: DirectoryType) => {
   return getSubDirectories(rootDirectory(directoryType)).map(
     (locale: string) => {
-      const fileNames = readdirSync(localeDirectory(directoryType, locale));
+      const fileNames = getResourcesFileNames(directoryType, locale);
 
       return {
         locale: locale,
@@ -71,24 +77,6 @@ const getfileNamesByLocale = (directoryType: DirectoryType) => {
     },
   );
 };
-
-const getSubDirectories = (directory: string) =>
-  readdirSync(directory, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
-
-const rootDirectory = (directoryType: DirectoryType) =>
-  join(
-    process.cwd(),
-    directoryType === DirectoryType.Posts ? '_posts' : '_author',
-  );
-
-const localeDirectory = (directoryType: DirectoryType, locale: string) =>
-  join(
-    process.cwd(),
-    directoryType === DirectoryType.Posts ? '_posts' : '_author',
-    locale,
-  );
 
 const getFileByFileName = (
   directoryType: DirectoryType,
