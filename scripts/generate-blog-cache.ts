@@ -3,6 +3,7 @@ import { join } from 'path';
 import matter from 'gray-matter';
 import { DirectoryType } from '../src/enums/directoryType';
 import {
+  getfileNamesByLocale,
   getResourcesFileNames,
   getSubDirectories,
   localeDirectory,
@@ -63,19 +64,6 @@ const generateBlogCacheFiles = (
   });
 
   writeBlogCacheFiles(directoryType, collection);
-};
-
-const getfileNamesByLocale = (directoryType: DirectoryType) => {
-  return getSubDirectories(rootDirectory(directoryType)).map(
-    (locale: string) => {
-      const fileNames = getResourcesFileNames(directoryType, locale);
-
-      return {
-        locale: locale,
-        fileNames: fileNames,
-      };
-    },
-  );
 };
 
 const getFileByFileName = (
