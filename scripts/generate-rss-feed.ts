@@ -7,7 +7,7 @@ import {
 import { getAuthorData, getAllPostsPreviews } from '../src/lib/api';
 import { Feed } from 'feed';
 import markdownToHtml from '../src/lib/markdownToHtml';
-import { writeFile } from '../src/lib/write-file';
+import { writeFile } from '../src/lib/file-system-helpers';
 
 async function generateRssFeed() {
   if (process.env.NODE_ENV !== 'production') {

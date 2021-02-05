@@ -3,7 +3,7 @@ import { getAllPosts, getAllTags } from '../src/lib/api';
 import globby from 'globby';
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { Readable } from 'stream';
-import { writeFile } from '../src/lib/write-file';
+import { writeFile } from '../src/lib/file-system-helpers';
 
 const blocklist = ['/404'];
 

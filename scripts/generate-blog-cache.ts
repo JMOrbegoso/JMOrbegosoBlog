@@ -1,8 +1,8 @@
-import { writeFile } from '../src/lib/write-file';
 import { readdirSync, readFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 import { DirectoryType } from '../src/enums/directoryType';
+import { writeFile } from '../src/lib/file-system-helpers';
 
 async function generateBlogCache() {
   if (process.env.NODE_ENV !== 'production') {

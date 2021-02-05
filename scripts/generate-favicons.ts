@@ -2,7 +2,7 @@ import { WEB_NAME, WEB_DESCRIPTION } from '../src/lib/constants';
 import { getAuthorData } from '../src/lib/api';
 import favicons, { FaviconOptions } from 'favicons';
 import { mkdirSync } from 'fs';
-import { writeFile } from '../src/lib/write-file';
+import { writeFile } from '../src/lib/file-system-helpers';
 
 async function generateFavicons() {
   if (process.env.NODE_ENV !== 'production') {
