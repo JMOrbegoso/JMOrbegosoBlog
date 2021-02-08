@@ -2,6 +2,7 @@ import PostPreview from './post-preview';
 import Post from '../types/post';
 import { POST_PER_PAGE } from '../lib/constants';
 import Container from './container';
+import { CardDeck } from 'react-bootstrap';
 import PostPagination from './post-pagination';
 import useTranslation from 'next-translate/useTranslation';
 import TranslationResource from '../enums/translationResource';
@@ -33,7 +34,7 @@ const PostsList = ({ posts, actualPage }: Props) => {
   return (
     <section>
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-16 mb-32">
+        <CardDeck>
           {visiblePosts.map((post) => (
             <PostPreview
               key={post.slug}
@@ -46,7 +47,7 @@ const PostsList = ({ posts, actualPage }: Props) => {
               tags={post.tags}
             />
           ))}
-        </div>
+        </CardDeck>
         <PostPagination actualPage={actualPage} totalPosts={posts.length} />
       </Container>
     </section>
