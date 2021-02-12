@@ -5,7 +5,7 @@ import Layout from '../components/layout';
 import { getAllTags, getAuthorData } from '../lib/api';
 import Head from 'next/head';
 import { WEB_NAME } from '../lib/constants';
-import { PostTag } from '../enums/postTag';
+import { Tag } from '../enums/tag';
 import Author from '../types/author';
 import PageHeader from '../components/page-header';
 import PostTags from '../components/post-tags';
@@ -14,7 +14,7 @@ import TranslationResource from '../enums/translationResource';
 
 type Props = {
   author: Author;
-  tags: PostTag[];
+  tags: Tag[];
 };
 
 const Tags = ({ author, tags }: Props) => {

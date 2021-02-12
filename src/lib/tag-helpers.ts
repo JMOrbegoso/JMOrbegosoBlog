@@ -1,40 +1,40 @@
-import { PostTag } from '../enums/postTag';
+import { Tag } from '../enums/tag';
 
 export function getTagTitle(tag: string) {
   switch (tag) {
-    case PostTag.Android:
+    case Tag.Android:
       return 'Android';
-    case PostTag.Angular:
+    case Tag.Angular:
       return 'Angular';
-    case PostTag.Bootstrap:
+    case Tag.Bootstrap:
       return 'Bootstrap';
-    case PostTag.CSharp:
+    case Tag.CSharp:
       return 'C#';
-    case PostTag.Jest:
+    case Tag.Jest:
       return 'Jest';
-    case PostTag.MySQL:
+    case Tag.MySQL:
       return 'MySQL';
-    case PostTag.NetCore:
+    case Tag.NetCore:
       return 'Net Core';
-    case PostTag.NestJS:
+    case Tag.NestJS:
       return 'NestJS';
-    case PostTag.NextJS:
+    case Tag.NextJS:
       return 'NextJS';
-    case PostTag.ReactJS:
+    case Tag.ReactJS:
       return 'ReactJS';
-    case PostTag.Redux:
+    case Tag.Redux:
       return 'Redux';
-    case PostTag.SqlServer:
+    case Tag.SqlServer:
       return 'Sql Server';
-    case PostTag.TypeScript:
+    case Tag.TypeScript:
       return 'TypeScript';
-    case PostTag.Windows10:
+    case Tag.Windows10:
       return 'Windows10';
-    case PostTag.WSL:
+    case Tag.WSL:
       return 'WSL';
-    case PostTag.Xamarin:
+    case Tag.Xamarin:
       return 'Xamarin';
-    case PostTag.Yarn:
+    case Tag.Yarn:
       return 'Yarn';
 
     default:

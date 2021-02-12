@@ -1,4 +1,4 @@
-import { PostTag } from '../enums/postTag';
+import { Tag } from '../enums/tag';
 
 type PostType = {
   slug: string;
@@ -10,7 +10,7 @@ type PostType = {
     url: string;
   };
   content: string;
-  tags: PostTag[];
+  tags: Tag[];
 };
 
 export default PostType;

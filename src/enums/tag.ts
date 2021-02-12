@@ -1,4 +1,4 @@
-export enum PostTag {
+export enum Tag {
   Android = 'android',
   Angular = 'angular',
   Bootstrap = 'bootstrap',

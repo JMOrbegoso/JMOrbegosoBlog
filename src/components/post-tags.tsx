@@ -1,8 +1,8 @@
-import { PostTag as PostTagEnum } from '../enums/postTag';
+import { Tag } from '../enums/tag';
 import PostTag from './post-tag';
 
 type Props = {
-  tags: PostTagEnum[];
+  tags: Tag[];
 };
 
 const PostTags = ({ tags }: Props) => {

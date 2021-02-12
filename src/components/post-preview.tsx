@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import DateFormatter from './date-formatter';
-import { PostTag as PostTagEnum } from '../enums/postTag';
+import { Tag } from '../enums/tag';
 import PostTags from './post-tags';
 import ReadTime from './read-time';
 import { Card } from 'react-bootstrap';
@@ -12,7 +12,7 @@ type Props = {
   excerpt: string;
   slug: string;
   content: string;
-  tags: PostTagEnum[];
+  tags: Tag[];
 };
 
 const PostPreview = ({
