@@ -62,7 +62,7 @@ export default Tag;
 
 type Params = {
   params: {
-    id: string;
+    tag: string;
     page: number;
   };
   locales: string[];
@@ -73,10 +73,10 @@ type Params = {
 export const getStaticProps = async ({ params, locale }: Params) => {
   const author = getAuthorData(locale);
   const posts = getAllPostsPreviews(locale).filter((p) =>
-    p.tags.includes(params.id),
+    p.tags.includes(params.tag),
   );
 
-  const tagTitle = getTagTitle(params.id);
+  const tagTitle = getTagTitle(params.tag);
 
   const actualPage = params.page;
 
@@ -91,7 +91,7 @@ export const getStaticProps = async ({ params, locale }: Params) => {
 };
 
 export async function getStaticPaths({ locales }: { locales: string[] }) {
-  const paths: { locale: string; params: { id: string; page: string } }[] = [];
+  const paths: { locale: string; params: { tag: string; page: string } }[] = [];
 
   locales.forEach((locale) => {
     const allTags = getAllTags(locale);
@@ -126,7 +126,7 @@ export async function getStaticPaths({ locales }: { locales: string[] }) {
       return {
         locale: pt.locale,
         params: {
-          id: pt.tag,
+          tag: pt.tag,
           page: pt.page.toString(),
         },
       };
